@@ -1111,12 +1111,17 @@ article header .author {
 article header .postdate {
   display: inline;
 }
+article .content {
+  width: 70% /* 设置宽度为屏幕宽度的70% */;
+  margin: 0 auto /* 居中显示 */;
+/* http://webdesignerwall.com/tutorials/css-elastic-videos */
+}
 article .content h2:before {
   position: absolute;
   top: -4px;
   left: -1rem;
   color: #2bbc8a;
-  content: "#";
+  content: "#" /* 这里的$color-accent-1是您的颜色变量 */;
   font-weight: bold;
   font-size: 1.2rem;
 }
