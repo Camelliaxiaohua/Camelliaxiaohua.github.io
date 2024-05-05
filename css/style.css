@@ -321,7 +321,7 @@ body .h1 {
   display: block;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  color: #0f0;
+  color: #2ecc71;
   letter-spacing: 0.01em;
   font-weight: 700;
   font-style: normal;
@@ -352,7 +352,7 @@ body h5,
 body h6 {
   display: inline;
   text-decoration: none;
-  color: #8c8c8c;
+  color: #0f0;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -364,7 +364,7 @@ body h6 {
   margin-bottom: 0.5rem;
 }
 body hr {
-  border: 0.5px dashed #8c8c8c;
+  border: 0.5px dashed #0f0;
   opacity: 0.5;
   margin: 0;
   margin-top: 20px;
@@ -624,7 +624,7 @@ body {
   -webkit-filter: grayscale(100%);
 }
 #header #nav {
-  color: #0f0;
+  color: #2ecc71;
   letter-spacing: 0.01em;
   font-weight: 200;
   font-style: normal;
@@ -638,10 +638,10 @@ body {
 }
 #header #nav ul a {
   margin-right: 15px;
-  color: #0f0;
+  color: #2ecc71;
 }
 #header #nav ul a:hover {
-  background-image: linear-gradient(transparent, transparent 5px, #0f0 5px, #0f0);
+  background-image: linear-gradient(transparent, transparent 5px, #2ecc71 5px, #2ecc71);
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
@@ -650,7 +650,7 @@ body {
   display: inline-block;
   margin-right: 15px;
   border-right: 1px dotted;
-  border-color: #0f0;
+  border-color: #2ecc71;
   vertical-align: middle;
 }
 #header #nav ul .icon {
@@ -747,7 +747,7 @@ body {
   margin-left: 15px;
 }
 #header-post #menu-icon:hover {
-  color: #0f0;
+  color: #2ecc71;
 }
 #header-post #menu-icon-tablet {
   float: right;
@@ -755,7 +755,7 @@ body {
   margin-left: 15px;
 }
 #header-post #menu-icon-tablet:hover {
-  color: #0f0;
+  color: #2ecc71;
 }
 #header-post #top-icon-tablet {
   position: fixed;
@@ -765,17 +765,17 @@ body {
   margin-left: 15px;
 }
 #header-post #top-icon-tablet:hover {
-  color: #0f0;
+  color: #2ecc71;
 }
 #header-post .active {
-  color: #0f0;
+  color: #2ecc71;
 }
 #header-post #menu {
   display: none;
   margin-right: 2rem;
 }
 #header-post #nav {
-  color: #0f0;
+  color: #2ecc71;
   letter-spacing: 0.01em;
   font-weight: 200;
   font-style: normal;
@@ -786,16 +786,16 @@ body {
 }
 #header-post #nav ul a {
   margin-right: 15px;
-  color: #0f0;
+  color: #2ecc71;
 }
 #header-post #nav ul a:hover {
-  background-image: linear-gradient(transparent, transparent 5px, #0f0 5px, #0f0);
+  background-image: linear-gradient(transparent, transparent 5px, #2ecc71 5px, #2ecc71);
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
 }
 #header-post #nav ul li {
-  border-right: 1px dotted #0f0;
+  border-right: 1px dotted #2ecc71;
 }
 #header-post #nav ul li:last-child {
   margin-right: 0;
@@ -849,7 +849,7 @@ body {
   font-size: 0.8rem;
 }
 #header-post #toc .toc-level-2:before {
-  color: #0f0;
+  color: #2ecc71;
   content: "#";
 }
 #header-post #toc .toc-level-3 {
@@ -947,11 +947,11 @@ body {
   text-align: center;
 }
 #footer-post #nav-footer a {
-  color: #0f0;
+  color: #2ecc71;
   font-size: 1em;
 }
 #footer-post #nav-footer a:hover {
-  background-image: linear-gradient(transparent, transparent 5px, #0f0 5px, #0f0);
+  background-image: linear-gradient(transparent, transparent 5px, #2ecc71 5px, #2ecc71);
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
@@ -982,7 +982,7 @@ body {
 #footer-post #actions-footer a {
   display: inline-block;
   padding-left: 1rem;
-  color: #0f0;
+  color: #2ecc71;
 }
 #footer-post #share-footer {
   padding-right: 1rem;
@@ -1029,7 +1029,7 @@ body {
   font-size: 0.8rem;
 }
 #footer-post #toc-footer .toc-level-2:before {
-  color: #0f0;
+  color: #2ecc71;
   content: "#";
 }
 #footer-post #toc-footer .toc-level-3 {
@@ -1100,7 +1100,7 @@ article header .meta {
   margin-bottom: 1rem;
 }
 article header .meta * {
-  color: #8c8c8c;
+  color: #0f0;
   font-size: 0.85rem;
 }
 article header .author {
@@ -1115,7 +1115,7 @@ article .content h2:before {
   position: absolute;
   top: -4px;
   left: -1rem;
-  color: #0f0;
+  color: #2ecc71;
   content: "#" /* 这里的$color-accent-1是您的颜色变量 */;
   font-weight: bold;
   font-size: 1.2rem;
@@ -1147,7 +1147,7 @@ article .content blockquote {
   margin: 1rem 10px;
   padding: 0.5em 10px;
   background: inherit;
-  color: #0f0;
+  color: #2ecc71;
   quotes: "\201C" "\201D" "\2018" "\2019";
   font-weight: bold;
 }
@@ -1156,7 +1156,7 @@ article .content blockquote p {
 }
 article .content blockquote:before {
   margin-right: 0.25em;
-  color: #0f0;
+  color: #2ecc71;
   content: "\201C";
   vertical-align: -0.4em;
   font-size: 2em;
@@ -1350,7 +1350,7 @@ article .content .caption {
   padding: 4px 7px;
   width: 100%;
   outline: none;
-  border: solid 1px #8c8c8c;
+  border: solid 1px #0f0;
   border-radius: 5px;
   background-color: #e2e0de;
   color: #383838;
@@ -1359,7 +1359,7 @@ article .content .caption {
   -moz-border-radius: 5px;
 }
 .search-input:focus {
-  border: solid 1px #0f0;
+  border: solid 1px #2ecc71;
 }
 #search-result ul.search-result-list {
   padding: 0;
@@ -1643,7 +1643,7 @@ code {
   transition: opacity 0.2s ease-in;
 }
 .highlight .btn-copy:hover {
-  color: #0f0;
+  color: #2ecc71;
 }
 .highlight pre {
   margin: 0;
