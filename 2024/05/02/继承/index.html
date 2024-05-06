@@ -9,12 +9,12 @@
     <meta name="description" content="继承一、继承的基本语法1、继承概念： 在Java中，继承是面向对象编程中的一个重要概念，它允许一个类（称为子类或派生类）继承另一个类（称为父类或基类）的属性和方法。Java中的继承通过关键字extends来实现。       Java只支持单继承，一个类只能直接继承一个类。     Java不支持多继承，但是支持多重继承。     子类继承父类，除了私有的不支持继承、构造方法不支持继承，其他的全部">
 <meta property="og:type" content="article">
 <meta property="og:title" content="继承">
-<meta property="og:url" content="http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/index.html">
+<meta property="og:url" content="http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="继承一、继承的基本语法1、继承概念： 在Java中，继承是面向对象编程中的一个重要概念，它允许一个类（称为子类或派生类）继承另一个类（称为父类或基类）的属性和方法。Java中的继承通过关键字extends来实现。       Java只支持单继承，一个类只能直接继承一个类。     Java不支持多继承，但是支持多重继承。     子类继承父类，除了私有的不支持继承、构造方法不支持继承，其他的全部">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-04T15:36:12.000Z">
-<meta property="article:modified_time" content="2024-05-05T03:31:31.238Z">
+<meta property="article:published_time" content="2024-05-02T15:36:12.000Z">
+<meta property="article:modified_time" content="2024-05-06T14:48:04.313Z">
 <meta property="article:author" content="Camellia.xiaohua">
 <meta property="article:tag" content="Java基础">
 <meta name="twitter:card" content="summary">
@@ -88,10 +88,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="上一篇" href="/2024/05/04/%E5%A4%9A%E6%80%81/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="上一篇" href="/2024/05/03/%E5%A4%9A%E6%80%81/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="下一篇" href="/2024/05/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="下一篇" href="/2024/05/01/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D%EF%BC%89/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -104,17 +104,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&text=继承"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&is_video=false&description=继承"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=继承&body=Check out this article: http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&name=继承&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&t=继承"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&text=继承"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&is_video=false&description=继承"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=继承&body=Check out this article: http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&name=继承&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&t=继承"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -146,7 +146,7 @@
       
     <div class="postdate">
       
-        <time datetime="2024-05-04T15:36:12.000Z" class="dt-published" itemprop="datePublished">2024-05-04</time>
+        <time datetime="2024-05-02T15:36:12.000Z" class="dt-published" itemprop="datePublished">2024-05-02</time>
         
       
     </div>
@@ -257,17 +257,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&text=继承"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&is_video=false&description=继承"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=继承&body=Check out this article: http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&name=继承&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/04/%E7%BB%A7%E6%89%BF/&t=继承"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&text=继承"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&is_video=false&description=继承"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=继承&body=Check out this article: http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&title=继承"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&name=继承&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/02/%E7%BB%A7%E6%89%BF/&t=继承"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
