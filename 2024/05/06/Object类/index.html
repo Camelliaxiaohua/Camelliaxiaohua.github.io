@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Object类一、Object类在Java中，Object 类是所有类的根类。也就是说，所有的类都是直接或间接地继承自 Object 类。Object 类定义了一些所有对象都共享的方法，这些方法可以在任何类的对象上调用。 下面是一些 Object 类中常用的方法：  equals(Object obj): 用于比较两个对象是否相等。默认情况下，equals() 方法比较的是对象的引用是否相同，但是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Object类">
+<meta property="og:url" content="http://example.com/2024/05/06/Object%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Object类一、Object类在Java中，Object 类是所有类的根类。也就是说，所有的类都是直接或间接地继承自 Object 类。Object 类定义了一些所有对象都共享的方法，这些方法可以在任何类的对象上调用。 下面是一些 Object 类中常用的方法：  equals(Object obj): 用于比较两个对象是否相等。默认情况下，equals() 方法比较的是对象的引用是否相同，但是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405062137116.png">
+<meta property="article:published_time" content="2024-05-06T13:34:40.000Z">
+<meta property="article:modified_time" content="2024-05-06T13:46:15.692Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405062137116.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Object类</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/_data/">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/05/06/UML-%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/05/06/Java%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/06/Object%E7%B1%BB/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/06/Object%E7%B1%BB/&text=Object类"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/06/Object%E7%B1%BB/&is_video=false&description=Object类"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Object类&body=Check out this article: http://example.com/2024/05/06/Object%E7%B1%BB/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/06/Object%E7%B1%BB/&name=Object类&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/06/Object%E7%B1%BB/&t=Object类"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Object%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">Object类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Object%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">一、Object类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81toString%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">二、toString方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E3%80%81Object%E7%B1%BB%E4%B8%AD%E7%9A%84toString-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1、Object类中的toString()方法。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81equals%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、equals方法</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Object类
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-06T13:34:40.000Z" class="dt-published" itemprop="datePublished">2024-05-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a> › <a class="category-link" href="/categories/Java-SE/Java-Part-1/">Java Part_1</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag">Java基础</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Object类"><a href="#Object类" class="headerlink" title="Object类"></a>Object类</h1><h2 id="一、Object类"><a href="#一、Object类" class="headerlink" title="一、Object类"></a>一、Object类</h2><p>在Java中，<code>Object</code> 类是所有类的根类。也就是说，所有的类都是直接或间接地继承自 <code>Object</code> 类。<br><code>Object</code> 类定义了一些所有对象都共享的方法，这些方法可以在任何类的对象上调用。</p>
+<p>下面是一些 <code>Object</code> 类中常用的方法：</p>
+<ol>
+<li><p><strong><code>equals(Object obj)</code></strong>: 用于比较两个对象是否相等。默认情况下，<code>equals()</code> 方法比较的是对象的引用是否相同，但是可以在子类中重写该方法来定义自定义的相等性比较逻辑。</p>
+</li>
+<li><p><strong><code>hashCode()</code></strong>: 返回对象的哈希码值。这个方法通常与 <code>equals()</code> 方法一起使用，确保相等的对象具有相同的哈希码。</p>
+</li>
+<li><p><strong><code>toString()</code></strong>: 返回对象的字符串表示。默认情况下，<code>toString()</code> 方法返回一个由类名和对象的哈希码组成的<strong>字符串</strong>。</p>
+</li>
+<li><p><strong><code>getClass()</code></strong>: 返回对象的运行时类的引用，即 <code>Class</code> 对象。 </p>
+</li>
+<li><p><strong><code>clone()</code></strong>: 用于创建并返回一个对象的副本。要实现对象的克隆，需要在子类中实现 <code>Cloneable</code> 接口，并重写 <code>clone()</code> 方法。</p>
+</li>
+<li><p><strong><code>finalize()</code></strong>: 在垃圾收集器删除对象之前调用。可以在子类中重写该方法以执行资源清理等操作。</p>
+</li>
+<li><p><strong><code>notify()</code>, <code>notifyAll()</code>, <code>wait()</code></strong>: 这些方法是用于多线程编程的，用于线程之间的通信和同步。</p>
+</li>
+<li><p><strong><code>getClassLoader()</code></strong>: 返回对象的类加载器。</p>
+</li>
+</ol>
+<h2 id="二、toString方法"><a href="#二、toString方法" class="headerlink" title="二、toString方法"></a>二、toString方法</h2><h3 id="2-1、Object类中的toString-方法。"><a href="#2-1、Object类中的toString-方法。" class="headerlink" title="2.1、Object类中的toString()方法。"></a>2.1、Object类中的toString()方法。</h3><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405062137116.png"  width="600"  height="300"/>
+
+<p>对<code>Object</code>类中的<code>toString</code>不满意可以重写。</p>
+<blockquote>
+<p>当<code>println()</code>输出的是一个引用的时候，会自动调用 “&#96;&#96;引用.toString()&#96;”</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//println底层源码</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">println</span><span class="params">(Object x)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> String.valueOf(x);</span><br><span class="line">        <span class="keyword">if</span> (getClass() == PrintStream.class) &#123;</span><br><span class="line">            <span class="comment">// 自第一次调用以来，需要再次应用 String.valueOf</span></span><br><span class="line">            <span class="comment">// might return null</span></span><br><span class="line">            writeln(String.valueOf(s));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">                print(s);</span><br><span class="line">                newLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//valueOf底层源码</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">valueOf</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (obj == <span class="literal">null</span>) ? <span class="string">&quot;null&quot;</span> : obj.toString();  <span class="comment">//这里对空引用进行了处理，不会报空异常。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>();</span><br><span class="line">        car=<span class="literal">null</span>;</span><br><span class="line">        System.out.println(car);    <span class="comment">//输出null，源代码对null进行了处理。</span></span><br><span class="line">        System.out.println(car.toString());  <span class="comment">//输出空指针异常。</span></span><br><span class="line">        <span class="comment">//由源码可以看出。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、equals方法"><a href="#三、equals方法" class="headerlink" title="三、equals方法"></a>三、equals方法</h2>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/_data/">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Object%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">Object类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Object%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">一、Object类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81toString%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">二、toString方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E3%80%81Object%E7%B1%BB%E4%B8%AD%E7%9A%84toString-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1、Object类中的toString()方法。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81equals%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、equals方法</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/06/Object%E7%B1%BB/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/06/Object%E7%B1%BB/&text=Object类"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/06/Object%E7%B1%BB/&is_video=false&description=Object类"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Object类&body=Check out this article: http://example.com/2024/05/06/Object%E7%B1%BB/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/06/Object%E7%B1%BB/&title=Object类"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/06/Object%E7%B1%BB/&name=Object类&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/06/Object%E7%B1%BB/&t=Object类"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/_data/">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
