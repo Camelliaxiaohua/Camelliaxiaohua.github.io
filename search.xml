@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Java访问控制权限</title>
+      <link href="/2024/05/06/Java%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90/"/>
+      <url>/2024/05/06/Java%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%9D%83%E9%99%90/</url>
+      
+        <content type="html"><![CDATA[<p>#Java访问控制权限</p><h2 id="一、对Java中访问控制权限修饰符的对比表格"><a href="#一、对Java中访问控制权限修饰符的对比表格" class="headerlink" title="一、对Java中访问控制权限修饰符的对比表格"></a>一、对Java中访问控制权限修饰符的对比表格</h2><table><thead><tr><th align="center">访问权限</th><th>同一类</th><th>同一包</th><th>子类</th><th>不同包的非子类</th></tr></thead><tbody><tr><td align="center">public</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td align="center">protected</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td></tr><tr><td align="center">default</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td></tr><tr><td align="center">private</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td></tr></tbody></table><h2 id="二、Java访问控制符"><a href="#二、Java访问控制符" class="headerlink" title="二、Java访问控制符"></a>二、Java访问控制符</h2><p>在Java中，访问控制权限是通过关键字 <code>public</code>, <code>protected</code>, <code>default</code> (也称为 package-private)，以及 <code>private</code> 来实现的。这些关键字用于控制类、变量、方法和构造函数的访问级别。</p><ol><li><p><strong>public</strong>: 公共访问级别，被声明为 <code>public</code> 的类、方法、变量可以被任何其他类访问。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> myVariable;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Some code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p><strong>protected</strong>: 受保护的访问级别，被声明为 <code>protected</code> 的成员可以被同一包内的其他类访问，以及继承该类的子类访问。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">int</span> myVariable;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Some code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p><strong>default (package-private)</strong>: 默认的访问级别，没有明确声明访问修饰符的类、方法、变量拥有默认的访问级别，它们只能被同一包内的其他类访问。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="type">int</span> myVariable;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Some code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p><strong>private</strong>: 私有访问级别，被声明为 <code>private</code> 的成员只能在声明它们的类内部访问。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> myVariable;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">myMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// Some code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><h2 id="三、修饰对象"><a href="#三、修饰对象" class="headerlink" title="三、修饰对象"></a>三、修饰对象</h2><ol><li><p><strong>类级别的修饰符</strong>：</p><ul><li><code>public</code>: 允许类被任何其他类访问。</li><li><code>default</code> (没有修饰符): 允许类在同一包内被访问，但在不同包内不能被访问。</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> &#123; &#125; <span class="comment">// 公共类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123; &#125; <span class="comment">// 默认访问级别的类，即包访问权限</span></span><br></pre></td></tr></table></figure></li><li><p><strong>局部变量</strong>：局部变量是在方法、构造函数或块中声明的变量。它们不能使用访问控制权限修饰符进行修饰，因为它们的作用范围限定在声明它们的块内部，超出这个范围就无法访问。</p></li><li><p><code>public</code>,<code> protected</code>, <code>default</code>,<code> private</code> 这四种访问控制权限修饰符可以用来修饰实例方法、静态方法、静态变量和实例变量。</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java SE </category>
+          
+          <category> Java Part_1 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
       <link href="/2024/05/05/%E6%8E%A5%E5%8F%A3/"/>
       <url>/2024/05/05/%E6%8E%A5%E5%8F%A3/</url>
