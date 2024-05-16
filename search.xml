@@ -4,6 +4,46 @@
   
     
     <entry>
+      <title>JUnit单元测试</title>
+      <link href="/2024/05/16/JUnit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"/>
+      <url>/2024/05/16/JUnit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="JUnit单元测试"><a href="#JUnit单元测试" class="headerlink" title="JUnit单元测试"></a>JUnit单元测试</h1><h3 id="1、单元测试类"><a href="#1、单元测试类" class="headerlink" title="1、单元测试类"></a>1、单元测试类</h3><p>单元测试类名：XxxTest</p><h3 id="2、单元测试方法"><a href="#2、单元测试方法" class="headerlink" title="2、单元测试方法"></a>2、单元测试方法</h3><ol><li>单元测试方法需要用<code>@Test</code>注解标注。</li><li>单元测试方法返回类型必须是<code>void</code>。</li><li>单元测试方法形参个数为0.</li><li>单元测试方法名约定规范为：testXxx。</li><li>在JUnit5中，方法名可以不用声明为public。</li></ol><h3 id="3、期望值、实际值"><a href="#3、期望值、实际值" class="headerlink" title="3、期望值、实际值"></a>3、期望值、实际值</h3><p><strong>期望值（Expected Value）：</strong><br>期望值是指在执行单元测试时，开发者预期被测试代码会产生的结果。<br>在编写单元测试时，通常会先确定要测试的功能或情况，并明确预期的输出、状态或行为。<br>期望值可以是一个具体的数值、对象、状态等，取决于正在测试的功能。在测试方法中，开发者会使用断言方法来验证实际结果是否与期望值一致。<br><strong>实际值（Actual Value）：</strong><br>实际值是指被测试代码在执行单元测试时产生的实际结果。<br>实际值是通过执行被测试的代码来获取的，它反映了代码在给定输入下的真实行为。<br>在单元测试方法中，开发者会调用被测试的方法或功能，并获取其输出、状态或行为，然后与期望值进行比较。    </p><h3 id="4、常见注解"><a href="#4、常见注解" class="headerlink" title="4、常见注解"></a>4、常见注解</h3><p><code>@BeforeAll</code>、<code>@AfterAll</code>、<code>@BeforeEach</code> 和 <code>@AfterEach</code> 是JUnit 5中用于执行测试前后操作的生命周期方法。它们提供了一种方便的方式来执行一些公共的初始化和清理工作，以确保测试的独立性和可重复性。</p><ol><li><p><strong>@BeforeAll</strong>：</p><ul><li><code>@BeforeAll</code> 注解用于指定在运行测试类中的<strong>所有测试方法之前</strong>执行的方法。</li><li>该注解标记的方法必须是<strong>静态的</strong>，且必须返回<code>void</code>。</li><li>通常用于执行一次性的全局初始化工作，例如创建数据库连接、启动服务器等。</li><li>在一个测试类中，<code>@BeforeAll</code> 注解标记的方法只会执行一次，并且在所有测试方法之前执行。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;开始执行单元测试了！&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li></ul></li><li><p><strong>@AfterAll</strong>：</p><ul><li><code>@AfterAll</code> 注解用于指定在运行测试类中的<strong>所有测试方法之后</strong>执行的方法。</li><li>该注解标记的方法必须是<strong>静态的</strong>，且必须返回<code>void</code>。</li><li>通常用于执行一次性的全局清理工作，例如关闭数据库连接、停止服务器等。</li><li>在一个测试类中，<code>@AfterAll</code> 注解标记的方法只会执行一次，并且在所有测试方法之后执行。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterAll</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">after</span><span class="params">()</span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;单元测试执行完毕！&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li></ul></li><li><p><strong>@BeforeEach</strong>：</p><ul><li><code>@BeforeEach</code> 注解用于指定在运行<strong>每个测试方法之前</strong>执行的方法。</li><li>该注解标记的方法<strong>不需</strong>要是静态的，但必须返回<code>void</code>。</li><li>通常用于执行每个测试方法之前的初始化工作，例如创建临时对象、设置测试数据等。</li><li>在一个测试类中，每个<code>@BeforeEach</code> 注解标记的方法都会在对应的测试方法之前执行。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BeforeEach</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">beforeEach</span><span class="params">()</span>&#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;单元测试方法开始执行&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li></ul></li><li><p><strong>@AfterEach</strong>：</p><ul><li><code>@AfterEach</code> 注解用于指定在运行<strong>每个测试方法之后</strong>执行的方法。</li><li>该注解标记的方法<strong>不需</strong>要是静态的，但必须返回<code>void</code>。</li><li>通常用于执行每个测试方法之后的清理工作，例如释放资源、恢复状态等。</li><li>在一个测试类中，每个<code>@AfterEach</code> 注解标记的方法都会在对应的测试方法之后执行。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterEach</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterEach</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;单元测试方法执行结束&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li></ul></li></ol><h3 id="5、单元测试断言"><a href="#5、单元测试断言" class="headerlink" title="5、单元测试断言"></a>5、单元测试断言</h3><p>在单元测试中，断言是一种用于验证代码行为的机制。<br>它允许开发者在测试代码中声明预期结果，并与实际结果进行比较，从而验证代码是否按预期工作。<br>如果预期结果与实际结果相符，则断言通过，否则测试失败。    </p><p>在JUnit中，常用的断言方法包括：</p><ol><li><p>**assertEquals(expected, actual)**：断言两个对象是否相等。如果预期值（expected）等于实际值（actual），则断言通过。</p></li><li><p>**assertTrue(condition)**：断言给定的条件是否为真。如果条件为真，则断言通过。</p></li><li><p>**assertFalse(condition)**：断言给定的条件是否为假。如果条件为假，则断言通过。</p></li><li><p>**assertNull(object)**：断言给定的对象是否为null。如果对象为null，则断言通过。</p></li><li><p>**assertNotNull(object)**：断言给定的对象是否不为null。如果对象不为null，则断言通过。</p></li><li><p>**assertArrayEquals(expectedArray, actualArray)**：断言两个数组是否相等。如果预期数组（expectedArray）与实际数组（actualArray）相等，则断言通过。</p></li><li><p>**assertSame(expected, actual)**：断言两个对象引用是否指向同一个对象。如果预期对象（expected）和实际对象（actual）是同一个对象，则断言通过。</p></li><li><p>**assertNotSame(expected, actual)**：断言两个对象引用是否指向不同的对象。如果预期对象（expected）和实际对象（actual）不是同一个对象，则断言通过。</p></li><li><p>**assertThrows(expectedException, executable)**：断言给定的代码块是否抛出了预期的异常。如果代码块抛出了预期的异常，则断言通过。</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java SE </category>
+          
+          <category> Java Part_1 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>二维数组</title>
+      <link href="/2024/05/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84/"/>
+      <url>/2024/05/11/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一维数组</title>
       <link href="/2024/05/09/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84/"/>
       <url>/2024/05/09/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84/</url>
