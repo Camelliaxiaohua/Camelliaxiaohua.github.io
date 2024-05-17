@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-17T15:33:02.172Z</updated>
+  <updated>2024-05-17T15:47:38.413Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringAOP</title>
+    <link href="http://example.com/2024/05/17/Spring/SpringAOP/"/>
+    <id>http://example.com/2024/05/17/Spring/SpringAOP/</id>
+    <published>2024-05-17T15:46:10.000Z</published>
+    <updated>2024-05-17T15:47:38.413Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;SpringAOP&quot;&gt;&lt;a href=&quot;#SpringAOP&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Spring" scheme="http://example.com/categories/Spring/"/>
+    
+    
+    <category term="Spring" scheme="http://example.com/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringIOC&amp;DI（注解）</title>
@@ -482,31 +507,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot; title=&quot;单例模式&quot;&gt;&lt;/a&gt;单例模式&lt;/h1&gt;&lt;p&gt;&amp;#x3D;&amp;#x3D;&lt;strong&gt;实现单例模式的步骤&lt;/strong&gt;&amp;#x3D;&amp;#x3D;  </summary>
-        
-      
-    
-    
-    
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
-    
-    
-    <category term="Java SE" scheme="http://example.com/tags/Java-SE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>类</title>
-    <link href="http://example.com/2024/04/30/Java%20SE/%E7%B1%BB/"/>
-    <id>http://example.com/2024/04/30/Java%20SE/%E7%B1%BB/</id>
-    <published>2024-04-30T15:26:22.000Z</published>
-    <updated>2024-05-17T10:02:44.276Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;类&quot;&gt;&lt;a href=&quot;#类&quot; class=&quot;headerlink&quot; title=&quot;类&quot;&gt;&lt;/a&gt;类&lt;/h1&gt;&lt;h2 id=&quot;一、类的定义&quot;&gt;&lt;a href=&quot;#一、类的定义&quot; class=&quot;headerlink&quot;</summary>
         
       
     
