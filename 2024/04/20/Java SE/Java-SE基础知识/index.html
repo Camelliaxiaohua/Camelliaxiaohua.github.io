@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成器（Java">
+    <meta name="description" content="目录    Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java SE基础知识">
 <meta property="og:url" content="http://example.com/2024/04/20/Java%20SE/Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成器（Java">
+<meta property="og:description" content="目录    Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png">
 <meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250158.PNG">
 <meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250370.png">
 <meta property="article:published_time" content="2024-04-19T19:21:00.000Z">
-<meta property="article:modified_time" content="2024-05-17T10:03:10.370Z">
+<meta property="article:modified_time" content="2024-05-19T10:31:26.734Z">
 <meta property="article:author" content="Camellia.xiaohua">
 <meta property="article:tag" content="Java SE">
 <meta name="twitter:card" content="summary">
@@ -86,6 +86,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </span>
@@ -174,7 +176,11 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h1 id="Java-SE-基础知识"><a href="#Java-SE-基础知识" class="headerlink" title="Java SE 基础知识"></a>Java SE 基础知识</h1><h2 id="一、Java虚拟机（JVM）"><a href="#一、Java虚拟机（JVM）" class="headerlink" title="一、Java虚拟机（JVM）"></a>一、Java虚拟机（JVM）</h2><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png"></p>
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Java-SE-基础知识"><a href="#Java-SE-基础知识" class="headerlink" title="Java SE 基础知识"></a>Java SE 基础知识</h1><h2 id="一、Java虚拟机（JVM）"><a href="#一、Java虚拟机（JVM）" class="headerlink" title="一、Java虚拟机（JVM）"></a>一、Java虚拟机（JVM）</h2><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png"></p>
 <h2 id="二、Java的加载与执行原理"><a href="#二、Java的加载与执行原理" class="headerlink" title="二、Java的加载与执行原理"></a>二、Java的加载与执行原理</h2><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250158.PNG"></p>
 <h2 id="三、JDK、JRE、JVM分别是什么？他们的关系是什么？"><a href="#三、JDK、JRE、JVM分别是什么？他们的关系是什么？" class="headerlink" title="三、JDK、JRE、JVM分别是什么？他们的关系是什么？"></a>三、JDK、JRE、JVM分别是什么？他们的关系是什么？</h2><ol>
 <li><p><strong>JDK（Java Development Kit）：</strong><br>JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成器（Javadoc）以及其他一些开发工具和库。简而言之，JDK 提供了开发 Java 应用程序所需的所有工具和资源。</p>
@@ -249,6 +255,8 @@
         
           <li><a href="/projects/">项目</a></li>
         
+          <li><a href="/links/">links</a></li>
+        
       </ul>
     </div>
 
@@ -314,6 +322,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </nav>

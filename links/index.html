@@ -6,15 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://example.com/tags/index.html">
+    <meta name="description" content="用户个人资料卡片    .profileContainer {     display: flex;     justify-content: flex-start; &#x2F;* 将内容居左对齐 *&#x2F;     align-items: center;     padding: 20px; &#x2F;* 上下内边距 *&#x2F;     border-radius: 5px;     width: 30%; &#x2F;*">
+<meta property="og:type" content="website">
+<meta property="og:title" content="友情链接">
+<meta property="og:url" content="http://example.com/links/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用户个人资料卡片    .profileContainer {     display: flex;     justify-content: flex-start; &#x2F;* 将内容居左对齐 *&#x2F;     align-items: center;     padding: 20px; &#x2F;* 上下内边距 *&#x2F;     border-radius: 5px;     width: 30%; &#x2F;*">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-04T05:48:47.000Z">
-<meta property="article:modified_time" content="2024-05-04T05:49:22.000Z">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/background%2FIMG_2141.JPG">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/background%2FIMG_2131.JPG">
+<meta property="article:published_time" content="2024-05-20T11:44:40.185Z">
+<meta property="article:modified_time" content="2024-05-20T11:44:40.185Z">
 <meta property="article:author" content="Camellia.xiaohua">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/background%2FIMG_2141.JPG">
     
     
       
@@ -34,7 +39,7 @@
       
     
     <!-- title -->
-    <title>tags</title>
+    <title>友情链接</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -103,40 +108,68 @@
 
   <div class="content" itemprop="articleBody">
       
-          <div id="tag-cloud">
-            <div class="tag-cloud-title">
-                
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/JDBC/" style="font-size: 18px;">JDBC</a> <a href="/tags/Java-SE/" style="font-size: 30px;">Java SE</a> <a href="/tags/Spring/" style="font-size: 24px;">Spring</a> <a href="/tags/Tools/" style="font-size: 18px;">Tools</a> <a href="/tags/UML/" style="font-size: 12px;">UML</a> <a href="/tags/git/" style="font-size: 12px;">git</a>
-            </div>
-          </div>
+          <!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>用户个人资料卡片</title>
+<style>
+  .profileContainer {
+    display: flex;
+    justify-content: flex-start; /* 将内容居左对齐 */
+    align-items: center;
+    padding: 20px; /* 上下内边距 */
+    border-radius: 5px;
+    width: 30%; /* 将容器宽度设为50%以实现并排显示 */
+    color: inherit;
+    cursor: pointer;
+    margin-bottom: 20px; /* 添加下方间隔 */
+    margin-left: 10px; /* 调整左边距 */
+  }
+  /* 在夜间模式下将容器背景颜色设置为黑色 */
+  @media (prefers-color-scheme: dark) {
+    .profileContainer {
+      background-color: black;
+      color: white; /* 文字颜色为白色 */
+    }
+  }
+</style>
+</head>
+<body>
+
+<div style="display: flex;"> 
+<!-- 父容器设置为 display: flex; -->
+  <div class="profileContainer" id="profileContainer1">
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/background%2FIMG_2141.JPG" alt="头像" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 10px;">
+<div style="display: flex; flex-direction: column;">
+<div style="font-weight: bold;">Cactus</div>
+<div>花有重开日，人无再少年</div>
+</div>
+</div>
+
+
+  <div class="profileContainer" id="profileContainer2">
+    <img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/background%2FIMG_2131.JPG" alt="头像" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 10px;">
+    <div style="display: flex; flex-direction: column;">
+      <div style="font-weight: bold;">Camellia.xiaohua</div>
+      <div>花有重开日，人无再少年</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("profileContainer1").addEventListener("click", function() {
+  window.open("https://camelliaxiaohua.github.io", "_blank");
+});
+
+document.getElementById("profileContainer2").addEventListener("click", function() {
+  window.open("https://blog.camelliaxiaohua.online", "_blank");
+});
+</script>
+
+</body>
+</html>
+
         
   </div>
 </article>

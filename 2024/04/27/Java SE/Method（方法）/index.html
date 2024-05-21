@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Method (方法)一、静态方法什么时候需要用类名调用？调用者和被调用者在同一个类中时，可以省略。     1234567891011121314151617181920&#x2F;&#x2F; 调用方法是，类名. 什么情况下可以省略。public class MethodTest01 &#123;    public static void main(String[] args) &#123;        &#x2F;&#x2F;">
+    <meta name="description" content="目录    Method (方法)一、静态方法什么时候需要用类名调用？调用者和被调用者在同一个类中时，可以省略。     1234567891011121314151617181920&#x2F;&#x2F; 调用方法是，类名. 什么情况下可以省略。public class MethodTest01 &#123;    public static void main(String[] args) &#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Method（方法）">
 <meta property="og:url" content="http://example.com/2024/04/27/Java%20SE/Method%EF%BC%88%E6%96%B9%E6%B3%95%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Method (方法)一、静态方法什么时候需要用类名调用？调用者和被调用者在同一个类中时，可以省略。     1234567891011121314151617181920&#x2F;&#x2F; 调用方法是，类名. 什么情况下可以省略。public class MethodTest01 &#123;    public static void main(String[] args) &#123;        &#x2F;&#x2F;">
+<meta property="og:description" content="目录    Method (方法)一、静态方法什么时候需要用类名调用？调用者和被调用者在同一个类中时，可以省略。     1234567891011121314151617181920&#x2F;&#x2F; 调用方法是，类名. 什么情况下可以省略。public class MethodTest01 &#123;    public static void main(String[] args) &#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011253474.png">
 <meta property="article:published_time" content="2024-04-27T15:22:57.000Z">
-<meta property="article:modified_time" content="2024-05-17T10:03:31.603Z">
+<meta property="article:modified_time" content="2024-05-19T10:31:16.703Z">
 <meta property="article:author" content="Camellia.xiaohua">
 <meta property="article:tag" content="Java SE">
 <meta name="twitter:card" content="summary">
@@ -84,6 +84,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </span>
@@ -174,7 +176,11 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h1 id="Method-方法"><a href="#Method-方法" class="headerlink" title="Method (方法)"></a>Method (方法)</h1><h2 id="一、静态方法什么时候需要用类名调用？"><a href="#一、静态方法什么时候需要用类名调用？" class="headerlink" title="一、静态方法什么时候需要用类名调用？"></a>一、静态方法什么时候需要用类名调用？</h2><p>调用者和被调用者在同一个类中时，可以省略。    </p>
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Method-方法"><a href="#Method-方法" class="headerlink" title="Method (方法)"></a>Method (方法)</h1><h2 id="一、静态方法什么时候需要用类名调用？"><a href="#一、静态方法什么时候需要用类名调用？" class="headerlink" title="一、静态方法什么时候需要用类名调用？"></a>一、静态方法什么时候需要用类名调用？</h2><p>调用者和被调用者在同一个类中时，可以省略。    </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方法是，类名. 什么情况下可以省略。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodTest01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//调用method1</span></span><br><span class="line">        method1();</span><br><span class="line">        MethodTest01.method1();</span><br><span class="line">        <span class="comment">//调用method2</span></span><br><span class="line">        <span class="comment">/*method2(); 编译器报错*/</span></span><br><span class="line">        MethodTest.method2();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;mothod1执行了！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span>  <span class="title class_">MethodTest</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">method2</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;method2执行了！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="二、方法语法的小细节"><a href="#二、方法语法的小细节" class="headerlink" title="二、方法语法的小细节"></a>二、方法语法的小细节</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodTest05</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 缺少返回语句</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">m1</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">99</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>; <span class="comment">//虽然这里有返回语句，但是有几率不执行if语句。所以编译器不通过。</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -244,6 +250,8 @@
         
           <li><a href="/projects/">项目</a></li>
         
+          <li><a href="/links/">links</a></li>
+        
       </ul>
     </div>
 
@@ -309,6 +317,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </nav>

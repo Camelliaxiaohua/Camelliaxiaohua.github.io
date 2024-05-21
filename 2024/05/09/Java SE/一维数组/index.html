@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="数组一、数组介绍二、静态一维数组2.1、初始化静态一维数组静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：     使用new关键字： 1数据类型[] 变量名 &#x3D; new 数据类型[]&#123;元素1, 元素2, 元素3, ...&#125;; 示例： 1int[] arr &#x3D; new int[]&#123;1, 2">
+    <meta name="description" content="目录    数组一、数组介绍二、静态一维数组2.1、初始化静态一维数组静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：     使用new关键字： 1数据类型[] 变量名 &#x3D; new 数据类型[]&#123;元素1, 元素2, 元素3, ...&#125;; 示例： 1int[] arr &#x3D; new int[]&amp;#12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一维数组">
 <meta property="og:url" content="http://example.com/2024/05/09/Java%20SE/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="数组一、数组介绍二、静态一维数组2.1、初始化静态一维数组静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：     使用new关键字： 1数据类型[] 变量名 &#x3D; new 数据类型[]&#123;元素1, 元素2, 元素3, ...&#125;; 示例： 1int[] arr &#x3D; new int[]&#123;1, 2">
+<meta property="og:description" content="目录    数组一、数组介绍二、静态一维数组2.1、初始化静态一维数组静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：     使用new关键字： 1数据类型[] 变量名 &#x3D; new 数据类型[]&#123;元素1, 元素2, 元素3, ...&#125;; 示例： 1int[] arr &#x3D; new int[]&amp;#12">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405091705650.png">
 <meta property="article:published_time" content="2024-05-09T07:45:44.000Z">
-<meta property="article:modified_time" content="2024-05-17T10:02:56.025Z">
+<meta property="article:modified_time" content="2024-05-19T10:32:24.750Z">
 <meta property="article:author" content="Camellia.xiaohua">
 <meta property="article:tag" content="Java SE">
 <meta name="twitter:card" content="summary">
@@ -84,6 +84,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </span>
@@ -174,7 +176,11 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="一、数组介绍"><a href="#一、数组介绍" class="headerlink" title="一、数组介绍"></a>一、数组介绍</h2><h2 id="二、静态一维数组"><a href="#二、静态一维数组" class="headerlink" title="二、静态一维数组"></a>二、静态一维数组</h2><h3 id="2-1、初始化静态一维数组"><a href="#2-1、初始化静态一维数组" class="headerlink" title="2.1、初始化静态一维数组"></a>2.1、初始化静态一维数组</h3><p>静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：   </p>
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="一、数组介绍"><a href="#一、数组介绍" class="headerlink" title="一、数组介绍"></a>一、数组介绍</h2><h2 id="二、静态一维数组"><a href="#二、静态一维数组" class="headerlink" title="二、静态一维数组"></a>二、静态一维数组</h2><h3 id="2-1、初始化静态一维数组"><a href="#2-1、初始化静态一维数组" class="headerlink" title="2.1、初始化静态一维数组"></a>2.1、初始化静态一维数组</h3><p>静态初始化一维数组是在创建数组时直接指定数组元素的值，而不是在后续的代码中逐个赋值。Java中有两种方式可以静态初始化一维数组：   </p>
 <ol>
 <li><p><strong>使用<code>new</code>关键字：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据类型[] 变量名 = <span class="keyword">new</span> 数据类型[]&#123;元素<span class="number">1</span>, 元素<span class="number">2</span>, 元素<span class="number">3</span>, ...&#125;;</span><br></pre></td></tr></table></figure>
@@ -342,6 +348,8 @@
         
           <li><a href="/projects/">项目</a></li>
         
+          <li><a href="/links/">links</a></li>
+        
       </ul>
     </div>
 
@@ -407,6 +415,8 @@
        --><li><a href="/search/">搜索</a></li><!--
      --><!--
        --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
      -->
       </ul>
     </nav>
