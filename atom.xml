@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-24T15:26:07.985Z</updated>
+  <updated>2024-05-27T13:26:57.973Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>异常</title>
+    <link href="http://example.com/2024/05/27/Java%20SE/%E5%BC%82%E5%B8%B8/"/>
+    <id>http://example.com/2024/05/27/Java%20SE/%E5%BC%82%E5%B8%B8/</id>
+    <published>2024-05-27T13:22:45.000Z</published>
+    <updated>2024-05-27T13:26:57.973Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;!!! note 目录&lt;br&gt;    &lt;!-- toc --&gt;&lt;/p&gt;
+&lt;h1 id=&quot;异常&quot;&gt;&lt;a href=&quot;#异常&quot; class=&quot;headerlink&quot; title=&quot;异常&quot;&gt;&lt;/a&gt;异常&lt;/h1&gt;&lt;h2 id=&quot;一、异常的概述&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Arrays工具类</title>
     <link href="http://example.com/2024/05/22/Java%20SE/Arrays%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
     <id>http://example.com/2024/05/22/Java%20SE/Arrays%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
     <published>2024-05-22T03:07:52.000Z</published>
-    <updated>2024-05-24T15:26:07.985Z</updated>
+    <updated>2024-05-27T02:10:51.751Z</updated>
     
     
       
@@ -517,33 +541,6 @@
 &lt;/div&gt;
 
 &lt;h1 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>抽象方法&amp;抽象类</title>
-    <link href="http://example.com/2024/05/05/Java%20SE/%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95-%E6%8A%BD%E8%B1%A1%E7%B1%BB/"/>
-    <id>http://example.com/2024/05/05/Java%20SE/%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95-%E6%8A%BD%E8%B1%A1%E7%B1%BB/</id>
-    <published>2024-05-05T08:30:53.000Z</published>
-    <updated>2024-05-21T11:34:13.503Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;抽象类-抽象方法&quot;&gt;&lt;a href=&quot;#抽象类-抽象方法&quot;</summary>
         
       
     
