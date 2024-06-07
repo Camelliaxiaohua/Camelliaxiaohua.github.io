@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-06-05T03:01:05.846Z</updated>
+  <updated>2024-06-07T07:46:29.635Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,192 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>StringBuffer与StringBuilder</title>
+    <link href="http://example.com/2024/06/07/Java%20SE/StringBuffer%E4%B8%8EStringBuilder/"/>
+    <id>http://example.com/2024/06/07/Java%20SE/StringBuffer%E4%B8%8EStringBuilder/</id>
+    <published>2024-06-07T07:44:41.000Z</published>
+    <updated>2024-06-07T07:46:29.635Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;StringBuffer与StringBuilder&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章05节 查询DQL--数据处理函数（if&amp;cast&amp;加密函数）</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88if-cast-%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0%EF%BC%89/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88if-cast-%E5%8A%A0%E5%AF%86%E5%87%BD%E6%95%B0%EF%BC%89/</id>
+    <published>2024-06-06T07:36:06.000Z</published>
+    <updated>2024-06-06T13:40:02.685Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;if-cast-MD5加密函数&quot;&gt;&lt;a href=&quot;#if-cast-MD5加密函数&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章05节 查询DQL--数据处理函数（日期和时间）</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%EF%BC%89/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%EF%BC%89/</id>
+    <published>2024-06-06T07:35:32.000Z</published>
+    <updated>2024-06-06T13:30:11.569Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;数据处理函数-日期和时间相关函数&quot;&gt;&lt;a href=&quot;#数据处理函数-日期和时间相关函数&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章05节 查询DQL--数据处理函数（数字）</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89/</id>
+    <published>2024-06-06T07:35:18.000Z</published>
+    <updated>2024-06-06T07:59:00.156Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;数据处理函数（数字相关）&quot;&gt;&lt;a href=&quot;#数据处理函数（数字相关）&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章05节 查询DQL--数据处理函数（字符串）</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%89/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A005%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%89/</id>
+    <published>2024-06-06T07:35:07.000Z</published>
+    <updated>2024-06-06T07:51:59.231Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;数据处理函数（字符串）&quot;&gt;&lt;a href=&quot;#数据处理函数（字符串）&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章04节 查询DQL--distinct去重</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A004%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-distinct%E5%8E%BB%E9%87%8D/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A004%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-distinct%E5%8E%BB%E9%87%8D/</id>
+    <published>2024-06-06T01:21:53.000Z</published>
+    <updated>2024-06-06T01:24:23.895Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;distinct去重&quot;&gt;&lt;a href=&quot;#distinct去重&quot; class=&quot;headerlink&quot; title=&quot;distinct去重&quot;&gt;&lt;/a&gt;distinct去重&lt;/h1&gt;&lt;p&gt;查询工作岗位&lt;/p&gt;
+&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第04章03节 查询DQL--排序操作</title>
+    <link href="http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A003%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%8E%92%E5%BA%8F%E6%93%8D%E4%BD%9C/"/>
+    <id>http://example.com/2024/06/06/MySQL/%E7%AC%AC04%E7%AB%A003%E8%8A%82-%E6%9F%A5%E8%AF%A2DQL-%E6%8E%92%E5%BA%8F%E6%93%8D%E4%BD%9C/</id>
+    <published>2024-06-05T18:39:19.000Z</published>
+    <updated>2024-06-06T00:57:24.942Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
+&lt;/p&gt;&lt;!-- toc --&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;排序操作&quot;&gt;&lt;a href=&quot;#排序操作&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>String正则表达式相关方法</title>
@@ -361,200 +547,6 @@
     
     <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>悲观锁&amp;乐观锁</title>
-    <link href="http://example.com/2024/05/22/JDBC/%E6%82%B2%E8%A7%82%E9%94%81-%E4%B9%90%E8%A7%82%E9%94%81/"/>
-    <id>http://example.com/2024/05/22/JDBC/%E6%82%B2%E8%A7%82%E9%94%81-%E4%B9%90%E8%A7%82%E9%94%81/</id>
-    <published>2024-05-21T16:33:56.000Z</published>
-    <updated>2024-05-22T16:07:19.115Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;悲观锁-乐观锁&quot;&gt;&lt;a href=&quot;#悲观锁-乐观锁&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="JDBC" scheme="http://example.com/categories/JDBC/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JDBC工具类&amp;示例</title>
-    <link href="http://example.com/2024/05/21/JDBC/JDBC%E5%B7%A5%E5%85%B7%E7%B1%BB-%E7%A4%BA%E4%BE%8B/"/>
-    <id>http://example.com/2024/05/21/JDBC/JDBC%E5%B7%A5%E5%85%B7%E7%B1%BB-%E7%A4%BA%E4%BE%8B/</id>
-    <published>2024-05-21T10:10:12.000Z</published>
-    <updated>2024-05-21T16:40:17.202Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;JDBC工具类-示例&quot;&gt;&lt;a href=&quot;#JDBC工具类-示例&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="JDBC" scheme="http://example.com/categories/JDBC/"/>
-    
-    
-    <category term="Utils" scheme="http://example.com/tags/Utils/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JDBC事务（单机事务）</title>
-    <link href="http://example.com/2024/05/21/JDBC/JDBC%E4%BA%8B%E5%8A%A1%EF%BC%88%E5%8D%95%E6%9C%BA%E4%BA%8B%E5%8A%A1%EF%BC%89/"/>
-    <id>http://example.com/2024/05/21/JDBC/JDBC%E4%BA%8B%E5%8A%A1%EF%BC%88%E5%8D%95%E6%9C%BA%E4%BA%8B%E5%8A%A1%EF%BC%89/</id>
-    <published>2024-05-21T09:06:22.000Z</published>
-    <updated>2024-05-21T11:36:11.708Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;JDBC事务（单机事务）&quot;&gt;&lt;a href=&quot;#JDBC事务（单机事务）&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="JDBC" scheme="http://example.com/categories/JDBC/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>SQL注入</title>
-    <link href="http://example.com/2024/05/20/JDBC/SQL%E6%B3%A8%E5%85%A5/"/>
-    <id>http://example.com/2024/05/20/JDBC/SQL%E6%B3%A8%E5%85%A5/</id>
-    <published>2024-05-20T09:07:12.000Z</published>
-    <updated>2024-05-21T11:36:17.549Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;SQL注入&quot;&gt;&lt;a href=&quot;#SQL注入&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="JDBC" scheme="http://example.com/categories/JDBC/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>SpringAOP</title>
-    <link href="http://example.com/2024/05/17/Spring/SpringAOP/"/>
-    <id>http://example.com/2024/05/17/Spring/SpringAOP/</id>
-    <published>2024-05-17T15:46:10.000Z</published>
-    <updated>2024-05-19T10:34:52.525Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;SpringAOP&quot;&gt;&lt;a href=&quot;#SpringAOP&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Spring" scheme="http://example.com/categories/Spring/"/>
-    
-    
-    <category term="Spring" scheme="http://example.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringIOC&amp;DI（注解）</title>
-    <link href="http://example.com/2024/05/17/Spring/SpringIOC-DI%EF%BC%88%E6%B3%A8%E8%A7%A3%EF%BC%89/"/>
-    <id>http://example.com/2024/05/17/Spring/SpringIOC-DI%EF%BC%88%E6%B3%A8%E8%A7%A3%EF%BC%89/</id>
-    <published>2024-05-17T15:31:42.000Z</published>
-    <updated>2024-05-19T10:34:59.806Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;SpringIOC-DI（注解）&quot;&gt;&lt;a href=&quot;#SpringIOC-DI（注解）&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Spring" scheme="http://example.com/categories/Spring/"/>
-    
-    
-    <category term="Spring" scheme="http://example.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringIOC&amp;DI(XML)</title>
-    <link href="http://example.com/2024/05/17/Spring/SpringIOC-DI-XML/"/>
-    <id>http://example.com/2024/05/17/Spring/SpringIOC-DI-XML/</id>
-    <published>2024-05-17T15:14:31.000Z</published>
-    <updated>2024-05-19T10:35:07.593Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc</summary>
-        
-      
-    
-    
-    
-    <category term="Spring" scheme="http://example.com/categories/Spring/"/>
-    
-    
-    <category term="Spring" scheme="http://example.com/tags/Spring/"/>
     
   </entry>
   
