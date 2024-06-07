@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SE基础知识">
+<meta property="og:url" content="http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    Java SE 基础知识一、Java虚拟机（JVM） 二、Java的加载与执行原理 三、JDK、JRE、JVM分别是什么？他们的关系是什么？ JDK（Java Development Kit）：JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250158.PNG">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250370.png">
+<meta property="article:published_time" content="2024-04-19T19:21:00.000Z">
+<meta property="article:modified_time" content="2024-05-21T11:35:04.562Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Java SE基础知识</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/04/23/Java%20SE/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/04/20/Java%20SE/Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=Java SE基础知识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=Java SE基础知识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java SE基础知识&body=Check out this article: http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=Java SE基础知识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=Java SE基础知识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-SE-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">Java SE 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA%EF%BC%88JVM%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">一、Java虚拟机（JVM）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E7%9A%84%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、Java的加载与执行原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81JDK%E3%80%81JRE%E3%80%81JVM%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%BB%96%E4%BB%AC%E7%9A%84%E5%85%B3%E7%B3%BB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">三、JDK、JRE、JVM分别是什么？他们的关系是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81class%E5%92%8Cpublic-class%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.</span> <span class="toc-text">四、class和public class的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-number">1.5.</span> <span class="toc-text">五、Java标识符命名规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Java%E4%B8%AD%E7%9A%84%E5%8A%A0%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.6.</span> <span class="toc-text">六、Java中的加号运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.7.</span> <span class="toc-text">七、变量的分类</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Java SE基础知识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-19T19:21:00.000Z" class="dt-published" itemprop="datePublished">2024-04-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Java-SE-基础知识"><a href="#Java-SE-基础知识" class="headerlink" title="Java SE 基础知识"></a>Java SE 基础知识</h1><h2 id="一、Java虚拟机（JVM）"><a href="#一、Java虚拟机（JVM）" class="headerlink" title="一、Java虚拟机（JVM）"></a>一、Java虚拟机（JVM）</h2><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011249837.png"></p>
+<h2 id="二、Java的加载与执行原理"><a href="#二、Java的加载与执行原理" class="headerlink" title="二、Java的加载与执行原理"></a>二、Java的加载与执行原理</h2><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250158.PNG"></p>
+<h2 id="三、JDK、JRE、JVM分别是什么？他们的关系是什么？"><a href="#三、JDK、JRE、JVM分别是什么？他们的关系是什么？" class="headerlink" title="三、JDK、JRE、JVM分别是什么？他们的关系是什么？"></a>三、JDK、JRE、JVM分别是什么？他们的关系是什么？</h2><ol>
+<li><p><strong>JDK（Java Development Kit）：</strong><br>JDK 是 Java 开发工具包，它是 Java 开发者用来开发 Java 应用程序的核心组件。JDK 包括了 Java 编译器（javac）、Java 运行时环境（JRE）、Java 文档生成器（Javadoc）以及其他一些开发工具和库。简而言之，JDK 提供了开发 Java 应用程序所需的所有工具和资源。</p>
+</li>
+<li><p><strong>JRE（Java Runtime Environment）：</strong><br>JRE 是 Java 运行时环境，它是在运行 Java 应用程序时所必需的环境。JRE 包含了 Java 虚拟机（JVM）以及 Java 核心类库和支持文件。当用户想要运行一个已编译的 Java 应用程序时，他们需要安装 JRE。JRE 提供了 Java 应用程序的运行环境，但不包含开发工具。</p>
+</li>
+<li><p><strong>JVM（Java Virtual Machine）：</strong><br>JVM 是 Java 虚拟机，它是 Java 程序的运行环境。JVM 负责在实际的硬件平台上执行 Java 字节码（即编译后的 Java 代码）。JVM 负责加载字节码、解释执行或即时编译字节码为本地机器代码，并管理内存、执行垃圾回收等任务。JVM 的存在使得 Java 能够实现“一次编写，到处运行”的特性。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405011250370.png"  height="300" width="300"></li>
+</ol>
+<h2 id="四、class和public-class的区别"><a href="#四、class和public-class的区别" class="headerlink" title="四、class和public class的区别"></a>四、class和public class的区别</h2><ol>
+<li>一个 Java 源文件可以定义多个 class。</li>
+<li>编译之后，一个 class 就会对应生成一个 class 字节码文件。</li>
+<li>如果一个类是 public，类名必须要和源文件名保持一致。</li>
+<li>public 类可以没有，如果有的话也只能有一个。</li>
+<li>每个类中都可以编写入口 main 方法。在实际开发中，入口一般只有一个。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;A执行了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;B执行了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">X</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;X执行了，这个 Java 源文件名为 X.java&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、Java标识符命名规范"><a href="#五、Java标识符命名规范" class="headerlink" title="五、Java标识符命名规范"></a>五、Java标识符命名规范</h2><p>遵循驼峰式命名方法。   </p>
+<ul>
+<li><strong>类名、接口名：</strong> 首字母大写吗，后面每个单词首字母大写。 <code>StudentService</code>    </li>
+<li><strong>变量名、方法名：</strong> 首字母小写，后面每个单词首字母大写。 <code>productPrice</code>    </li>
+<li><strong>常量名：</strong> 全部大写，每个单词之间采用”_”分隔。 <code>LOGIN_SUCCESS</code>    </li>
+<li><strong>包名：</strong> 全部小写。 <code>com.camellia.javase.extends</code></li>
+</ul>
+<h2 id="六、Java中的加号运算符"><a href="#六、Java中的加号运算符" class="headerlink" title="六、Java中的加号运算符"></a>六、Java中的加号运算符</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlusTest</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line">        <span class="type">int</span> b=<span class="number">20</span>;</span><br><span class="line">        String str=<span class="string">&quot;10&quot;</span>;</span><br><span class="line">        <span class="comment">// 字符串拼接</span></span><br><span class="line">        System.out.println(str + b); <span class="comment">// 1020;</span></span><br><span class="line">        </span><br><span class="line">        str=<span class="string">&quot;30&quot;</span>;</span><br><span class="line">        <span class="comment">// 当一个表达式中出现多个+，若没有（），遵循从左到右。</span></span><br><span class="line">        System.out.println(a + b + str); <span class="comment">// 3030;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 添加了（）优先级比较高。</span></span><br><span class="line">        System.out.println(a+(b+str)); <span class="comment">// 102030</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、变量的分类"><a href="#七、变量的分类" class="headerlink" title="七、变量的分类"></a>七、变量的分类</h2><ul>
+<li><p><strong>局部变量（Local Variables）：</strong><br>在方法、代码块或构造方法中声明的变量称为局部变量。局部变量只在其声明的范围内可见，超出该范围就无法访问。局部变量的生命周期仅在其声明的代码块、方法或构造方法执行期间。当代码块或方法执行完毕时，局部变量将被销毁。    </p>
+</li>
+<li><p><strong>成员变量（Instance Variables）：</strong><br>在类中声明的变量，但在方法之外，类的任何地方都可以访问，称为成员变量或实例变量。每个对象都有一份成员变量的副本，它们属于对象的状态。成员变量的生命周期与对象的生命周期相同。它们随着对象的创建而创建，随着对象的销毁而销毁。    </p>
+</li>
+<li><p><strong>静态变量（Static Variables）：</strong><br>使用 static 关键字声明的成员变量称为静态变量。静态变量属于类而不是对象，在类加载时初始化，并且所有对象共享同一份静态变量。静态变量的生命周期与类的生命周期相同。它们在类加载时初始化，随着类的卸载而销毁。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 变量可以根据定义/声明的位置来进行分类，可以分为两大类：</span></span><br><span class="line"><span class="comment">        1、局部变量</span></span><br><span class="line"><span class="comment">        2、成员变量</span></span><br><span class="line"><span class="comment">          - 静态变量</span></span><br><span class="line"><span class="comment">         </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> - 实例变量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VarClassify</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 凡是在方法体中定义的变量，一定是局部变量。</span></span><br><span class="line">        <span class="comment">// 局部变量只在当前方法体中有效。</span></span><br><span class="line">        <span class="type">int</span> a=<span class="number">100</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在类中定义的变量叫做成员变量。</span></span><br><span class="line">    <span class="comment">// 实例变量</span></span><br><span class="line">    <span class="type">int</span> b=<span class="number">200</span>;</span><br><span class="line">    <span class="comment">// 静态变量</span></span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> c=<span class="number">300</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结：</strong></p>
+<blockquote>
+<p>Java 是一种混合型语言，既有编译阶段也有解释阶段。</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-SE-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">Java SE 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA%EF%BC%88JVM%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">一、Java虚拟机（JVM）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E7%9A%84%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、Java的加载与执行原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81JDK%E3%80%81JRE%E3%80%81JVM%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%BB%96%E4%BB%AC%E7%9A%84%E5%85%B3%E7%B3%BB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">三、JDK、JRE、JVM分别是什么？他们的关系是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81class%E5%92%8Cpublic-class%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.</span> <span class="toc-text">四、class和public class的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-number">1.5.</span> <span class="toc-text">五、Java标识符命名规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Java%E4%B8%AD%E7%9A%84%E5%8A%A0%E5%8F%B7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.6.</span> <span class="toc-text">六、Java中的加号运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.7.</span> <span class="toc-text">七、变量的分类</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=Java SE基础知识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=Java SE基础知识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java SE基础知识&body=Check out this article: http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=Java SE基础知识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=Java SE基础知识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/04/20/Java%20SE/1.%20Java-SE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=Java SE基础知识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
