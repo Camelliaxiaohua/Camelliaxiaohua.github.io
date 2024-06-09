@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    SequencedCollection接口所有的有序集合都实现了SequencedCollection接口 一、SequencedCollection接口方法   修饰符和类型 方法 描述    default void addFirst(E e) 将一个元素添加为此集合的第一个元素（可选操作）。   default void addLast(E e) 将一个元素添加为此集合的最后一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SequencedCollection有序接口">
+<meta property="og:url" content="http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    SequencedCollection接口所有的有序集合都实现了SequencedCollection接口 一、SequencedCollection接口方法   修饰符和类型 方法 描述    default void addFirst(E e) 将一个元素添加为此集合的第一个元素（可选操作）。   default void addLast(E e) 将一个元素添加为此集合的最后一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-09T03:59:15.000Z">
+<meta property="article:modified_time" content="2024-06-09T04:00:35.487Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SequencedCollection有序接口</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/09/Java%20SE/31.%20Java%E6%B3%9B%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/09/Java%20SE/29.%20Collection%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&text=SequencedCollection有序接口"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&is_video=false&description=SequencedCollection有序接口"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SequencedCollection有序接口&body=Check out this article: http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&name=SequencedCollection有序接口&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&t=SequencedCollection有序接口"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SequencedCollection%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">SequencedCollection接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81SequencedCollection%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">一、SequencedCollection接口方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SequencedCollection%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text">二、SequencedCollection接口方法测试</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SequencedCollection有序接口
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-09T03:59:15.000Z" class="dt-published" itemprop="datePublished">2024-06-09</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="SequencedCollection接口"><a href="#SequencedCollection接口" class="headerlink" title="SequencedCollection接口"></a>SequencedCollection接口</h1><p>所有的有序集合都实现了SequencedCollection接口</p>
+<h2 id="一、SequencedCollection接口方法"><a href="#一、SequencedCollection接口方法" class="headerlink" title="一、SequencedCollection接口方法"></a>一、SequencedCollection接口方法</h2><table>
+<thead>
+<tr>
+<th>修饰符和类型</th>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default void</code></td>
+<td><code>addFirst(E e)</code></td>
+<td>将一个元素添加为此集合的第一个元素（可选操作）。</td>
+</tr>
+<tr>
+<td><code>default void</code></td>
+<td><code>addLast(E e)</code></td>
+<td>将一个元素添加为此集合的最后一个元素（可选操作）。</td>
+</tr>
+<tr>
+<td><code>default E</code></td>
+<td><code>getFirst()</code></td>
+<td>获取此集合的第一个元素。</td>
+</tr>
+<tr>
+<td><code>default E</code></td>
+<td><code>getLast()</code></td>
+<td>获取此集合的最后一个元素。</td>
+</tr>
+<tr>
+<td><code>default E</code></td>
+<td><code>removeFirst()</code></td>
+<td>移除并返回此集合的第一个元素（可选操作）。</td>
+</tr>
+<tr>
+<td><code>default E</code></td>
+<td><code>removeLast()</code></td>
+<td>移除并返回此集合的最后一个元素（可选操作）。</td>
+</tr>
+<tr>
+<td><code>SequencedCollection&lt;E&gt;</code></td>
+<td><code>reversed()</code></td>
+<td>返回此集合的元素的反向排列视图。</td>
+</tr>
+</tbody></table>
+<h2 id="二、SequencedCollection接口方法测试"><a href="#二、SequencedCollection接口方法测试" class="headerlink" title="二、SequencedCollection接口方法测试"></a>二、SequencedCollection接口方法测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SequencedCollection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.SequencedCollection;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试有序集合操作。</span></span><br><span class="line"><span class="comment"> * 这是一个测试类，用于验证有序集合（SequencedCollection）接口的方法实现。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SequencedCollectionTest</span> &#123;</span><br><span class="line">    <span class="comment">// 创建一个ArrayList对象实现SequencedCollection接口作为测试集合</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">SequencedCollection</span> <span class="variable">collection</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态代码块，用于初始化集合数据</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= <span class="number">6</span>; i++) &#123;</span><br><span class="line">            collection.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历集合并打印所有元素。</span></span><br><span class="line"><span class="comment">     * 使用Iterator来遍历集合，并将每个元素打印到控制台。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">iteratorArrayList</span><span class="params">(SequencedCollection sequencedCollectioncollection)</span> &#123;</span><br><span class="line">        <span class="type">Iterator</span> <span class="variable">it</span> <span class="operator">=</span> sequencedCollectioncollection.iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            System.out.print(it.next() + <span class="string">&quot;\t&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(); <span class="comment">// 添加换行以便输出格式整洁</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试在集合的开头添加元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testAddFirst</span><span class="params">()</span> &#123;</span><br><span class="line">        collection.addFirst(<span class="number">0</span>); <span class="comment">// 添加元素到集合的开头</span></span><br><span class="line">        iteratorArrayList(collection); <span class="comment">// 调用遍历方法以显示当前集合状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试在集合的末尾添加元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testAddLast</span><span class="params">()</span> &#123;</span><br><span class="line">        collection.addLast(<span class="number">7</span>); <span class="comment">// 添加元素到集合的末尾</span></span><br><span class="line">        iteratorArrayList(collection); <span class="comment">// 调用遍历方法以显示当前集合状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试获取集合中的第一个元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetFirst</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(collection.getFirst()); <span class="comment">// 打印集合中的第一个元素</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试获取集合中的最后一个元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetLast</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(collection.getLast()); <span class="comment">// 打印集合中的最后一个元素</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试从集合的开头移除元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testRemoveFirst</span><span class="params">()</span> &#123;</span><br><span class="line">        collection.removeFirst(); <span class="comment">// 从集合的开头移除元素</span></span><br><span class="line">        iteratorArrayList(collection); <span class="comment">// 调用遍历方法以显示当前集合状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试从集合的末尾移除元素的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testRemoveLast</span><span class="params">()</span> &#123;</span><br><span class="line">        collection.removeLast(); <span class="comment">// 从集合的末尾移除元素</span></span><br><span class="line">        iteratorArrayList(collection); <span class="comment">// 调用遍历方法以显示当前集合状态</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试集合翻转的方法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testReversed</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">SequencedCollection</span> <span class="variable">reversed</span> <span class="operator">=</span> collection.reversed();</span><br><span class="line">        iteratorArrayList(reversed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SequencedCollection%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">SequencedCollection接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81SequencedCollection%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">一、SequencedCollection接口方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SequencedCollection%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text">二、SequencedCollection接口方法测试</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&text=SequencedCollection有序接口"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&is_video=false&description=SequencedCollection有序接口"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SequencedCollection有序接口&body=Check out this article: http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&title=SequencedCollection有序接口"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&name=SequencedCollection有序接口&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/09/Java%20SE/30.%20SequencedCollection%E6%9C%89%E5%BA%8F%E6%8E%A5%E5%8F%A3/&t=SequencedCollection有序接口"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
