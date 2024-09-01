@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="SpringBoot多环境配置 在实际工作工作中，对于开发环境、测试环境、生产环境的配置肯定都不相同，在开发阶段会在自己的电脑上安装 mysql ，连接自己电脑上的 mysql 即可，但是项目开发完毕后要上线就需要该配置，将环境的配置改为线上环境的。   来回的修改配置会很麻烦，而 SpringBoot 给开发者提供了多环境的快捷配置，需要切换环境时只需要改一个配置即可。不同类型的配置文件的多环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot多环境配置">
+<meta property="og:url" content="http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpringBoot多环境配置 在实际工作工作中，对于开发环境、测试环境、生产环境的配置肯定都不相同，在开发阶段会在自己的电脑上安装 mysql ，连接自己电脑上的 mysql 即可，但是项目开发完毕后要上线就需要该配置，将环境的配置改为线上环境的。   来回的修改配置会很麻烦，而 SpringBoot 给开发者提供了多环境的快捷配置，需要切换环境时只需要改一个配置即可。不同类型的配置文件的多环境">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282151541.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234317.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234086.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234724.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234825.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234903.png">
+<meta property="article:published_time" content="2024-07-01T06:13:41.000Z">
+<meta property="article:modified_time" content="2024-08-29T13:51:16.031Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282151541.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SpringBoot多环境配置</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/07/01/Blog/CSS/1.%20CSS/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/01/Blog/SpringBoot/2.%20SpringBoot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&text=SpringBoot多环境配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&is_video=false&description=SpringBoot多环境配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot多环境配置&body=Check out this article: http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&name=SpringBoot多环境配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&t=SpringBoot多环境配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot多环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-yaml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%92%8Cyml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">1. yaml配置文件和yml配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-properties%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2. properties文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">3. 命令行启动参数设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">4. 配置文件分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">4.1 验证测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.4.0.1.1.</span> <span class="toc-text">4.1.1 环境准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-2-%E9%AA%8C%E8%AF%811%E7%BA%A7%E5%92%8C2%E7%BA%A7%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.4.0.1.2.</span> <span class="toc-text">4.1.2 验证1级和2级的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-3-%E9%AA%8C%E8%AF%812%E7%BA%A7%E5%92%8C4%E7%BA%A7%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.4.0.1.3.</span> <span class="toc-text">4.1.3 验证2级和4级的优先级</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpringBoot多环境配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-01T06:13:41.000Z" class="dt-published" itemprop="datePublished">2024-07-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="SpringBoot多环境配置"><a href="#SpringBoot多环境配置" class="headerlink" title="SpringBoot多环境配置"></a>SpringBoot多环境配置</h1><hr>
+<p>在实际工作工作中，对于开发环境、测试环境、生产环境的配置肯定都不相同，在开发阶段会在自己的电脑上安装 <code>mysql</code> ，连接自己电脑上的 <code>mysql</code> 即可，但是项目开发完毕后要上线就需要该配置，将环境的配置改为线上环境的。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282151541.png" alt="image-20210917185253557" style="zoom:60%;" />
+
+<p>来回的修改配置会很麻烦，而 <code>SpringBoot</code> 给开发者提供了多环境的快捷配置，需要切换环境时只需要改一个配置即可。<strong>不同类型</strong>的配置文件的多环境开发的配置都不相同，主要介绍常用的。</p>
+<h2 id="1-yaml配置文件和yml配置文件"><a href="#1-yaml配置文件和yml配置文件" class="headerlink" title="1. yaml配置文件和yml配置文件"></a>1. yaml配置文件和yml配置文件</h2><hr>
+<p><mark>在 <code>application.yml</code> 中使用 <code>---</code> 来分割不同的配置。</mark></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置启用的环境</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">#开发</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">dev</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">#生产</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">pro</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">81</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment">#测试</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">82</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>上面配置中 <code>spring.profiles</code> 是用来给不同的配置起名字的。而通过<code>spring.profiles. active</code>告知 <code>SpringBoot</code> 使用哪段配置。</p>
+<blockquote>
+<p>[!tip]</p>
+<p><mark><strong>注意：</strong></mark>在上面配置中给不同配置起名字的 <code>spring.profiles</code> 配置项已经过时。最新用来起名字的配置项是 </p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#开发</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"> <span class="attr">config:</span></span><br><span class="line">   <span class="attr">activate:</span></span><br><span class="line">     <span class="attr">on-profile:</span> <span class="string">dev</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="2-properties文件"><a href="#2-properties文件" class="headerlink" title="2. properties文件"></a>2. properties文件</h2><hr>
+<p><code>properties</code> 类型的配置文件配置多环境需要定义不同的配置文件</p>
+<ul>
+<li><p><mark><code>application-dev.properties</code></mark> 是开发环境的配置文件，在该文件中配置端口号为 <code>80</code>。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">80</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><mark><code>application-test.properties</code></mark> 是测试环境的配置文件，我们在该文件中配置端口号为 <code>81</code>。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">81</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><mark><code>application-pro.properties</code></mark> 是生产环境的配置文件，我们在该文件中配置端口号为 <code>82</code>。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">82</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><u><strong><code>SpringBoot</code> 只会默认加载名为 <code>application.properties</code> 的配置文件，所以需要在 <code>application.properties</code> 配置文件中设置启用哪个配置文件，配置如下:</strong></u></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.profiles.active</span>=<span class="string">pro</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-命令行启动参数设置"><a href="#3-命令行启动参数设置" class="headerlink" title="3. 命令行启动参数设置"></a>3. 命令行启动参数设置</h2><hr>
+<p>使用 <code>SpringBoot</code> 开发的程序以后都是打成 <code>jar</code> 包，通过 <code>java -jar xxx.jar</code> 的方式启动服务的。那么就存在一个问题，如何切换环境呢？因为配置文件打到的jar包中了。</p>
+<p> <code>jar</code> 包其实就是一个压缩包，可以解压缩，然后修改配置，最后再打成jar包就可以了。这种方式显然有点麻烦，而 <code>SpringBoot</code> 提供了在运行 <code>jar</code> 时设置开启指定的环境的方式。</p>
+<ul>
+<li>指定<code>jar</code>运行时开启的环境配置文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java –jar xxx.jar --spring.profiles.active=test</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>临时修改<code>jar</code>包运行的端口号</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java –jar xxx.jar --server.port=88</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>同时设置多个配置，比如即指定启用哪个环境配置，又临时指定端口。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java –jar springboot.jar --server.port=88 --spring.profiles.active=test</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config">在进行测试后就会发现命令行设置的端口号优先级高（也就是使用的是命令行设置的端口号），配置的优先级其实 <code>SpringBoot</code> 官网已经进行了说明。</a></p>
+<h2 id="4-配置文件分类"><a href="#4-配置文件分类" class="headerlink" title="4. 配置文件分类"></a>4. 配置文件分类</h2><hr>
+<p>有这样的场景，在开发完毕后需要测试人员进行测试。由于测试环境和开发环境的很多配置都不相同，所以测试人员在运行我们的工程时需要临时修改很多配置，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java –jar springboot.jar –-spring.profiles.active=test --server.port=85 --server.servlet.context-path=/heima --server.tomcat.connection-timeout=-1 …… …… …… …… ……</span><br></pre></td></tr></table></figure>
+
+<p>针对这种情况，<code>SpringBoot</code> 定义了配置文件不同的放置的位置；而放在不同位置的优先级时不同的。</p>
+<p><code>SpringBoot</code> 中4级配置文件放置位置：</p>
+<ul>
+<li>1级：classpath：application.yml  </li>
+<li>2级：classpath：config&#x2F;application.yml</li>
+<li>3级：file ：application.yml</li>
+<li>4级：file ：config&#x2F;application.yml</li>
+</ul>
+<blockquote>
+<p>[!tip]<br> <mark><strong>说明：</strong></mark>级别越高优先级越高</p>
+</blockquote>
+<h4 id="4-1-验证测试"><a href="#4-1-验证测试" class="headerlink" title="4.1 验证测试"></a>4.1 验证测试</h4><h5 id="4-1-1-环境准备"><a href="#4-1-1-环境准备" class="headerlink" title="4.1.1 环境准备"></a>4.1.1 环境准备</h5><p>创建一个名为 <code>springboot_06_config_file</code> 的 <code>SpringBoot</code> 工程，目录结构如下</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234317.png" alt="image-20210917200241282" style="zoom:80%;" />
+
+
+
+<p>在 <code>resources</code> 下创建一个名为 <code>config</code> 的目录，在该目录中创建 <code>application.yml</code> 配置文件，而在该配置文件中将端口号设置为 <code>81</code>，内容如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">81</span></span><br></pre></td></tr></table></figure>
+
+<p>而在 <code>resources</code> 下创建的 <code>application.yml</code> 配置文件中并将端口号设置为 <code>80</code>，内容如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-2-验证1级和2级的优先级"><a href="#4-1-2-验证1级和2级的优先级" class="headerlink" title="4.1.2 验证1级和2级的优先级"></a>4.1.2 验证1级和2级的优先级</h5><p>运行启动引导类，可以在控制台看到如下日志信息</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234086.png" alt="image-20210917200805389"></p>
+<p>通过这个结果可以得出&#x3D;&#x3D;类路径下的 <code>config</code> 下的配置文件优先于类路径下的配置文件。&#x3D;&#x3D;</p>
+<h5 id="4-1-3-验证2级和4级的优先级"><a href="#4-1-3-验证2级和4级的优先级" class="headerlink" title="4.1.3 验证2级和4级的优先级"></a>4.1.3 验证2级和4级的优先级</h5><p>要验证4级，按照以下步骤完成</p>
+<ul>
+<li><p>将工程打成 <code>jar</code> 包</p>
+<p>点击工程的 <code>package</code> 来打 <code>jar</code> 包</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234724.png" alt="image-20210917201243721" style="zoom:80%;" />
+</li>
+<li><p>在硬盘上找到 <code>jar</code> 包所在位置</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234825.png" alt="image-20210917201523669" style="zoom:70%;" />
+</li>
+<li><p>在 <code>jar</code> 包所在位置创建 <code>config</code> 文件夹，在该文件夹下创建 <code>application.yml</code> 配置文件，而在该配合文件中将端口号设置为 <code>82</code> </p>
+</li>
+<li><p>在命令行使用以下命令运行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar springboot_06_config_file-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p>运行后日志信息如下</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408282234903.png" alt="image-20210917201922831"></p>
+<p>通过这个结果可以得出<mark>file： <code>config</code> 下的配置文件优先于类路径下的配置文件。</mark></p>
+</li>
+</ul>
+<blockquote>
+<p><mark><strong>注意：</strong></mark>SpringBoot 2.5.0版本存在一个bug，在使用这个版本时，需要在 <code>jar</code> 所在位置的 <code>config</code> 目录下创建一个任意名称的文件夹</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot多环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-yaml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%92%8Cyml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">1. yaml配置文件和yml配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-properties%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2. properties文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">3. 命令行启动参数设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">4. 配置文件分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">4.1 验证测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.4.0.1.1.</span> <span class="toc-text">4.1.1 环境准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-2-%E9%AA%8C%E8%AF%811%E7%BA%A7%E5%92%8C2%E7%BA%A7%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.4.0.1.2.</span> <span class="toc-text">4.1.2 验证1级和2级的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-3-%E9%AA%8C%E8%AF%812%E7%BA%A7%E5%92%8C4%E7%BA%A7%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.4.0.1.3.</span> <span class="toc-text">4.1.3 验证2级和4级的优先级</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&text=SpringBoot多环境配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&is_video=false&description=SpringBoot多环境配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot多环境配置&body=Check out this article: http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&title=SpringBoot多环境配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&name=SpringBoot多环境配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/01/Blog/SpringBoot/3.%20Springboot%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/&t=SpringBoot多环境配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

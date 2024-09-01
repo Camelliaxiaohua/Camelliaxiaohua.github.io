@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="SpringBoot常见配置 1. 常见注解  @RestController  @RequestMapping  @Value  @ConfigurationProperties : 将配置文件中的属性值映射到Java对象中  @GetMapping  @Autowired  @Resource  [!Tip] @Autowired和@Resource区别。    2. 常见配置 2.1 MyS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot常见配置">
+<meta property="og:url" content="http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpringBoot常见配置 1. 常见注解  @RestController  @RequestMapping  @Value  @ConfigurationProperties : 将配置文件中的属性值映射到Java对象中  @GetMapping  @Autowired  @Resource  [!Tip] @Autowired和@Resource区别。    2. 常见配置 2.1 MyS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-30T02:13:41.000Z">
+<meta property="article:modified_time" content="2024-08-29T15:13:49.870Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="Utils">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SpringBoot常见配置</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/30/Blog/NetWork/%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&text=SpringBoot常见配置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&is_video=false&description=SpringBoot常见配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot常见配置&body=Check out this article: http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&name=SpringBoot常见配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&t=SpringBoot常见配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">1. 常见注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 MySQL数据库配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Druid%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Druid数据库连接池配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Spring-Boot%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 Spring Boot配置服务端口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">2.3.1 基本配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E6%9B%B4%E5%A4%9A%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">2.3.2 更多配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.2.3.2.1.</span> <span class="toc-text">- 压缩</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSL-TLS-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.2.2.</span> <span class="toc-text">- SSL&#x2F;TLS 配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.2.3.2.3.</span> <span class="toc-text">- 错误处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E5%AE%B9%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.2.4.</span> <span class="toc-text">- 内置容器的配置</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpringBoot常见配置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-30T02:13:41.000Z" class="dt-published" itemprop="datePublished">2024-06-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Utils/" rel="tag">Utils</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="SpringBoot常见配置"><a href="#SpringBoot常见配置" class="headerlink" title="SpringBoot常见配置"></a>SpringBoot常见配置</h1><hr>
+<h2 id="1-常见注解"><a href="#1-常见注解" class="headerlink" title="1. 常见注解"></a>1. 常见注解</h2><hr>
+<ul>
+<li><p><code>@RestController</code></p>
+</li>
+<li><p><code>@RequestMapping</code></p>
+</li>
+<li><p><code>@Value</code></p>
+</li>
+<li><p><code>@ConfigurationProperties</code> : <u>将配置文件中的属性值映射到Java对象中</u></p>
+</li>
+<li><p><code>@GetMapping</code></p>
+</li>
+<li><p><code>@Autowired</code></p>
+</li>
+<li><p><code>@Resource</code></p>
+<blockquote>
+<p>[!Tip]</p>
+<p><code>@Autowired</code>和<code>@Resource</code>区别。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-常见配置"><a href="#2-常见配置" class="headerlink" title="2. 常见配置"></a>2. 常见配置</h2><hr>
+<h3 id="2-1-MySQL数据库配置"><a href="#2-1-MySQL数据库配置" class="headerlink" title="2.1 MySQL数据库配置"></a>2.1 MySQL数据库配置</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据源连接信息</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">密码</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/数据库?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!Tip]</p>
+<p>MySQL8更换了换数据库驱动类名：<mark><code>com.mysql.cj.jdbc.Driver</code></mark></p>
+</blockquote>
+<h3 id="2-2-Druid数据库连接池配置"><a href="#2-2-Druid数据库连接池配置" class="headerlink" title="2.2 Druid数据库连接池配置"></a>2.2 Druid数据库连接池配置</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="comment">#连接数据库配置 </span></span><br><span class="line">    <span class="comment"># . . . . .</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Druid datasource</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span></span><br><span class="line">    <span class="attr">druid:</span></span><br><span class="line">      <span class="attr">initial-size:</span> <span class="number">5</span>  <span class="comment"># 初始化时建立的物理连接个数</span></span><br><span class="line">      <span class="attr">min-idle:</span> <span class="number">5</span>  <span class="comment"># 最小连接池数量</span></span><br><span class="line">      <span class="attr">max-active:</span> <span class="number">20</span>  <span class="comment"># 最大连接池数量</span></span><br><span class="line">      <span class="attr">max-wait:</span> <span class="number">60000</span>  <span class="comment"># 获取连接时的最大等待时间（毫秒）</span></span><br><span class="line">      <span class="attr">pool-prepared-statements:</span> <span class="literal">true</span>  <span class="comment"># 是否缓存preparedStatement，也就是PSCache</span></span><br><span class="line">      <span class="attr">max-pool-prepared-statement-per-connection-size:</span> <span class="number">20</span>  <span class="comment"># 每个连接上PSCache的大小</span></span><br><span class="line">      <span class="attr">test-while-idle:</span> <span class="literal">true</span>  <span class="comment"># 建议配置为true，不影响性能，检测连接是否有效</span></span><br><span class="line">      <span class="attr">time-between-eviction-runs-millis:</span> <span class="number">60000</span>  <span class="comment"># 检测连接有效性的时间间隔（毫秒）</span></span><br><span class="line">      <span class="attr">min-evictable-idle-time-millis:</span> <span class="number">300000</span>  <span class="comment"># 连接在池中最小生存时间（毫秒）</span></span><br><span class="line">      <span class="attr">filters:</span> <span class="string">stat,wall,slf4j</span>  <span class="comment"># 配置监控统计拦截的filters，stat:监控统计、wall:防SQL注入、slf4j:日志</span></span><br><span class="line">      <span class="attr">connection-properties:</span> <span class="string">druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000</span>  <span class="comment"># 合并SQL，记录慢SQL</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]</p>
+</blockquote>
+<h3 id="2-3-Spring-Boot配置服务端口"><a href="#2-3-Spring-Boot配置服务端口" class="headerlink" title="2.3 Spring Boot配置服务端口"></a>2.3 Spring Boot配置服务端口</h3><h4 id="2-3-1-基本配置"><a href="#2-3-1-基本配置" class="headerlink" title="2.3.1 基本配置"></a>2.3.1 基本配置</h4><ol>
+<li><p><strong>YAML 文件</strong> (<code>application.yml</code>):</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Properties 文件</strong> (<code>application.properties</code>):</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">8089</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>这些是最基本的配置方式，可以让Spring Boot应用监听在8089端口上。</p>
+<h4 id="2-3-2-更多配置选项"><a href="#2-3-2-更多配置选项" class="headerlink" title="2.3.2 更多配置选项"></a>2.3.2 更多配置选项</h4><p>除了基本的端口配置之外，还可以配置更多与服务器相关的属性。以下是一些常用的配置项：</p>
+<ul>
+<li><strong>压缩</strong>：启用或禁用HTTP响应的压缩功能。</li>
+<li><strong>SSL&#x2F;TLS</strong>：配置安全连接。</li>
+<li><strong>错误处理</strong>：自定义错误页面。</li>
+<li><strong>Tomcat&#x2F;Jetty&#x2F;Undertow</strong>：如果使用的是这些内嵌容器之一，可以进行更详细的配置。</li>
+</ul>
+<h5 id="压缩"><a href="#压缩" class="headerlink" title="- 压缩"></a>- 压缩</h5><p>启用HTTP响应压缩可以减少网络传输的数据量，从而提高性能。可以通过以下配置启用压缩：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span></span><br><span class="line">  <span class="comment"># HTTP 响应压缩配置</span></span><br><span class="line">  <span class="attr">compression:</span></span><br><span class="line">    <span class="comment"># 是否开启压缩功能</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># 指定要压缩的内容类型</span></span><br><span class="line">    <span class="attr">mime-types:</span> <span class="string">text/html,text/xml,application/json</span></span><br><span class="line">    <span class="comment"># 设置最小响应大小以触发压缩</span></span><br><span class="line">    <span class="attr">min-response-size:</span> <span class="number">1024</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="SSL-TLS-配置"><a href="#SSL-TLS-配置" class="headerlink" title="- SSL&#x2F;TLS 配置"></a>- SSL&#x2F;TLS 配置</h5><p>如果应用需要支持HTTPS，可以配置SSL&#x2F;TLS证书：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span></span><br><span class="line">  <span class="comment"># SSL/TLS 配置</span></span><br><span class="line">  <span class="attr">ssl:</span></span><br><span class="line">    <span class="comment"># 密钥库文件的路径</span></span><br><span class="line">    <span class="attr">key-store:</span> <span class="string">classpath:keystore.p12</span></span><br><span class="line">    <span class="comment"># 密钥库的密码</span></span><br><span class="line">    <span class="attr">key-store-password:</span> <span class="string">secret</span></span><br><span class="line">    <span class="comment"># 密钥别名</span></span><br><span class="line">    <span class="attr">key-alias:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="comment"># 密钥的密码</span></span><br><span class="line">    <span class="attr">key-password:</span> <span class="string">secret</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里有一个名为<code>keystore.p12</code>的密钥库文件存储在类路径中，并且使用密码<code>secret</code>进行保护。</p>
+</blockquote>
+<h5 id="错误处理"><a href="#错误处理" class="headerlink" title="- 错误处理"></a>- 错误处理</h5><p>可以自定义错误页面，比如404和500错误页面：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span>  </span><br><span class="line">  <span class="comment"># SSL/TLS 配置</span></span><br><span class="line">  <span class="attr">ssl:</span></span><br><span class="line">    <span class="comment"># 密钥库文件的路径</span></span><br><span class="line">    <span class="attr">key-store:</span> <span class="string">classpath:keystore.p12</span></span><br><span class="line">    <span class="comment"># 密钥库的密码</span></span><br><span class="line">    <span class="attr">key-store-password:</span> <span class="string">secret</span></span><br><span class="line">    <span class="comment"># 密钥别名</span></span><br><span class="line">    <span class="attr">key-alias:</span> <span class="string">tomcat</span></span><br><span class="line">    <span class="comment"># 密钥的密码</span></span><br><span class="line">    <span class="attr">key-password:</span> <span class="string">secret</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这将禁用默认的错误堆栈跟踪信息，并关闭内置的错误页面。</p>
+</blockquote>
+<h5 id="内置容器的配置"><a href="#内置容器的配置" class="headerlink" title="- 内置容器的配置"></a>- 内置容器的配置</h5><p>Spring Boot支持多种内置Web服务器，包括Tomcat, Jetty和Undertow。这些服务器都可以通过额外的配置进行定制。</p>
+<ul>
+<li><strong>Tomcat</strong>:</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span></span><br><span class="line">  <span class="comment"># Tomcat服务器配置</span></span><br><span class="line">  <span class="attr">tomcat:</span></span><br><span class="line">    <span class="comment"># 最大线程数</span></span><br><span class="line">    <span class="attr">max-threads:</span> <span class="number">200</span></span><br><span class="line">    <span class="comment"># 接受队列的最大长度</span></span><br><span class="line">    <span class="attr">accept-count:</span> <span class="number">100</span></span><br><span class="line">    <span class="comment"># 连接超时时间（毫秒）</span></span><br><span class="line">    <span class="attr">connection-timeout:</span> <span class="number">20000</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Jetty</strong>:</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span></span><br><span class="line">  <span class="comment"># Jetty服务器配置</span></span><br><span class="line">  <span class="attr">jetty:</span></span><br><span class="line">    <span class="comment"># 最大POST请求大小（字节）</span></span><br><span class="line">    <span class="attr">max-http-post-size:</span> <span class="string">10MB</span></span><br><span class="line">    <span class="comment"># 最大HTTP头部大小（字节）</span></span><br><span class="line">    <span class="attr">max-http-header-size:</span> <span class="string">16KB</span></span><br><span class="line">    <span class="comment"># 选择器的数量</span></span><br><span class="line">    <span class="attr">selectors:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Undertow</strong>:</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Spring Boot 服务器配置</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8089</span> </span><br><span class="line">  <span class="comment"># Undertow服务器配置</span></span><br><span class="line">  <span class="attr">undertow:</span></span><br><span class="line">    <span class="comment"># 线程池配置</span></span><br><span class="line">    <span class="attr">threads:</span></span><br><span class="line">      <span class="comment"># I/O线程数量</span></span><br><span class="line">      <span class="attr">io:</span> <span class="number">8</span></span><br><span class="line">      <span class="comment"># 工作线程数量</span></span><br><span class="line">      <span class="attr">worker:</span> <span class="number">200</span></span><br><span class="line">    <span class="comment"># 缓冲区大小（字节）</span></span><br><span class="line">    <span class="attr">buffer-size:</span> <span class="number">32768</span></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">1. 常见注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. 常见配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 MySQL数据库配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Druid%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Druid数据库连接池配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Spring-Boot%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 Spring Boot配置服务端口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">2.3.1 基本配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E6%9B%B4%E5%A4%9A%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">2.3.2 更多配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.2.3.2.1.</span> <span class="toc-text">- 压缩</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSL-TLS-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.2.2.</span> <span class="toc-text">- SSL&#x2F;TLS 配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.2.3.2.3.</span> <span class="toc-text">- 错误处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E5%AE%B9%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.2.4.</span> <span class="toc-text">- 内置容器的配置</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&text=SpringBoot常见配置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&is_video=false&description=SpringBoot常见配置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot常见配置&body=Check out this article: http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&title=SpringBoot常见配置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&name=SpringBoot常见配置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/&t=SpringBoot常见配置"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

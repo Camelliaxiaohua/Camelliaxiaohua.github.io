@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="[!TIP]  记住：如果别名中有空格的话，可以将这个别名使用双引号或者单引号将其括起来。 123SELECT ename, sal * 12 &quot;year sal&quot; FROM EMP;SELECT ename, sal*12 as &quot;year sal&quot; FROM EMP;  select * from dept; 在执行的时候会被解析为 select D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL常用指令">
+<meta property="og:url" content="http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[!TIP]  记住：如果别名中有空格的话，可以将这个别名使用双引号或者单引号将其括起来。 123SELECT ename, sal * 12 &quot;year sal&quot; FROM EMP;SELECT ename, sal*12 as &quot;year sal&quot; FROM EMP;  select * from dept; 在执行的时候会被解析为 select D">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-21T23:02:01.000Z">
+<meta property="article:modified_time" content="2024-07-23T15:25:28.250Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>MySQL常用指令</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/08/01/Blog/SpringCloud/Nacos%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/16/Blog/Tips/20.%20Redis%E5%AE%9E%E7%8E%B0%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8(session)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&text=MySQL常用指令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&is_video=false&description=MySQL常用指令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL常用指令&body=Check out this article: http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&name=MySQL常用指令&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&t=MySQL常用指令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        MySQL常用指令
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-21T23:02:01.000Z" class="dt-published" itemprop="datePublished">2024-07-22</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <hr>
+<blockquote>
+<p>[!TIP]</p>
+<ol>
+<li><p>记住：如果别名中有空格的话，可以将这个别名使用双引号或者单引号将其括起来。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, sal <span class="operator">*</span> <span class="number">12</span> &quot;year sal&quot; <span class="keyword">FROM</span> EMP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> ename, sal<span class="operator">*</span><span class="number">12</span> <span class="keyword">as</span> &quot;year sal&quot; <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>select * from dept; </code>在执行的时候会被解析为 <code>select DEPTNO, DNAME, LOC from dept; </code>再执行，所以这种效率方面弱一些。</p>
+</li>
+<li><p>别名是中文是可以的，但是对于低版本的MySQL来说会报错，需要添加双引号或单引号。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ename, sal<span class="operator">*</span><span class="number">12</span> 年薪 <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在MySQL当中，字符串可以使用单引号，也可以使用双引号</p>
+</li>
+<li><p>查询的数据是字符串类型，要用 ‘ ‘或者” “。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查询工作岗位不是MANAGER的员工姓名和岗位</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , JOB <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> JOB<span class="operator">&lt;&gt;</span> <span class="string">&#x27;MANAGER&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> ENAME , JOB <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> JOB<span class="operator">&lt;&gt;</span> &quot;MANAGER&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>and和or同时出现时，<strong>and优先级较高</strong>，会先执行，<strong>如果希望or先执行，这个时候需要给or条件添加小括号</strong>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出薪资小于<span class="number">1500</span>，并且部门编号是<span class="number">20</span>或<span class="number">30</span>的员工姓名、薪资、部门编号。</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL , DEPTNO <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> SAL <span class="operator">&lt;</span> <span class="number">1500</span> <span class="keyword">AND</span> (DEPTNO <span class="operator">=</span> <span class="number">20</span> <span class="keyword">OR</span> DEPTNO <span class="operator">=</span> <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>between...and...</code>在使用时一定是<strong>左小右大</strong>。左大右小时无法查询到数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出薪资在<span class="number">1600</span>到<span class="number">3000</span>的员工姓名、薪资。</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> SAL <span class="keyword">BETWEEN</span> <span class="number">1600</span> <span class="keyword">AND</span> <span class="number">3000</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>between...and...</code> 和<code> &gt;= and &lt;=</code>只是在写法结构上有区别，执行原理和效率方面没有区别。  </p>
+</li>
+<li><p>SQL语句中日期需要加上单引号。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查询在<span class="number">1982</span><span class="number">-01</span><span class="number">-23</span>到<span class="number">1987</span><span class="number">-04</span><span class="number">-19</span>之间入职的员工</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> HIREDATE <span class="keyword">BETWEEN</span> <span class="string">&#x27;1982-01-23&#x27;</span> <span class="keyword">AND</span> <span class="string">&#x27;1987-04-19&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断某个数据是否为null，不能使用等号，只能使用 is null。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出津贴为空的员工姓名、薪资、津贴。</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL , COMM <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> COMM <span class="keyword">IS</span> <span class="keyword">NULL</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断某个数据是否不为null，不能使用不等号，只能使用 is not null。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出津贴不为空的员工姓名、薪资、津贴。</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL , COMM <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> COMM <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>IN</code> 关键字就是在 SQL 查询中，用来检查某个值是不是在你列出的那些值里。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出工作岗位是MANAGER和SALESMAN的员工姓名、薪资、工作岗位</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL , JOB <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> JOB <span class="keyword">IN</span> (<span class="string">&#x27;MANAGER&#x27;</span> ,<span class="string">&#x27;SALESMAN&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>NOT IN</code> 关键字在 SQL 查询中，用来排除掉不想要的一堆值。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 找出工作岗位不是MANAGER和SALESMAN的员工姓名、工作岗位。</span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL , JOB <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> JOB <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="string">&#x27;MANAGER&#x27;</span> ,<span class="string">&#x27;SALESMAN&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>in和not in对于NULL的处理方式</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> comm <span class="keyword">in</span>(<span class="keyword">NULL</span>, <span class="number">300</span>);</span><br><span class="line"># <span class="keyword">in</span> 执行的实质，<span class="keyword">NULL</span>不能用<span class="operator">=</span>判断，所以comm <span class="operator">=</span> <span class="keyword">NULL</span>恒为<span class="literal">false</span>。</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> comm <span class="operator">=</span> <span class="keyword">NULL</span> <span class="keyword">or</span> comm <span class="operator">=</span> <span class="number">300</span>;</span><br><span class="line"><span class="comment">-- 查出来的都是comm = 300为true的。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> comm <span class="keyword">not</span> <span class="keyword">in</span>(<span class="keyword">NULL</span>, <span class="number">300</span>);</span><br><span class="line"># <span class="keyword">not</span> <span class="keyword">in</span> 执行的实质，<span class="keyword">NULL</span>不能用<span class="operator">&lt;&gt;</span>判断，所以comm <span class="operator">&lt;&gt;</span> <span class="keyword">NULL</span>恒为<span class="literal">false</span>。</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp <span class="keyword">where</span> comm <span class="operator">&lt;&gt;</span> <span class="keyword">NULL</span> <span class="keyword">and</span> comm <span class="operator">&lt;&gt;</span> <span class="number">300</span>;</span><br><span class="line"><span class="comment">-- where 后面恒为false，返回空。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果in和or所在的列有索引或主键，二者性能几乎相同，执行计划和时间相差无几。但在没有索引的情况下，性能差异显著。随着数据量增加，in的效率变化不大，而or的性能会急剧下降，呈指数级增长。</p>
+</li>
+<li><p>在模糊查询中，通配符主要包括两个：一个是%，一个是下划线_。其中%代表任意多个字符，下划线_代表任意一个字符。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 查询员工名字以<span class="string">&#x27;S&#x27;</span>开始的员工姓名</span><br><span class="line"><span class="keyword">SELECT</span> ENAME <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> ENAME <span class="keyword">LIKE</span> <span class="string">&#x27;S%&#x27;</span>;</span><br><span class="line">#查询员工名字中第二个字母是<span class="string">&#x27;A&#x27;</span>的员工姓名</span><br><span class="line"><span class="keyword">SELECT</span> ENAME <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> ENAME <span class="keyword">LIKE</span> <span class="string">&#x27;_A%&#x27;</span>;</span><br><span class="line"># 查询学员名字中含有下划线的。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> ENAME <span class="keyword">LIKE</span> <span class="string">&#x27;%\_%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序操作：单一字段升序、单一字段降序、默认采用升序、多个字段排序。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 单一字段升序</span><br><span class="line"><span class="comment">-- 查询员工的编号、姓名、薪资，按照薪资升序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> EMPNO , ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">ASC</span>;</span><br><span class="line"></span><br><span class="line"># 单一字段降序</span><br><span class="line"><span class="comment">-- 查询员工的编号、姓名、薪资，按照薪资降序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> EMPNO , ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">DESC</span>;</span><br><span class="line"></span><br><span class="line"># 默认采用升序</span><br><span class="line"><span class="comment">-- 查询员工的编号、姓名、薪资，按照薪资升序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> EMPNO , ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询员工的编号、姓名，按照姓名升序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> EMPNO , ENAME <span class="keyword">FROM</span> EMP <span class="keyword">ORDER</span> <span class="keyword">BY</span> ENAME;</span><br><span class="line"></span><br><span class="line"># 多个字段排序</span><br><span class="line"><span class="comment">-- 查询员工的编号、姓名、薪资，按照薪资升序排列，如果薪资相同的，再按照姓名升序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> EMPNO , ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">ASC</span> , ENAME <span class="keyword">ASC</span>;</span><br><span class="line"></span><br><span class="line"># <span class="keyword">where</span>和<span class="keyword">order</span> <span class="keyword">by</span>的位置,<span class="keyword">where</span>先执行，<span class="keyword">order</span> <span class="keyword">by</span>语句是最后执行的。</span><br><span class="line"><span class="comment">-- 找出岗位是MANAGER的员工姓名和薪资，按照薪资升序排列。</span></span><br><span class="line"><span class="keyword">SELECT</span> ENAME , SAL <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> JOB <span class="operator">=</span> <span class="string">&#x27;MANAGER&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> SAL <span class="keyword">ASC</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>distinct去重，<strong>distinct只能出现在所有字段的最前面。当distinct出现后，后面多个字段一定是联合去重的。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询去重工作岗位</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> JOB <span class="keyword">FROM</span> EMP;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 找出公司中不同部门的不同工作岗位。</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> DEPTNO , JOB <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>If语句：如果条件为TRUE则返回“YES”，如果条件为FALSE则返回“NO”。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 如果工资高于3000，则输出1，反之则输出0</span></span><br><span class="line"><span class="keyword">SELECT</span> ENAME , IF(SAL <span class="operator">&gt;</span> <span class="number">3000</span>, <span class="number">1</span> , <span class="number">0</span>) <span class="keyword">FROM</span> EMP;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如果名字是SMITH的，工资上调10%，其他员工工资正常显示。</span></span><br><span class="line"><span class="keyword">SELECT</span> ENAME , IF(ENAME <span class="operator">=</span> <span class="string">&#x27;SMITH&#x27;</span> , SAL<span class="operator">*</span><span class="number">1.1</span> ,SAL) <span class="keyword">AS</span> SAL <span class="keyword">FROM</span> EMP;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 工作岗位是MANAGER的工资上调10%，是SALESMAN的工资上调20%，其他岗位工资正常。</span></span><br><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	ENAME, JOB,</span><br><span class="line">IF</span><br><span class="line">	(</span><br><span class="line">		JOB <span class="operator">=</span> <span class="string">&#x27;MANAGER&#x27;</span>,</span><br><span class="line">		SAL <span class="operator">*</span> <span class="number">1.1</span>,</span><br><span class="line">	IF</span><br><span class="line">	( JOB <span class="operator">=</span> <span class="string">&#x27;SALESMAN&#x27;</span>, SAL <span class="operator">*</span> <span class="number">1.2</span>, SAL )) <span class="keyword">AS</span> SAL </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>cast函数用于将值从一种数据类型转换为表达式中指定的另一种数据类型。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CAST</span>(<span class="string">&#x27;2022-7-8&#x27;</span> <span class="keyword">AS</span> <span class="type">DATE</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CAST</span>(<span class="string">&#x27;2022-7-8 09:12;34&#x27;</span> <span class="keyword">AS</span> <span class="type">TIME</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CAST</span>(<span class="string">&#x27;2022-7-8 09:12;34&#x27;</span> <span class="keyword">AS</span> datetime);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加密函数:可以将给定的字符串经过md5算法进行加密处理，字符串经过加密之后会生成一个固定长度32位的字符串。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> md5(<span class="string">&#x27;camellia·XIAOHUA&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取当前日期和时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 获取当前日期和时间</span><br><span class="line"><span class="keyword">SELECT</span> NOW() , SLEEP(<span class="number">2</span>) , SYSDATE();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!CAUTION]</p>
+<p><code>now()</code>：获取的是执行<code>select</code>语句的时刻。<code>sysdate()</code>：获取的是执行<code>sysdate()</code>函数的时刻。</p>
+</blockquote>
+</li>
+<li><p>获取当前日期</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 获取当前日期</span><br><span class="line"><span class="keyword">SELECT</span> CURDATE() <span class="keyword">AS</span> way1 , <span class="built_in">CURRENT_DATE</span> <span class="keyword">AS</span> way2 , <span class="built_in">CURRENT_DATE</span>() <span class="keyword">AS</span> way3;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取当前时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 获取当前时间</span><br><span class="line"><span class="keyword">SELECT</span> CURTIME() <span class="keyword">AS</span> way1 , <span class="built_in">CURRENT_TIME</span>() <span class="keyword">AS</span> way2 , <span class="built_in">CURRENT_TIME</span> <span class="keyword">AS</span> way3 ;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取单独的年、月、日、时、分、秒</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> NOW() <span class="keyword">AS</span> 日期 , <span class="keyword">YEAR</span>(now()) <span class="keyword">AS</span> 年 , <span class="keyword">MONTH</span>(now()) <span class="keyword">AS</span> 月 , <span class="keyword">DAY</span>(now()) <span class="keyword">AS</span> 日 , <span class="keyword">HOUR</span>(NOW()) <span class="keyword">AS</span> 小时 ,<span class="keyword">MINUTE</span>(NOW()) <span class="keyword">AS</span> 分钟, <span class="keyword">SECOND</span>(NOW()) <span class="keyword">AS</span> 秒, <span class="type">DATE</span>(NOW()) <span class="keyword">AS</span>  期日, <span class="type">TIME</span>(NOW()) <span class="keyword">AS</span> 时间;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>date_add函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">给指定的日期添加间隔的时间，从而得到一个新的日期。</span><br><span class="line"><span class="keyword">SELECT</span> DATE_ADD(<span class="type">DATE</span>(NOW()), <span class="type">INTERVAL</span> <span class="number">3</span> <span class="keyword">DAY</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>date_format日期格式化函数，<strong>将日期转换成具有某种格式的日期字符串</strong>，通常用在<strong>查询操作</strong>当中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DATE_FORMAT(NOW(),<span class="string">&#x27;%Y-%m-%d %H:%i:%s&#x27;</span>) <span class="keyword">AS</span> 北京时间;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!CAUTION]</p>
+<p><strong>在MySQL当中，默认的日期格式就是：</strong><code>%Y-%m-%d %H:%i:%s</code>，所以当你直接输出日期数据的时候，<strong>会自动转换成该格式的字符串</strong>。</p>
+</blockquote>
+</li>
+<li><p>str_to_date函数，将char类型的日期字符串转换成日期类型date，通常使用在<strong>插入</strong>和<strong>修改</strong>操作当中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> events (event_name, event_date)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">&#x27;Conference&#x27;</span>, STR_TO_DATE(<span class="string">&#x27;2024-07-23&#x27;</span>, <span class="string">&#x27;%Y-%m-%d&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!CAUTION]</p>
+<p>如果提供的日期字符串格式能够被MySQL解析，<code>str_to_date</code>函数是可以省略的，底层会自动调用该函数进行类型转换。（百度）</p>
+</blockquote>
+</li>
+<li><p>dayofweek、dayofmonth、dayofyear函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- dayofweek：一周中的第几天（1~ 7），周日是1，周六是7。</span></span><br><span class="line"><span class="keyword">SELECT</span> DAYOFWEEK(NOW());</span><br><span class="line"></span><br><span class="line"><span class="comment">-- dayofmonth：一个月中的第几天（1~31）</span></span><br><span class="line"><span class="keyword">SELECT</span> DAYOFMONTH(NOW());</span><br><span class="line"></span><br><span class="line"><span class="comment">-- dayofyear：一年中的第几天（1~366）</span></span><br><span class="line"><span class="keyword">SELECT</span> DAYOFYEAR(NOW());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>last_day、datediff、timediff函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- last_day函数,获取给定日期所在月的最后一天的日期。</span></span><br><span class="line"><span class="keyword">SELECT</span> LAST_DAY(NOW());</span><br><span class="line"></span><br><span class="line"><span class="comment">-- datediff函数,计算两个日期之间所差天数。</span></span><br><span class="line"><span class="keyword">SELECT</span> DATEDIFF(NOW() , DATE_ADD(NOW(), <span class="type">INTERVAL</span> <span class="number">-1</span> <span class="keyword">YEAR</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">-- timediff函数,计算两个日期所差时间。</span></span><br><span class="line"><span class="keyword">SELECT</span> TIMEDIFF(NOW() , DATE_ADD(NOW(), <span class="type">INTERVAL</span> <span class="number">-1</span> <span class="keyword">HOUR</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>rand()和rand(x)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- rand()生成0到1的随机浮点数。</span></span><br><span class="line"><span class="keyword">SELECT</span> RAND();</span><br><span class="line"></span><br><span class="line"><span class="comment">-- rand(x)生成0到1的随机浮点数，通过指定整数x来确定每次获取到相同的浮点值。</span></span><br><span class="line"><span class="keyword">SELECT</span> RAND(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>round(x)和round(x,y)四舍五入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- round(x)四舍五入，保留整数位，舍去所有小数。</span></span><br><span class="line"><span class="keyword">SELECT</span> ROUND(<span class="number">9.77856</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- round(x,y)四舍五入，保留y位小数。</span></span><br><span class="line"><span class="keyword">SELECT</span>  ROUND(<span class="number">9.77856</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>truncate(x, y)，保留y位小数，其他的全舍去。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRUNCATE</span>(<span class="number">9.3478</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ceil与floor</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ceil函数：返回大于或等于数值x的最小整数</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CEIL</span>(<span class="number">5.1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- floor函数：返回小于或等于数值x的最大整数</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">FLOOR</span>(<span class="number">5.9</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ifnull(x, y)，空处理函数，当x为NULL时，将x当做y处理。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ifnull(comm, 0)，表示如果员工的津贴是NULL时当做0处理。</span></span><br><span class="line"><span class="keyword">SELECT</span> (SAL <span class="operator">+</span> IFNULL(COMM,<span class="number">0</span>))<span class="operator">*</span><span class="number">12</span> <span class="keyword">AS</span> 年薪 <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!CAUTION]</p>
+<p>在SQL语句中，凡是有NULL参与的数学运算，最终的计算结果都是NULL，所以可以用ifnull处理后再计算。</p>
+</blockquote>
+</li>
+<li><p>转大写upper和ucase</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">UPPER</span>(ENAME) <span class="keyword">AS</span> WAY1 , UCASE(ENAME) <span class="keyword">AS</span> WAY2 <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>转小写lower和lcase</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">LOWER</span>(ENAME) <span class="keyword">AS</span> WAY1 , LCASE(ENAME) <span class="keyword">AS</span> WAY2 <span class="keyword">FROM</span> EMP;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>截取字符串substr。语法：substr( ‘被截取的字符串’ , 起始下标 , 截取长度)，当第三个参数“截取长度”缺失时，截取到字符串末尾。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 找出员工名字中第二个字母是A的</span></span><br><span class="line"><span class="keyword">SELECT</span> ENAME <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> <span class="string">&#x27;A&#x27;</span> <span class="operator">=</span> SUBSTR(ENAME, <span class="number">2</span> , <span class="number">1</span>);</span><br><span class="line"><span class="keyword">SELECT</span> ENAME <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> ENAME <span class="keyword">LIKE</span> <span class="string">&#x27;_A%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>length、char_length。在SQL中，<code>LENGTH</code> <strong>返回字符串的字节长度，适用于需要知道字符串占用多少字节空间的情况</strong>；而 <code>CHAR_LENGTH</code> <strong>返回字符串的字符长度，计算实际的字符数量</strong>，适用于需要知道字符串包含多少个字符的情况。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--  获取字符串长度length，获取字符的个数char_length。</span></span><br><span class="line"><span class="keyword">SELECT</span> LENGTH(&quot;你好MySQL&quot;) , <span class="keyword">CHAR_LENGTH</span>(&quot;你好MySQL&quot;);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>字符串拼接concat ( ‘字符串1’ ,  ‘字符串2’ ,  ‘字符串3’ …. )</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CONCAT(<span class="string">&#x27;Hello World &#x27;</span>,<span class="string">&#x27;Hello MySQL&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>trim，去除字符串前后空白。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">TRIM</span>(&quot;   Hello World  &quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去除指定的前缀后缀</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 去除前置0&amp;去除后置0&amp;前置0和后置0全部去除</span></span><br><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	<span class="built_in">TRIM</span>( <span class="keyword">LEADING</span> <span class="string">&#x27;0&#x27;</span> <span class="keyword">FROM</span> <span class="string">&#x27;0001110000&#x27;</span> ),</span><br><span class="line">	<span class="built_in">TRIM</span>( <span class="keyword">TRAILING</span> <span class="string">&#x27;0&#x27;</span> <span class="keyword">FROM</span> <span class="string">&#x27;0001110000&#x27;</span> ),</span><br><span class="line">	<span class="built_in">TRIM</span>( <span class="keyword">BOTH</span> <span class="string">&#x27;0&#x27;</span> <span class="keyword">FROM</span> <span class="string">&#x27;0001110000&#x27;</span> );</span><br></pre></td></tr></table></figure></li>
+</ol>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&text=MySQL常用指令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&is_video=false&description=MySQL常用指令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL常用指令&body=Check out this article: http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&title=MySQL常用指令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&name=MySQL常用指令&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/&t=MySQL常用指令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

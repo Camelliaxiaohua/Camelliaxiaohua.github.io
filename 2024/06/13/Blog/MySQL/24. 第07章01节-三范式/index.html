@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="数据库设计三范式 数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。 数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。以下是三范式的具体定义和示例： 1. 第一范式（1NF） 第一范式要求数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第07章01节-数据库设计三范式">
+<meta property="og:url" content="http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数据库设计三范式 数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。 数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。以下是三范式的具体定义和示例： 1. 第一范式（1NF） 第一范式要求数据库">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-13T03:37:04.000Z">
+<meta property="article:modified_time" content="2024-08-29T15:25:47.263Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>第07章01节-数据库设计三范式</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/14/Blog/Java%20SE/44.%20%E9%93%BE%E8%A1%A8%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/13/Blog/Java%20SE/40.%20Vector/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&text=第07章01节-数据库设计三范式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&is_video=false&description=第07章01节-数据库设计三范式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第07章01节-数据库设计三范式&body=Check out this article: http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&name=第07章01节-数据库设计三范式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&t=第07章01节-数据库设计三范式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%89%E8%8C%83%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">数据库设计三范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F%EF%BC%881NF%EF%BC%89"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 第一范式（1NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F%EF%BC%882NF%EF%BC%89"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 第二范式（2NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%883NF%EF%BC%89"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 第三范式（3NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.0.4.</span> <span class="toc-text">4. 总结</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        第07章01节-数据库设计三范式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-13T03:37:04.000Z" class="dt-published" itemprop="datePublished">2024-06-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="数据库设计三范式"><a href="#数据库设计三范式" class="headerlink" title="数据库设计三范式"></a>数据库设计三范式</h1><hr>
+<p>数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。</p>
+<p>数据库设计的三范式（Third Normal Form，简称 3NF）是数据库设计中的一种规范化过程，用于组织数据库结构以减少数据冗余和提高数据完整性。以下是三范式的具体定义和示例：</p>
+<h3 id="1-第一范式（1NF）"><a href="#1-第一范式（1NF）" class="headerlink" title="1. 第一范式（1NF）"></a>1. 第一范式（1NF）</h3><hr>
+<p>第一范式要求数据库表中的所有字段值都是原子的，不可再分。换句话说，每一列的值都是不可分割的基本数据项。</p>
+<p><strong>未达到 1NF 的表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>订单ID</th>
+<th>客户名</th>
+<th>产品</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>张三</td>
+<td>手机, 电脑</td>
+<td>2, 1</td>
+</tr>
+</tbody></table>
+<p><strong>问题</strong>：在同一列中包含多个值，例如“产品”列包含“手机”和“电脑”，这违反了原子性原则。</p>
+<p><strong>解决方案</strong>：将每个产品拆分为单独的行</p>
+<p><strong>达到 1NF 的表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>订单ID</th>
+<th>客户名</th>
+<th>产品</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>张三</td>
+<td>手机</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>张三</td>
+<td>电脑</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><strong>解释</strong>：每个产品和数量的组合在一个单独的行中，这样每个字段的值都是原子的。</p>
+<h3 id="2-第二范式（2NF）"><a href="#2-第二范式（2NF）" class="headerlink" title="2. 第二范式（2NF）"></a>2. 第二范式（2NF）</h3><hr>
+<p>在满足第一范式的基础上，第二范式要求数据库表中不存在部分依赖，即非主键列必须完全依赖于主键，而不是依赖于主键的一部分。第二范式消除了部分依赖的冗余。</p>
+<p><strong>未达到 2NF 的表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>学生ID</th>
+<th>课程ID</th>
+<th>成绩</th>
+<th>学生名</th>
+<th>课程名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>101</td>
+<td>90</td>
+<td>张三</td>
+<td>数学</td>
+</tr>
+<tr>
+<td>1</td>
+<td>102</td>
+<td>85</td>
+<td>张三</td>
+<td>英语</td>
+</tr>
+</tbody></table>
+<p><strong>问题</strong>：学生名和课程名依赖于学生ID和课程ID的组合，而不完全依赖于该组合中的某一部分，存在部分依赖。</p>
+<p><strong>解决方案</strong>：将学生信息和课程信息拆分到独立的表中。</p>
+<p><strong>达到 2NF 的表：</strong></p>
+<p><em>学生表：</em></p>
+<table>
+<thead>
+<tr>
+<th>学生ID</th>
+<th>学生名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>张三</td>
+</tr>
+</tbody></table>
+<p><em>课程表：</em></p>
+<table>
+<thead>
+<tr>
+<th>课程ID</th>
+<th>课程名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>101</td>
+<td>数学</td>
+</tr>
+<tr>
+<td>102</td>
+<td>英语</td>
+</tr>
+</tbody></table>
+<p><em>成绩表：</em></p>
+<table>
+<thead>
+<tr>
+<th>学生ID</th>
+<th>课程ID</th>
+<th>成绩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>101</td>
+<td>90</td>
+</tr>
+<tr>
+<td>1</td>
+<td>102</td>
+<td>85</td>
+</tr>
+</tbody></table>
+<p><strong>解释</strong>：通过将学生信息和课程信息拆分到独立的表中，非主键列“学生名”和“课程名”完全依赖于它们各自的主键列，从而消除了部分依赖。</p>
+<h3 id="3-第三范式（3NF）"><a href="#3-第三范式（3NF）" class="headerlink" title="3. 第三范式（3NF）"></a>3. 第三范式（3NF）</h3><hr>
+<p>在满足第二范式的基础上，第三范式要求数据库表中不存在传递依赖，即非主键列必须直接依赖于主键，而不能通过其他非主键列间接依赖于主键。第三范式消除了传递依赖的冗余。</p>
+<p><strong>未达到 3NF 的表：</strong></p>
+<table>
+<thead>
+<tr>
+<th>学生ID</th>
+<th>学生名</th>
+<th>系ID</th>
+<th>系主任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>张三</td>
+<td>10</td>
+<td>王老师</td>
+</tr>
+<tr>
+<td>2</td>
+<td>李四</td>
+<td>20</td>
+<td>张老师</td>
+</tr>
+<tr>
+<td>3</td>
+<td>王五</td>
+<td>10</td>
+<td>王老师</td>
+</tr>
+</tbody></table>
+<p><strong>问题</strong>：在这个表中，“系主任”依赖于“系ID”，“系ID”依赖于“学生ID”。因此，“系主任”通过“系ID”间接依赖于“学生ID”，这就是传递依赖。</p>
+<p><strong>解决方案</strong>：将系的信息单独放在一个表中。</p>
+<p><strong>达到 3NF 的表：</strong></p>
+<p><em>学生表：</em></p>
+<table>
+<thead>
+<tr>
+<th>学生ID</th>
+<th>学生名</th>
+<th>系ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>张三</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>李四</td>
+<td>20</td>
+</tr>
+<tr>
+<td>3</td>
+<td>王五</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p><em>系表：</em></p>
+<table>
+<thead>
+<tr>
+<th>系ID</th>
+<th>系主任</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>王老师</td>
+</tr>
+<tr>
+<td>20</td>
+<td>张老师</td>
+</tr>
+</tbody></table>
+<p><strong>解释</strong>：通过将“系ID”和“系主任”信息分离到独立的“系表”中，消除了“系主任”对“学生ID”的传递依赖。现在，学生表中的非主键列（学生名和系ID）直接依赖于学生ID，而系表中的非主键列（系主任）直接依赖于系ID。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><hr>
+<p>通过遵循三范式，我们可以：</p>
+<ul>
+<li><strong>减少数据冗余</strong>：避免重复存储同一信息，节省存储空间。</li>
+<li><strong>提高数据一致性</strong>：更新一处数据后，不需要同步更新多处，从而避免数据不一致。</li>
+<li><strong>简化数据维护</strong>：清晰的表结构使得数据的插入、更新、删除操作更加简洁高效。</li>
+</ul>
+<p>这些规范化的步骤有助于设计一个结构合理、数据完整、易于维护的数据库系统。</p>
+<blockquote>
+<p>注意：最终以满足客户需求为原则，有的时候会拿空间换速度。</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%89%E8%8C%83%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">数据库设计三范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F%EF%BC%881NF%EF%BC%89"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 第一范式（1NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F%EF%BC%882NF%EF%BC%89"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 第二范式（2NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%883NF%EF%BC%89"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 第三范式（3NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.0.4.</span> <span class="toc-text">4. 总结</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&text=第07章01节-数据库设计三范式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&is_video=false&description=第07章01节-数据库设计三范式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第07章01节-数据库设计三范式&body=Check out this article: http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&title=第07章01节-数据库设计三范式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&name=第07章01节-数据库设计三范式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/13/Blog/MySQL/24.%20%E7%AC%AC07%E7%AB%A001%E8%8A%82-%E4%B8%89%E8%8C%83%E5%BC%8F/&t=第07章01节-数据库设计三范式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

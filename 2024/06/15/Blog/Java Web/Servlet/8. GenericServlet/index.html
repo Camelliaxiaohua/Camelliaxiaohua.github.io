@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    Servlet：适配器思想一、GenericServlet1.1 为什么要使用适配器？ 我们编写一个Servlet类直接实现Servlet接口有什么缺点？  我们只需要service方法，其他方法大部分情况下是不需要使用的。代码很丑陋。   适配器设计模式Adapter  手机直接插到220V的电压上，手机直接就报废了。怎么办？可以找一个充电器。这个充电器就是一个适配器。手机连接适配器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GenericServlet">
+<meta property="og:url" content="http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    Servlet：适配器思想一、GenericServlet1.1 为什么要使用适配器？ 我们编写一个Servlet类直接实现Servlet接口有什么缺点？  我们只需要service方法，其他方法大部分情况下是不需要使用的。代码很丑陋。   适配器设计模式Adapter  手机直接插到220V的电压上，手机直接就报废了。怎么办？可以找一个充电器。这个充电器就是一个适配器。手机连接适配器">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-15T11:02:26.000Z">
+<meta property="article:modified_time" content="2024-06-27T03:03:58.815Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>GenericServlet</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/16/Blog/Java%20SE/45.%20IO%E6%B5%81%E6%A6%82%E8%BF%B0/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&text=GenericServlet"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&is_video=false&description=GenericServlet"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GenericServlet&body=Check out this article: http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&name=GenericServlet&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&t=GenericServlet"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E9%80%82%E9%85%8D%E5%99%A8%E6%80%9D%E6%83%B3"><span class="toc-number">1.</span> <span class="toc-text">Servlet：适配器思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81GenericServlet"><span class="toc-number">1.1.</span> <span class="toc-text">一、GenericServlet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E9%80%82%E9%85%8D%E5%99%A8%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 为什么要使用适配器？</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        GenericServlet
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-15T11:02:26.000Z" class="dt-published" itemprop="datePublished">2024-06-15</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-Web/">Java Web</a> › <a class="category-link" href="/categories/Java-Web/Servlet/">Servlet</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Servlet：适配器思想"><a href="#Servlet：适配器思想" class="headerlink" title="Servlet：适配器思想"></a>Servlet：适配器思想</h1><h2 id="一、GenericServlet"><a href="#一、GenericServlet" class="headerlink" title="一、GenericServlet"></a>一、GenericServlet</h2><h3 id="1-1-为什么要使用适配器？"><a href="#1-1-为什么要使用适配器？" class="headerlink" title="1.1 为什么要使用适配器？"></a>1.1 为什么要使用适配器？</h3><ul>
+<li><p>我们编写一个Servlet类直接实现Servlet接口有什么缺点？</p>
+<ul>
+<li>我们只需要service方法，其他方法大部分情况下是不需要使用的。代码很丑陋。</li>
+</ul>
+</li>
+<li><p>适配器设计模式Adapter</p>
+<ul>
+<li>手机直接插到220V的电压上，手机直接就报废了。怎么办？可以找一个充电器。这个充电器就是一个适配器。手机连接适配器。适配器连接220V的电压。这样问题就解决了。</li>
+</ul>
+</li>
+<li><p>编写一个GenericServlet类，这个类是一个抽象类，其中有一个抽象方法service。</p>
+<ul>
+<li>GenericServlet实现Servlet接口。</li>
+<li>GenericServlet是一个适配器。</li>
+<li>以后编写的所有Servlet类继承GenericServlet，重写service方法即可。</li>
+</ul>
+</li>
+<li><p>思考：GenericServlet类是否需要改造一下？怎么改造？更利于子类程序的编写？</p>
+<ul>
+<li><p>思考第一个问题：我提供了一个GenericServlet之后，init方法还会执行吗？</p>
+<ul>
+<li>还会执行。会执行GenericServlet类中的init方法。</li>
+</ul>
+</li>
+<li><p>思考第二个问题：init方法是谁调用的？</p>
+<ul>
+<li>Tomcat服务器调用的。</li>
+</ul>
+</li>
+<li><p>思考第三个问题：init方法中的ServletConfig对象是谁创建的？是谁传过来的？</p>
+<ul>
+<li>都是Tomcat干的。</li>
+<li>Tomcat服务器先创建了ServletConfig对象，然后调用init方法，将ServletConfig对象传给了init方法。</li>
+</ul>
+</li>
+<li><p>思考一下Tomcat服务器伪代码：</p>
+<ul>
+<li><pre><code class="java">public class Tomcat &#123;
+    public static void main(String[] args)&#123;
+        // .....
+        // Tomcat服务器伪代码
+        // 创建LoginServlet对象（通过反射机制，调用无参数构造方法来实例化LoginServlet对象）
+        Class clazz = Class.forName(&quot;servlet.LoginServlet&quot;);
+        Object obj = clazz.newInstance(); 
+        // 向下转型
+        Servlet servlet = (Servlet)obj;
+        // 创建ServletConfig对象
+        // Tomcat服务器负责将ServletConfig对象实例化出来。
+        // 多态（Tomcat服务器完全实现了Servlet规范）
+        ServletConfig servletConfig = new org.apache.catalina.core.StandardWrapperFacade();
+        // 调用Servlet的init方法
+        servlet.init(servletConfig);
+        // 调用Servlet的service方法
+        // ....
+    &#125; 
+&#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 1.2 适配器的实现</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; 思想：直接写类实现Servlet接口会导致多个方法都要实现，代码很混乱。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 但是在中间增加一个适配器（GenericServlet抽象类）让他实现Servlet接口，然后让我们的Servlet适配器。这样就可以按需实现方法。</span><br><span class="line">&gt;</span><br><span class="line">&gt; init方法重载以完成子类重写init方法以满足业务需求非常巧妙。</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">package servlet;</span><br><span class="line"></span><br><span class="line">import jakarta.servlet.*;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 写一个标准通用的servlet。&lt;br&gt;</span><br><span class="line"> * 以后所有的Servlet类都不要直接实现Servlet接口，继承GenericServlet即可&lt;br&gt;</span><br><span class="line"> * GenericServlet就是一个适配器。&lt;br&gt;</span><br><span class="line"> */</span><br><span class="line">public abstract class GenericServlet implements Servlet &#123;</span><br><span class="line"></span><br><span class="line">    private ServletConfig config;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * init方法中的servletConfig对象是TomCat创建好的。&lt;br&gt;</span><br><span class="line">     * servletConfig对象属于局部变量，所以要改造为在service方法上使用。&lt;br&gt;</span><br><span class="line">     * @param servletConfig</span><br><span class="line">     * @throws ServletException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    final public void init(ServletConfig servletConfig) throws ServletException &#123;</span><br><span class="line">        this.config = servletConfig;</span><br><span class="line">        this.init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 为防止子类重写init(ServletConfig servletConfig)方法，导致init(ServletConfig servletConfig)方法不执行，config为空，将其用final修饰。&lt;br&gt;</span><br><span class="line">     * 但是，有时我们子类的有业务确实要重写init，此时我们可以写一个init的重载方法，在init(ServletConfig servletConfig)调用这个重载方法。&lt;br&gt;</span><br><span class="line">     */</span><br><span class="line">    public void init()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public ServletConfig getServletConfig() &#123;</span><br><span class="line">        return config;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 抽象方法，这个方法最常用，所以要求子类必须实现service方法。</span><br><span class="line">     * @param servletRequest</span><br><span class="line">     * @param servletResponse</span><br><span class="line">     * @throws ServletException</span><br><span class="line">     * @throws IOException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public abstract void service(ServletRequest servletRequest, ServletResponse servletResponse)</span><br><span class="line">            throws ServletException, IOException;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getServletInfo() &#123;</span><br><span class="line">        return &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void destroy() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.ServletConfig;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.ServletRequest;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.ServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginServlet</span> <span class="keyword">extends</span> <span class="title class_">GenericServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">service</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在处理用户登入请求，请稍后...&quot;</span>);</span><br><span class="line">        <span class="comment">//在子类中使用config对象.</span></span><br><span class="line">        <span class="type">ServletConfig</span> <span class="variable">config</span> <span class="operator">=</span> <span class="built_in">this</span>.getServletConfig();</span><br><span class="line">        System.out.println(<span class="string">&quot;成功在service中获取config对象&quot;</span>+config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 有个问题：我们的业务逻辑可能会重新写init方法，会导致父类的init方法不执行，config为空。</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;LoginServlet&#x27;s init() method execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E9%80%82%E9%85%8D%E5%99%A8%E6%80%9D%E6%83%B3"><span class="toc-number">1.</span> <span class="toc-text">Servlet：适配器思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81GenericServlet"><span class="toc-number">1.1.</span> <span class="toc-text">一、GenericServlet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E9%80%82%E9%85%8D%E5%99%A8%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 为什么要使用适配器？</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&text=GenericServlet"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&is_video=false&description=GenericServlet"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GenericServlet&body=Check out this article: http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&title=GenericServlet"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&name=GenericServlet&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/&t=GenericServlet"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

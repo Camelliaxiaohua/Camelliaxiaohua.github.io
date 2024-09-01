@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Nacos配置管理 Nacos 不仅可以作为服务注册中心，还可以用作配置管理。Nacos 提供了一个集中的配置管理系统，允许您动态地管理应用程序的配置。 1. 统一配置管理 当微服务部署的实例越来越多，达到数十、数百时，逐个修改微服务配置就会让人抓狂，而且很容易出错。我们需要一种统一配置管理方案，可以集中管理所有实例的配置。   Nacos一方面可以将配置集中管理，另一方可以在配置变更时，及时通知">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nacos配置管理">
+<meta property="og:url" content="http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Nacos配置管理 Nacos 不仅可以作为服务注册中心，还可以用作配置管理。Nacos 提供了一个集中的配置管理系统，允许您动态地管理应用程序的配置。 1. 统一配置管理 当微服务部署的实例越来越多，达到数十、数百时，逐个修改微服务配置就会让人抓狂，而且很容易出错。我们需要一种统一配置管理方案，可以集中管理所有实例的配置。   Nacos一方面可以将配置集中管理，另一方可以在配置变更时，及时通知">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937988.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937277.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937790.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937411.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041040273.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041047927.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041048498.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041049443.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041050961.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041103954.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041054227.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041055653.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041056106.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041057604.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041057594.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058548.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058045.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058727.png">
+<meta property="article:published_time" content="2024-08-02T08:39:01.000Z">
+<meta property="article:modified_time" content="2024-08-09T02:27:54.305Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937988.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Nacos配置管理</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/08/03/Blog/SpringCloud/8.%20Feign%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/08/02/Blog/SpringCloud/6.%20Nacos%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&text=Nacos配置管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&is_video=false&description=Nacos配置管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nacos配置管理&body=Check out this article: http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&name=Nacos配置管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&t=Nacos配置管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Nacos配置管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BB%9F%E4%B8%80%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1. 统一配置管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%9C%A8nacos%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 在nacos中添加配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%89%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 从微服务拉取配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 配置热更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 方式一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 方式二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB"><span class="toc-number">1.3.</span> <span class="toc-text">3. 配置共享</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%8E%AF%E5%A2%83%E5%85%B1%E4%BA%AB%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 添加一个环境共享配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9C%A8user-service%E4%B8%AD%E8%AF%BB%E5%8F%96%E5%85%B1%E4%BA%AB%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 在user-service中读取共享配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 配置共享测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 配置共享的优先级</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Nacos配置管理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-02T08:39:01.000Z" class="dt-published" itemprop="datePublished">2024-08-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringCloud/">SpringCloud</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Nacos配置管理"><a href="#Nacos配置管理" class="headerlink" title="Nacos配置管理"></a>Nacos配置管理</h1><hr>
+<p>Nacos 不仅可以作为服务注册中心，还可以用作配置管理。Nacos 提供了一个集中的配置管理系统，允许您动态地管理应用程序的配置。</p>
+<h2 id="1-统一配置管理"><a href="#1-统一配置管理" class="headerlink" title="1. 统一配置管理"></a>1. 统一配置管理</h2><hr>
+<p>当微服务部署的实例越来越多，达到数十、数百时，逐个修改微服务配置就会让人抓狂，而且很容易出错。我们需要一种统一配置管理方案，可以集中管理所有实例的配置。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937988.png" alt="image-20210714164426792" style="zoom:80%;" />
+
+<p>Nacos一方面可以将配置集中管理，另一方可以在配置变更时，及时通知微服务，实现配置的热更新。</p>
+<h3 id="1-1-在nacos中添加配置文件"><a href="#1-1-在nacos中添加配置文件" class="headerlink" title="1.1 在nacos中添加配置文件"></a>1.1 在nacos中添加配置文件</h3><p>如何在nacos中管理配置呢？</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937277.png" alt="image-20210714164742924"></p>
+<p>然后在弹出的表单中，填写配置信息：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937790.png" alt="image-20210714164856664" style="zoom:80%;" />
+
+
+
+<blockquote>
+<p>注意：项目的核心配置，需要热更新的配置才有放到nacos管理的必要。基本不会变更的一些配置还是保存在微服务本地比较好。</p>
+</blockquote>
+<h3 id="1-2-从微服务拉取配置"><a href="#1-2-从微服务拉取配置" class="headerlink" title="1.2 从微服务拉取配置"></a>1.2 从微服务拉取配置</h3><p>微服务要拉取nacos中管理的配置，并且与本地的application.yml配置合并，才能完成项目启动。</p>
+<p>但如果尚未读取application.yml，又如何得知nacos地址呢？</p>
+<p>因此spring引入了一种新的配置文件：bootstrap.yaml文件，会在application.yml之前被读取，流程如下：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408040937411.png" alt="img"></p>
+<p>1）引入nacos-config依赖</p>
+<p>首先，在user-service服务中，引入nacos-config的客户端依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--nacos配置管理依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）添加bootstrap.yaml</p>
+<p>然后，在user-service中添加一个bootstrap.yaml文件，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">userservice</span> <span class="comment"># 服务名称</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span> <span class="comment">#开发环境，这里是dev </span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="string">localhost:8848</span> <span class="comment"># Nacos地址</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="attr">file-extension:</span> <span class="string">yaml</span> <span class="comment"># 文件后缀名</span></span><br></pre></td></tr></table></figure>
+
+<p>这里会根据spring.cloud.nacos.server-addr获取nacos地址，再根据</p>
+<p><code>$&#123;spring.application.name&#125;-$&#123;spring.profiles.active&#125;.$&#123;spring.cloud.nacos.config.file-extension&#125;</code>作为文件id，来读取配置。</p>
+<p>本例中，就是去读取<code>userservice-dev.yaml</code>：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041040273.png" alt="image-20210714170845901" style="zoom:80%;" />
+
+<p>3）添加bootstrap依赖</p>
+<p><code>spring-cloud-starter-bootstrap</code> 主要用于简化 Spring Cloud 应用的配置管理。它帮助应用从配置中心（如 Nacos、Consul、Config Server）加载启动时的配置，确保在应用启动时能够获取到集中管理的配置。简单来说，它使得 Spring Cloud 应用能够更方便地使用集中式配置和服务发现功能。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bootstrap<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4）读取nacos配置</p>
+<p>在user-service中的UserController中添加业务逻辑，读取pattern.dateformat配置：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041047927.png" alt="image-20210714170337448" style="zoom: 67%;" />
+
+
+
+<p>在页面访问，可以看到效果：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041048498.png" alt="image-20210714170449612" style="zoom:80%;" />
+
+
+
+
+
+<h2 id="2-配置热更新"><a href="#2-配置热更新" class="headerlink" title="2. 配置热更新"></a>2. 配置热更新</h2><hr>
+<p>我们最终的目的，是修改nacos中的配置后，微服务中无需重启即可让配置生效，也就是<strong>配置热更新</strong>。</p>
+<p>要实现配置热更新，可以使用<strong>两种方式</strong>：</p>
+<h3 id="2-1-方式一"><a href="#2-1-方式一" class="headerlink" title="2.1 方式一"></a>2.1 方式一</h3><p>在@Value注入的变量所在类上添加注解@RefreshScope：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041049443.png" alt="image-20210714171036335" style="zoom:67%;" />
+
+
+
+<h3 id="2-2-方式二"><a href="#2-2-方式二" class="headerlink" title="2.2 方式二"></a>2.2 方式二</h3><p>使用@ConfigurationProperties注解代替@Value注解。</p>
+<p>在user-service服务中，添加一个类，读取patterrn.dateformat属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;pattern&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PatternProperties</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String dateformat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在UserController中使用这个类代替@Value：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041050961.png" alt="image-20210714171316124"></p>
+<p>最后，在启动类添加<code>@EnableConfigurationProperties</code>注解</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041103954.png" alt="image-20240804105239801"></p>
+<h2 id="3-配置共享"><a href="#3-配置共享" class="headerlink" title="3. 配置共享"></a>3. 配置共享</h2><hr>
+<p>其实微服务启动时，会去nacos读取多个配置文件，例如：</p>
+<ul>
+<li><p><code>[spring.application.name]-[spring.profiles.active].yaml</code>，例如：userservice-dev.yaml</p>
+</li>
+<li><p><code>[spring.application.name].yaml</code>，例如：userservice.yaml</p>
+</li>
+</ul>
+<p>而<code>[spring.application.name].yaml</code>不包含环境，因此可以被多个环境共享。</p>
+<h3 id="3-1-添加一个环境共享配置"><a href="#3-1-添加一个环境共享配置" class="headerlink" title="3.1 添加一个环境共享配置"></a>3.1 添加一个环境共享配置</h3><p>在nacos中添加一个userservice.yaml文件：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041054227.png" alt="image-20210714173233650" style="zoom: 80%;" />
+
+
+
+<h3 id="3-2-在user-service中读取共享配置"><a href="#3-2-在user-service中读取共享配置" class="headerlink" title="3.2 在user-service中读取共享配置"></a>3.2 在user-service中读取共享配置</h3><p>在user-service服务中，修改PatternProperties类，读取新添加的属性：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041055653.png" alt="image-20210714173324231" style="zoom: 67%;" />
+
+<p>在user-service服务中，修改UserController，添加一个方法：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041056106.png" alt="image-20210714173721309" style="zoom:67%;" />
+
+
+
+<h3 id="3-3-配置共享测试"><a href="#3-3-配置共享测试" class="headerlink" title="3.3 配置共享测试"></a>3.3 配置共享测试</h3><p>运行两个UserApplication，使用不同的profile。修改UserApplication2这个启动项，改变其profile值：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041057604.png" alt="image-20210714173538538" style="zoom: 80%;" />
+
+
+
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041057594.png" alt="image-20210714173519963" style="zoom: 67%;" />
+
+
+
+<p>这样，UserApplication(8081)使用的profile是dev，UserApplication2(8082)使用的profile是test，启动UserApplication和UserApplication2。</p>
+<p>访问<a target="_blank" rel="noopener" href="http://localhost:8081/user/prop%EF%BC%8C%E7%BB%93%E6%9E%9C%EF%BC%9A">http://localhost:8081/user/prop，结果：</a></p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058548.png" alt="image-20210714174313344" style="zoom:67%;" />
+
+<p>访问<a target="_blank" rel="noopener" href="http://localhost:8082/user/prop%EF%BC%8C%E7%BB%93%E6%9E%9C%EF%BC%9A">http://localhost:8082/user/prop，结果：</a></p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058045.png" alt="image-20210714174424818" style="zoom:67%;" />
+
+<p>可以看出来，不管是dev，还是test环境，都读取到了envSharedValue这个属性的值。</p>
+<h3 id="3-4-配置共享的优先级"><a href="#3-4-配置共享的优先级" class="headerlink" title="3.4 配置共享的优先级"></a>3.4 配置共享的优先级</h3><p>当nacos、服务本地同时出现相同属性时，优先级有高低之分：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202408041058727.png" alt="image-20210714174623557" style="zoom:80%;" />
+
+<p>优先级低的配置会被先加载，所以后加载的是优先级高的配置，后加载的相同key会覆盖掉先前加载的，也就是远程nacos配置会覆盖本地相同key。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Nacos配置管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BB%9F%E4%B8%80%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1. 统一配置管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%9C%A8nacos%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 在nacos中添加配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%89%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 从微服务拉取配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">1.2.</span> <span class="toc-text">2. 配置热更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 方式一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 方式二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB"><span class="toc-number">1.3.</span> <span class="toc-text">3. 配置共享</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%8E%AF%E5%A2%83%E5%85%B1%E4%BA%AB%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 添加一个环境共享配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9C%A8user-service%E4%B8%AD%E8%AF%BB%E5%8F%96%E5%85%B1%E4%BA%AB%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 在user-service中读取共享配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 配置共享测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%85%8D%E7%BD%AE%E5%85%B1%E4%BA%AB%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 配置共享的优先级</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&text=Nacos配置管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&is_video=false&description=Nacos配置管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nacos配置管理&body=Check out this article: http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&title=Nacos配置管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&name=Nacos配置管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/&t=Nacos配置管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Git版本回退  作用：版本切换 命令形式：git reset --hard commitID commitID 可以使用git-log或git log指令查看   如何查看已经删除的记录？ git reflog 这个指令可以看到已经删除的提交记录    Git 版本回退（版本恢复）是指将代码库恢复到之前的某个状态。这在开发过程中非常常见，可能由于提交错误、引入了Bug或者需要撤销某些更改。Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git版本回退">
+<meta property="og:url" content="http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Git版本回退  作用：版本切换 命令形式：git reset --hard commitID commitID 可以使用git-log或git log指令查看   如何查看已经删除的记录？ git reflog 这个指令可以看到已经删除的提交记录    Git 版本回退（版本恢复）是指将代码库恢复到之前的某个状态。这在开发过程中非常常见，可能由于提交错误、引入了Bug或者需要撤销某些更改。Git">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-10T02:40:04.000Z">
+<meta property="article:modified_time" content="2024-09-01T07:56:24.571Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Git版本回退</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/03/09/Blog/git/2.%20Git%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&text=Git版本回退"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&is_video=false&description=Git版本回退"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git版本回退&body=Check out this article: http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&name=Git版本回退&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&t=Git版本回退"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text">Git版本回退</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-git-reset-%E5%9B%9E%E9%80%80%E7%89%88%E6%9C%AC"><span class="toc-number">1.1.</span> <span class="toc-text">1. *使用 git reset 回退版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-git-reset-soft-%E8%BD%AF%E9%80%80%E5%9B%9E"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 git reset --soft &lt;commit&gt;软退回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-git-reset-mixed-%E6%B7%B7%E5%90%88%E5%9B%9E%E9%80%80"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 git reset --mixed &lt;commit&gt;混合回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-git-reset-hard-%E7%A1%AC%E9%80%80%E5%9B%9E"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 git reset --hard &lt;commit&gt;硬退回</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-git-revert-%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.</span> <span class="toc-text">2. *使用 git revert 撤销提交</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-git-revert-%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 如何使用 git revert 撤销提交</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-git-checkout-%E5%88%87%E6%8D%A2%E5%88%B0%E7%89%B9%E5%AE%9A%E6%8F%90%E4%BA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">3. 使用 git checkout 切换到特定提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-git-reflog-%E6%89%BE%E5%9B%9E%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%8F%90%E4%BA%A4"><span class="toc-number">1.4.</span> <span class="toc-text">4. *使用 git reflog 找回丢失的提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8-git-stash-%E6%9A%82%E5%AD%98%E6%9C%AA%E6%8F%90%E4%BA%A4%E7%9A%84%E6%9B%B4%E6%94%B9"><span class="toc-number">1.5.</span> <span class="toc-text">5. 使用 git stash 暂存未提交的更改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">6. 总结</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Git版本回退
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-10T02:40:04.000Z" class="dt-published" itemprop="datePublished">2022-03-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Git/">Git</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Git版本回退"><a href="#Git版本回退" class="headerlink" title="Git版本回退"></a>Git版本回退</h1><hr>
+<ul>
+<li>作用：版本切换</li>
+<li>命令形式：<code>git reset --hard commitID</code><ul>
+<li>commitID 可以使用<code>git-log</code>或<code>git log</code>指令查看</li>
+</ul>
+</li>
+<li>如何查看已经删除的记录？<ul>
+<li><code>git reflog</code></li>
+<li>这个指令可以看到已经删除的提交记录</li>
+</ul>
+</li>
+</ul>
+<p>Git 版本回退（版本恢复）是指将代码库恢复到之前的某个状态。这在开发过程中非常常见，可能由于提交错误、引入了Bug或者需要撤销某些更改。Git 提供了多种方法来实现版本回退，主要包括 <code>git reset</code>、<code>git revert</code>、<code>git checkout</code> 和 <code>git reflog</code>。下面详细介绍这些方法及其适用场景。</p>
+<p>Git的版本回退操作默认是针对<strong>本地仓库</strong>的。当我使用 <code>git reset</code> 或其他回退命令时，它们最初只会影响我本地的代码库和提交历史。</p>
+<h2 id="1-使用-git-reset-回退版本"><a href="#1-使用-git-reset-回退版本" class="headerlink" title="1. *使用 git reset 回退版本"></a>1. *使用 <code>git reset</code> 回退版本</h2><hr>
+<p><code>git reset</code> 命令用于重置当前分支的指针到指定的提交，同时可以选择性地修改暂存区和工作目录。<code>git reset</code> 有三种模式：</p>
+<h3 id="1-1-git-reset-soft-软退回"><a href="#1-1-git-reset-soft-软退回" class="headerlink" title="1.1 git reset --soft &lt;commit&gt;软退回"></a>1.1 <code>git reset --soft &lt;commit&gt;</code><strong>软退回</strong></h3><p>将当前分支的指针（<code>HEAD</code>）移动到指定提交，相当于将本地仓库的状态退回到该提交点，但不会丢失任何工作进度。暂存区和工作目录中的更改都会保留，我可以基于这些更改进行进一步的修改或直接重新提交。</p>
+<ul>
+<li><p><strong>适用场景</strong>：需要修改最近的提交，但保留更改以便重新提交。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --soft HEAD~1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-2-git-reset-mixed-混合回退"><a href="#1-2-git-reset-mixed-混合回退" class="headerlink" title="1.2 git reset --mixed &lt;commit&gt;混合回退"></a>1.2 <code>git reset --mixed &lt;commit&gt;</code><strong>混合回退</strong></h3><p>将当前分支的指针（<code>HEAD</code>）移动到指定的提交点，相当于将本地仓库的状态退回到该提交点。同时，重置暂存区，使其与指定提交的状态保持一致。工作目录中的更改则会保留，但它们不再处于暂存状态。这意味着可以基于这些保留的更改进行进一步的修改，或选择性地重新暂存并提交。</p>
+<ul>
+<li><strong>适用场景</strong>：需要取消暂存的更改，但保留在工作目录中以便进一步修改。</li>
+<li><strong>示例</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --mixed HEAD~1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-3-git-reset-hard-硬退回"><a href="#1-3-git-reset-hard-硬退回" class="headerlink" title="1.3 git reset --hard &lt;commit&gt;硬退回"></a>1.3 <code>git reset --hard &lt;commit&gt;</code>硬退回</h3><p>将当前分支的指针（<code>HEAD</code>）移动到指定的提交点，相当于将本地仓库的状态完全退回到该提交点。与 <code>soft</code> 和 <code>mixed</code> 模式不同，<code>hard</code> 模式会重置分支指针、暂存区，并且<strong>彻底</strong>重置工作目录。这意味着所有未提交的更改（包括暂存区和工作目录中的更改）都会被<strong>永久删除</strong>，使本地仓库的状态完全与指定提交一致。这种操作非常危险，因为所有未提交的工作都会丢失且无法恢复。</p>
+<ul>
+<li><strong>适用场景</strong>：彻底回退到某个提交，丢弃所有未提交的更改。需谨慎使用。</li>
+<li><strong>示例</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-使用-git-revert-撤销提交"><a href="#2-使用-git-revert-撤销提交" class="headerlink" title="2. *使用 git revert 撤销提交"></a>2. *使用 <code>git revert</code> 撤销提交</h2><hr>
+<p> <code>git revert</code> 撤销提交是一个安全且常用的方法，它通过创建一个新的提交来撤销指定提交的更改，而不会修改提交历史。这对于已经推送到远程仓库的提交特别有效，因为它不会破坏历史记录。</p>
+<h3 id="2-1-如何使用-git-revert-撤销提交"><a href="#2-1-如何使用-git-revert-撤销提交" class="headerlink" title="2.1 如何使用 git revert 撤销提交"></a>2.1 如何使用 <code>git revert</code> 撤销提交</h3><ol>
+<li><p><strong>查看提交历史</strong>：<br>首先，需要确定要撤销的提交的哈希值（<code>&lt;commit&gt;</code>）。可以使用 <code>git log</code> 查看提交历史。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<p>示例输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">commit abc1234 (HEAD -&gt; main)</span><br><span class="line">Author: Your Name &lt;you@example.com&gt;</span><br><span class="line">Date:   Thu Sep 21 14:00:00 2024 +0000</span><br><span class="line"></span><br><span class="line">    Your commit message</span><br><span class="line"></span><br><span class="line">commit def5678</span><br><span class="line">Author: Your Name &lt;you@example.com&gt;</span><br><span class="line">Date:   Wed Sep 20 14:00:00 2024 +0000</span><br><span class="line"></span><br><span class="line">    Another commit message</span><br></pre></td></tr></table></figure>
+
+<p>假设想撤销提交 <code>abc1234</code>。</p>
+</li>
+<li><p>**执行 <code>git revert</code>**：<br>使用 <code>git revert</code> 命令来撤销指定的提交。需要提供要撤销的提交的哈希值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert &lt;commit&gt;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert abc1234</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释</strong>：<br>这会创建一个新的提交，内容与 <code>abc1234</code> 相反，从而撤销 <code>abc1234</code> 中的所有更改。</p>
+</li>
+<li><p><strong>解决可能的冲突</strong>：<br>如果撤销的提交与当前工作目录中的更改发生冲突，Git 会提示解决冲突。我们需要手动解决这些冲突，然后完成 revert 操作。</p>
+<ul>
+<li><strong>解决冲突</strong>：编辑有冲突的文件，解决所有冲突。</li>
+<li><strong>标记为已解决</strong>：使用 <code>git add</code> 将解决后的文件标记为已解决。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;conflicted-file&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>完成 revert</strong>：在解决所有冲突后，执行以下命令来完成 revert。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert --<span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>提交更改</strong>：<br>如果没有冲突，Git 会自动为我们创建一个新的提交。我们可以使用默认的提交消息，或者编辑提交消息以说明撤销的原因。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;Revert commit abc1234&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>推送更改到远程仓库</strong>（如果需要）：<br>如果是在本地仓库中完成了撤销操作，并且希望将这些更改推送到远程仓库，可以使用以下命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释</strong>：<br>将包含撤销更改的提交推送到远程仓库。</p>
+</li>
+</ol>
+<h2 id="3-使用-git-checkout-切换到特定提交"><a href="#3-使用-git-checkout-切换到特定提交" class="headerlink" title="3. 使用 git checkout 切换到特定提交"></a>3. 使用 <code>git checkout</code> 切换到特定提交</h2><hr>
+<p><code>git checkout</code> 可以用于切换到某个特定的提交或分支。</p>
+<ul>
+<li><p><strong>作用</strong>：查看或临时使用某个历史提交的状态。</p>
+</li>
+<li><p><strong>适用场景</strong>：需要查看旧版本代码或在旧版本基础上进行新的开发。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;commit&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注意</strong>：在 <code>detached HEAD</code> 状态下进行更改不会影响任何分支，建议在此状态下创建新分支以保存更改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b new-branch &lt;commit&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="4-使用-git-reflog-找回丢失的提交"><a href="#4-使用-git-reflog-找回丢失的提交" class="headerlink" title="4. *使用 git reflog 找回丢失的提交"></a>4. *使用 <code>git reflog</code> 找回丢失的提交</h2><hr>
+<p><code>git reflog</code> 记录了所有分支指针的移动历史，即使是通过 <code>reset</code>、<code>rebase</code> 等操作导致的丢失提交也能通过 <code>reflog</code> 找回。</p>
+<ul>
+<li><p><strong>作用</strong>：查看和恢复之前的分支状态，包括那些不在当前分支历史中的提交。</p>
+</li>
+<li><p><strong>适用场景</strong>：误用了 <code>git reset --hard</code> 丢失了重要的提交，需要找回这些提交。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line">git reset --hard &lt;reflog-commit&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>示例解释</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line"><span class="comment"># 输出类似：</span></span><br><span class="line"><span class="comment"># abc1234 HEAD@&#123;0&#125;: reset: moving to HEAD~1</span></span><br><span class="line"><span class="comment"># def5678 HEAD@&#123;1&#125;: commit: 添加新功能</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">git reset --hard def5678</span><br></pre></td></tr></table></figure>
+<p>这将把分支指针重置回 <code>def5678</code> 提交，恢复之前的状态。</p>
+</li>
+</ul>
+<h2 id="5-使用-git-stash-暂存未提交的更改"><a href="#5-使用-git-stash-暂存未提交的更改" class="headerlink" title="5. 使用 git stash 暂存未提交的更改"></a>5. 使用 <code>git stash</code> 暂存未提交的更改</h2><hr>
+<p>虽然不直接用于版本回退，<code>git stash</code> 可以临时保存未提交的更改，方便在回退或切换分支时保留工作进度。</p>
+<ul>
+<li><p><strong>作用</strong>：暂时保存工作目录的更改，清理工作区以便进行其他操作。</p>
+</li>
+<li><p><strong>适用场景</strong>：需要切换分支或回退版本，但不想丢失当前未提交的更改。</p>
+</li>
+<li><p><strong>示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git reset --hard &lt;commit&gt;</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><hr>
+<p>Git 提供了多种回退版本的方法，每种方法适用于不同的场景：</p>
+<ul>
+<li>**<code>git reset</code>**：适用于本地开发，需要修改提交历史。需谨慎在共享分支上使用。</li>
+<li>**<code>git revert</code>**：适用于公共分支，安全地撤销提交，不改变历史。</li>
+<li>**<code>git checkout</code>**：用于查看旧版本或在旧版本上创建新分支。</li>
+<li>**<code>git reflog</code>**：用于恢复丢失的提交，尤其在误操作后。</li>
+<li>**<code>git stash</code>**：用于临时保存未提交的更改，辅助回退和切换分支。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">1.</span> <span class="toc-text">Git版本回退</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-git-reset-%E5%9B%9E%E9%80%80%E7%89%88%E6%9C%AC"><span class="toc-number">1.1.</span> <span class="toc-text">1. *使用 git reset 回退版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-git-reset-soft-%E8%BD%AF%E9%80%80%E5%9B%9E"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 git reset --soft &lt;commit&gt;软退回</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-git-reset-mixed-%E6%B7%B7%E5%90%88%E5%9B%9E%E9%80%80"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 git reset --mixed &lt;commit&gt;混合回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-git-reset-hard-%E7%A1%AC%E9%80%80%E5%9B%9E"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 git reset --hard &lt;commit&gt;硬退回</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-git-revert-%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.</span> <span class="toc-text">2. *使用 git revert 撤销提交</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-git-revert-%E6%92%A4%E9%94%80%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 如何使用 git revert 撤销提交</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-git-checkout-%E5%88%87%E6%8D%A2%E5%88%B0%E7%89%B9%E5%AE%9A%E6%8F%90%E4%BA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">3. 使用 git checkout 切换到特定提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-git-reflog-%E6%89%BE%E5%9B%9E%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%8F%90%E4%BA%A4"><span class="toc-number">1.4.</span> <span class="toc-text">4. *使用 git reflog 找回丢失的提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8-git-stash-%E6%9A%82%E5%AD%98%E6%9C%AA%E6%8F%90%E4%BA%A4%E7%9A%84%E6%9B%B4%E6%94%B9"><span class="toc-number">1.5.</span> <span class="toc-text">5. 使用 git stash 暂存未提交的更改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">6. 总结</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&text=Git版本回退"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&is_video=false&description=Git版本回退"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git版本回退&body=Check out this article: http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&title=Git版本回退"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&name=Git版本回退&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/&t=Git版本回退"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

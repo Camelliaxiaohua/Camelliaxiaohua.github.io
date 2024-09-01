@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="线程安全问题在多线程编程中，多个线程可以同时访问和修改共享数据，如果不进行适当的同步处理，会导致数据不一致和不可预测的行为。 一、什么时候考虑安全问题？1.1 需要考虑线程安全问题的情况 条件1：多线程的并发环境下。 条件2：有共享的数据。 条件3：共享数据涉及到修改的操作。  1.2 一般情况下的线程安全性分析 局部变量：一般情况下局部变量不存在线程安全问题。特别是基本数据类型的局部变量，因为它">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程安全问题">
+<meta property="og:url" content="http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="线程安全问题在多线程编程中，多个线程可以同时访问和修改共享数据，如果不进行适当的同步处理，会导致数据不一致和不可预测的行为。 一、什么时候考虑安全问题？1.1 需要考虑线程安全问题的情况 条件1：多线程的并发环境下。 条件2：有共享的数据。 条件3：共享数据涉及到修改的操作。  1.2 一般情况下的线程安全性分析 局部变量：一般情况下局部变量不存在线程安全问题。特别是基本数据类型的局部变量，因为它">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-23T09:17:46.000Z">
+<meta property="article:modified_time" content="2024-09-01T14:45:53.433Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>线程安全问题</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/23/Blog/Java%20SE/85.%20%E6%AD%BB%E9%94%81/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/23/Blog/Java%20SE/83.%20%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%AE%A9%E4%BD%8D/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&text=线程安全问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&is_video=false&description=线程安全问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=线程安全问题&body=Check out this article: http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&name=线程安全问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&t=线程安全问题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">线程安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%80%83%E8%99%91%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">一、什么时候考虑安全问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 需要考虑线程安全问题的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 一般情况下的线程安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%A7%A3%E5%86%B3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 解决多线程并发操作中的安全问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">二、同步代码块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E4%BF%9D%E8%AF%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 线程同步机制保证多线程并发环境下的数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1. 线程同步的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2. 语法格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">3. 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B3%A8%E6%84%8F%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97%E7%9A%84%E8%8C%83%E5%9B%B4"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">4. 注意同步代码块的范围</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">代码解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%BB%93%E8%AE%BA"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、同步实例方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 同步实例方法的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">代码解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BD%BF%E7%94%A8%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 使用同步实例方法的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 注意事项</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        线程安全问题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-23T09:17:46.000Z" class="dt-published" itemprop="datePublished">2024-06-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="线程安全问题"><a href="#线程安全问题" class="headerlink" title="线程安全问题"></a>线程安全问题</h1><p>在多线程编程中，多个线程可以同时访问和修改<strong>共享数据</strong>，如果不进行适当的同步处理，会导致数据不一致和不可预测的行为。</p>
+<h2 id="一、什么时候考虑安全问题？"><a href="#一、什么时候考虑安全问题？" class="headerlink" title="一、什么时候考虑安全问题？"></a>一、什么时候考虑安全问题？</h2><h3 id="1-1-需要考虑线程安全问题的情况"><a href="#1-1-需要考虑线程安全问题的情况" class="headerlink" title="1.1 需要考虑线程安全问题的情况"></a>1.1 需要考虑线程安全问题的情况</h3><ul>
+<li><strong>条件1</strong>：多线程的并发环境下。</li>
+<li><strong>条件2</strong>：有共享的数据。</li>
+<li><strong>条件3</strong>：共享数据涉及到修改的操作。</li>
+</ul>
+<h3 id="1-2-一般情况下的线程安全性分析"><a href="#1-2-一般情况下的线程安全性分析" class="headerlink" title="1.2 一般情况下的线程安全性分析"></a>1.2 一般情况下的线程安全性分析</h3><ul>
+<li><p><strong>局部变量</strong>：一般情况下局部变量不存在线程安全问题。特别是<strong>基本数据类型</strong>的局部变量，因为它们在栈中存储，栈是线程私有的，不是共享的。如果是<strong>引用数据类型</strong>的局部变量，就另当别论了，因为它们可能指向堆中的共享对象。</p>
+</li>
+<li><p><strong>实例变量</strong>：可能存在线程安全问题。实例变量存储在堆中，堆是多线程共享的。因此，如果多个线程同时访问和修改实例变量，可能会引起数据不一致。</p>
+</li>
+<li><p><strong>静态变量</strong>：也可能存在线程安全问题。静态变量在堆中存储，多个线程可能会同时访问和修改静态变量，从而引发安全问题。</p>
+</li>
+</ul>
+<h3 id="1-3-解决多线程并发操作中的安全问题"><a href="#1-3-解决多线程并发操作中的安全问题" class="headerlink" title="1.3 解决多线程并发操作中的安全问题"></a>1.3 解决多线程并发操作中的安全问题</h3><p>为了解决多线程并发操作中的安全问题，可以使用线程同步机制，即让线程t1和线程t2排队执行，保证同一时间只有一个线程能够对共享数据进行修改。</p>
+<ul>
+<li><p><strong>线程同步机制</strong>：t1线程在执行的时候必须等待t2线程执行到某个位置之后，t1线程才能执行。只要t1和t2之间发生了等待，就认为是同步。这种机制虽然效率低，但是可以保证数据的安全性。</p>
+</li>
+<li><p><strong>线程异步机制</strong>：t1和t2各自独立执行，不需要等待对方。这种机制效率高，但是可能存在安全隐患，因为并发执行时可能会导致数据不一致。</p>
+</li>
+</ul>
+<h2 id="二、同步代码块"><a href="#二、同步代码块" class="headerlink" title="二、同步代码块"></a>二、同步代码块</h2><h3 id="2-1-线程同步机制保证多线程并发环境下的数据安全"><a href="#2-1-线程同步机制保证多线程并发环境下的数据安全" class="headerlink" title="2.1 线程同步机制保证多线程并发环境下的数据安全"></a>2.1 线程同步机制保证多线程并发环境下的数据安全</h3><h4 id="1-线程同步的本质"><a href="#1-线程同步的本质" class="headerlink" title="1. 线程同步的本质"></a>1. 线程同步的本质</h4><p>线程同步的本质是让多个线程排队执行共享资源的操作，确保同一时间只有一个线程能够访问和修改共享资源。这可以防止数据竞争和不一致问题。</p>
+<h4 id="2-语法格式"><a href="#2-语法格式" class="headerlink" title="2. 语法格式"></a>2. 语法格式</h4><p>使用<code> synchronized</code>关键字来实现线程同步。语法格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (共享对象) &#123;</span><br><span class="line">        <span class="comment">// 需要同步的代码</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的“共享对象”是用于线程同步的锁对象，必须是所有需要同步的线程共享的对象。如果选择不当，可能会导致不必要的线程同步，从而降低效率。</p>
+</blockquote>
+<h4 id="3-原理"><a href="#3-原理" class="headerlink" title="3. 原理"></a>3. 原理</h4><p><code> synchronized</code>关键字使用对象锁来实现同步。当一个线程进入同步代码块时，它需要先获取对象锁。只有获得对象锁的线程才能执行同步代码块，其它线程必须等待锁被释放。</p>
+<h4 id="4-注意同步代码块的范围"><a href="#4-注意同步代码块的范围" class="headerlink" title="4. 注意同步代码块的范围"></a>4. 注意同步代码块的范围</h4><p>同步代码块的范围应该尽可能小，以提高效率。过大的同步范围会导致更多的线程等待，从而降低程序性能。</p>
+<h4 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h4><ul>
+<li><code>lock</code>对象用于实现线程同步。</li>
+<li><code>synchronized (lock)</code>块确保同一时间只有一个线程可以执行其中的代码。</li>
+<li>当一个线程进入<code> synchronized</code>块，它需要获取<code> lock</code>对象的锁。</li>
+<li>当一个线程持有锁时，其他线程必须等待，直到锁被释放。</li>
+<li>确保<code> synchronized</code>块尽可能小，以提高并发效率。</li>
+</ul>
+<h3 id="2-2-示例代码"><a href="#2-2-示例代码" class="headerlink" title="2.2 示例代码"></a>2.2 示例代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.camellia.thread.ThreadSafe;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadSafeSolve</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建账户对象</span></span><br><span class="line">        <span class="type">AccountSolve</span> <span class="variable">act</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AccountSolve</span>(<span class="string">&quot;act-001&quot;</span>, <span class="number">10000</span>);</span><br><span class="line">        <span class="comment">// 创建线程对象1</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">WithdrawSolve</span>(act));</span><br><span class="line">        <span class="comment">// 创建线程对象2</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">WithdrawSolve</span>(act));</span><br><span class="line">        <span class="comment">// 启动线程</span></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 取款线程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WithdrawSolve</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//实例变量（共享数据）</span></span><br><span class="line">    <span class="keyword">private</span> AccountSolve act;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">WithdrawSolve</span><span class="params">(AccountSolve act)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.act = act;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.act.withdraw(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 银行账户</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AccountSolve</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">    <span class="keyword">private</span> String actNo;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> balance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">AccountSolve</span><span class="params">()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">AccountSolve</span><span class="params">(String actNo, <span class="type">double</span> balance)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.actNo = actNo;</span><br><span class="line">        <span class="built_in">this</span>.balance = balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getBalance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBalance</span><span class="params">(<span class="type">double</span> balance)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.balance = balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getActNo</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> actNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setActNo</span><span class="params">(String actNo)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.actNo = actNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取款方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> money 取款额度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">withdraw</span><span class="params">(<span class="type">double</span> money)</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123; <span class="comment">//这里填obj也可以，只要是需要排队线程的共享对象。（但是obj是静态变量，会全部加锁。）</span></span><br><span class="line">            <span class="type">double</span> <span class="variable">before</span> <span class="operator">=</span> <span class="built_in">this</span>.balance;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;线程正在取款&quot;</span> + money + <span class="string">&quot;，当前&quot;</span> + <span class="built_in">this</span>.getActNo() + <span class="string">&quot;账户余额&quot;</span> + before);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//第二步：修改余额</span></span><br><span class="line">            <span class="built_in">this</span>.setBalance(before - money);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;线程取款成功，当前&quot;</span> + <span class="built_in">this</span>.getActNo() + <span class="string">&quot;账户余额&quot;</span> + <span class="built_in">this</span>.getBalance());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里act是锁，多个线程抢一把锁。</p>
+</blockquote>
+<h3 id="2-3-结论"><a href="#2-3-结论" class="headerlink" title="2.3 结论"></a>2.3 结论</h3><p>线程同步机制通过使用对象锁来确保多线程环境下的数据安全。选择合适的锁对象并合理控制同步代码块的范围，可以有效地解决数据竞争问题，并尽量减少对程序性能的影响。</p>
+<h2 id="三、同步实例方法"><a href="#三、同步实例方法" class="headerlink" title="三、同步实例方法"></a>三、同步实例方法</h2><p>在 Java 中，除了使用同步代码块外，还可以使用同步实例方法来实现线程同步。同步实例方法会自动使用方法所属对象（即调用方法的对象）作为锁对象，从而确保同一时间只有一个线程可以执行该实例方法。</p>
+<h3 id="3-1-同步实例方法的语法"><a href="#3-1-同步实例方法的语法" class="headerlink" title="3.1 同步实例方法的语法"></a>3.1 同步实例方法的语法</h3><p>在 Java 中，如果将 <code>synchronized</code> 关键字放在实例方法的声明上，就可以将该方法声明为同步方法。其语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">methodName</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 同步代码块</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-示例代码"><a href="#3-2-示例代码" class="headerlink" title="3.2 示例代码"></a>3.2 示例代码</h3><p>假设我们有一个银行账户类 <code>BankAccount</code>，其中包含一个同步实例方法 <code>withdraw</code>，用来模拟多个线程同时对同一个账户进行取款操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.camellia.thread.ThreadSafe;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadSafeSolve2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建账户对象</span></span><br><span class="line">        <span class="type">AccountSolve</span> <span class="variable">act</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AccountSolve</span>(<span class="string">&quot;act-001&quot;</span>, <span class="number">10000</span>);</span><br><span class="line">        <span class="comment">// 创建线程对象1</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">WithdrawSolve</span>(act));</span><br><span class="line">        <span class="comment">// 创建线程对象2</span></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">WithdrawSolve</span>(act));</span><br><span class="line">        <span class="comment">// 启动线程</span></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 取款线程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WithdrawSolve2</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//实例变量（共享数据）</span></span><br><span class="line">    <span class="keyword">private</span> AccountSolve act;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">WithdrawSolve2</span><span class="params">(AccountSolve act)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.act = act;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.act.withdraw(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 银行账户</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AccountSolve2</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Object</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">    <span class="keyword">private</span> String actNo;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> balance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">AccountSolve2</span><span class="params">()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">AccountSolve2</span><span class="params">(String actNo, <span class="type">double</span> balance)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.actNo = actNo;</span><br><span class="line">        <span class="built_in">this</span>.balance = balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getBalance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBalance</span><span class="params">(<span class="type">double</span> balance)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.balance = balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getActNo</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> actNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setActNo</span><span class="params">(String actNo)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.actNo = actNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取款方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> money 取款额度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">withdraw</span><span class="params">(<span class="type">double</span> money)</span> &#123; <span class="comment">//设置同步实例变量</span></span><br><span class="line">            <span class="type">double</span> <span class="variable">before</span> <span class="operator">=</span> <span class="built_in">this</span>.balance;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;线程正在取款&quot;</span> + money + <span class="string">&quot;，当前&quot;</span> + <span class="built_in">this</span>.getActNo() + <span class="string">&quot;账户余额&quot;</span> + before);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//第二步：修改余额</span></span><br><span class="line">            <span class="built_in">this</span>.setBalance(before - money);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;线程取款成功，当前&quot;</span> + <span class="built_in">this</span>.getActNo() + <span class="string">&quot;账户余额&quot;</span> + <span class="built_in">this</span>.getBalance());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="代码解析-1"><a href="#代码解析-1" class="headerlink" title="代码解析"></a>代码解析</h4><ul>
+<li><code>withdraw</code> 方法使用了 <code>synchronized</code> 关键字修饰，成为一个同步实例方法。</li>
+<li>当线程调用 <code>withdraw</code> 方法时，会自动获取当前对象（<code>account</code>）的锁对象，因此同一时间只有一个线程可以执行 <code>withdraw</code> 方法。</li>
+<li>其他线程在执行 <code>withdraw</code> 方法时，如果此时有线程已经占有了 <code>account</code> 对象的锁，则必须等待锁被释放后才能继续执行。</li>
+</ul>
+<h3 id="3-3-使用同步实例方法的优势"><a href="#3-3-使用同步实例方法的优势" class="headerlink" title="3.3 使用同步实例方法的优势"></a>3.3 使用同步实例方法的优势</h3><ul>
+<li><strong>简单性</strong>：不需要显式指定锁对象，直接使用方法所属对象作为锁。</li>
+<li><strong>可读性</strong>：代码更加清晰，易于理解。</li>
+<li><strong>一致性</strong>：同一对象的不同同步方法共享同一把锁，保证了对象内部状态的一致性。</li>
+</ul>
+<h3 id="3-4-注意事项"><a href="#3-4-注意事项" class="headerlink" title="3.4 注意事项"></a>3.4 注意事项</h3><ul>
+<li>同步实例方法使用的是当前对象作为锁，因此在多线程环境中，需要确保同一对象的同步方法互斥执行，以防止竞态条件和数据不一致问题。</li>
+<li>同步实例方法的<strong>锁粒度比较粗</strong>，如果需要更细粒度的控制，可以考虑使用同步代码块并指定特定的锁对象。</li>
+</ul>
+<blockquote>
+<p>注意：若synchronized加在静态方法上就是对类加锁，仔细思考就是对类的静态变量加了锁。</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">线程安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%80%83%E8%99%91%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">一、什么时候考虑安全问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 需要考虑线程安全问题的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%80%E8%88%AC%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 一般情况下的线程安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%A7%A3%E5%86%B3%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 解决多线程并发操作中的安全问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">二、同步代码块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6%E4%BF%9D%E8%AF%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 线程同步机制保证多线程并发环境下的数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1. 线程同步的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2. 语法格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">3. 原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B3%A8%E6%84%8F%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97%E7%9A%84%E8%8C%83%E5%9B%B4"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">4. 注意同步代码块的范围</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">代码解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%BB%93%E8%AE%BA"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、同步实例方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 同步实例方法的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">代码解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BD%BF%E7%94%A8%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 使用同步实例方法的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 注意事项</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&text=线程安全问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&is_video=false&description=线程安全问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=线程安全问题&body=Check out this article: http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&title=线程安全问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&name=线程安全问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/23/Blog/Java%20SE/84.%20%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/&t=线程安全问题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

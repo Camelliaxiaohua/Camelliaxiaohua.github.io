@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="JWT令牌1. 什么是JWT令牌JWT（JSON Web Token）是一种开放标准（RFC 7519），用于在各方之间安全地传输信息作为 JSON 对象。它主要由三部分组成，通过点号（.）分隔：  Header（头部）：包含令牌的类型（即JWT）和使用的签名算法（例如HMAC SHA256或RSA）。 Payload（载荷）：包含令牌的声明（claim），即实际传输的信息，例如用户ID、角色、权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JWT令牌">
+<meta property="og:url" content="http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JWT令牌1. 什么是JWT令牌JWT（JSON Web Token）是一种开放标准（RFC 7519），用于在各方之间安全地传输信息作为 JSON 对象。它主要由三部分组成，通过点号（.）分隔：  Header（头部）：包含令牌的类型（即JWT）和使用的签名算法（例如HMAC SHA256或RSA）。 Payload（载荷）：包含令牌的声明（claim），即实际传输的信息，例如用户ID、角色、权">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-10T14:31:41.000Z">
+<meta property="article:modified_time" content="2024-07-11T16:54:36.000Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="Tips">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>JWT令牌</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&text=JWT令牌"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&is_video=false&description=JWT令牌"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JWT令牌&body=Check out this article: http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&name=JWT令牌&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&t=JWT令牌"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.</span> <span class="toc-text">JWT令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFJWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是JWT令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90%E5%92%8C%E6%A0%A1%E9%AA%8CJWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.2.</span> <span class="toc-text">2. 生成和校验JWT令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">JWT工具类</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        JWT令牌
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-10T14:31:41.000Z" class="dt-published" itemprop="datePublished">2024-07-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tips/">Tips</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Tips/" rel="tag">Tips</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="JWT令牌"><a href="#JWT令牌" class="headerlink" title="JWT令牌"></a>JWT令牌</h2><h3 id="1-什么是JWT令牌"><a href="#1-什么是JWT令牌" class="headerlink" title="1. 什么是JWT令牌"></a>1. 什么是JWT令牌</h3><p>JWT（JSON Web Token）是一种开放标准（RFC 7519），用于在各方之间安全地传输信息作为 JSON 对象。它主要由三部分组成，通过点号（.）分隔：</p>
+<ol>
+<li><strong>Header（头部）</strong>：包含令牌的类型（即JWT）和使用的签名算法（例如HMAC SHA256或RSA）。</li>
+<li><strong>Payload（载荷）</strong>：包含令牌的声明（claim），即实际传输的信息，例如用户ID、角色、权限等。</li>
+<li><strong>Signature（签名）</strong>：用于验证发送方是否有权创建令牌，确保信息未被篡改。</li>
+</ol>
+<p>JWT的工作流程通常如下：</p>
+<ul>
+<li><strong>生成令牌</strong>：在用户身份验证成功后，服务器根据用户信息和配置生成一个JWT，并将其发送给客户端。</li>
+<li><strong>验证令牌</strong>：客户端收到JWT后，可以存储在本地并在未来的API请求中发送该令牌。</li>
+<li><strong>使用令牌</strong>：服务端收到JWT后，会验证签名，解析载荷中的信息，并根据需要做出响应。</li>
+</ul>
+<p>JWT的优点包括：</p>
+<ul>
+<li><strong>无状态</strong>：服务器不需要在内存中存储会话信息，每个请求都包含足够的信息来验证用户。</li>
+<li><strong>可扩展性</strong>：因为JWT可以包含任何JSON数据，因此非常适合于传输各种类型的信息。</li>
+<li><strong>安全性</strong>：JWT可以使用密钥进行签名，确保发送方的身份和数据完整性。</li>
+</ul>
+<p>JWT是如何将原始的JSON格式数据，转变为字符串的呢？</p>
+<ul>
+<li><p>其实在生成JWT令牌时，会对JSON格式的数据进行一次编码：进行base64编码</p>
+</li>
+<li><p><strong>Base64：</strong>是一种基于64个可打印的字符来表示二进制数据的编码方式。既然能编码，那也就意味着也能解码。所使用的64个字符分别是A到Z、a到z、 0- 9，一个加号，一个斜杠，加起来就是64个字符。任何数据经过base64编码之后，最终就会通过这64个字符来表示。当然还有一个符号，那就是等号。等号它是一个补位的符号</p>
+</li>
+<li><p>需要注意的是Base64是编码方式，而不是加密方式。</p>
+</li>
+</ul>
+<h3 id="2-生成和校验JWT令牌"><a href="#2-生成和校验JWT令牌" class="headerlink" title="2. 生成和校验JWT令牌"></a>2. 生成和校验JWT令牌</h3><p>简单介绍了JWT令牌以及JWT令牌的组成之后，接下来介绍基于Java代码如何生成和校验JWT令牌。</p>
+<ul>
+<li>要想使用JWT令牌，需要先引入JWT的依赖：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JWT依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>生成和校验JWT令牌</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> camellia;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Jwts;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.SignatureAlgorithm;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;</span><br><span class="line"><span class="keyword">import</span> java.io.FileWriter;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String token;</span><br><span class="line">    <span class="comment">// 密钥，用于签名和验证签名，必须保密</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">SECRET_KEY</span> <span class="operator">=</span> <span class="string">&quot;Camellia24211&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">generateToken</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 创建头部</span></span><br><span class="line">        Map&lt;String, Object&gt; headerClaims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        headerClaims.put(<span class="string">&quot;typ&quot;</span>, <span class="string">&quot;JWT&quot;</span>);</span><br><span class="line">        headerClaims.put(<span class="string">&quot;alg&quot;</span>, <span class="string">&quot;HS256&quot;</span>);</span><br><span class="line">        <span class="comment">// // 创建载荷。（一个Map对象，用于存放JWT的声明）</span></span><br><span class="line">        Map&lt;String, Object&gt; payloadClaims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">// 将ID添加到声明中</span></span><br><span class="line">        payloadClaims.put(<span class="string">&quot;id&quot;</span>, <span class="number">24211</span>);</span><br><span class="line">        <span class="comment">// 将姓名添加到声明中</span></span><br><span class="line">        payloadClaims.put(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Camellia&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用Jwts.builder()创建JWT构建器</span></span><br><span class="line">        token = Jwts.builder()</span><br><span class="line">                <span class="comment">// 设置JWT的头部</span></span><br><span class="line">                .setHeader(headerClaims)</span><br><span class="line">                <span class="comment">// 设置JWT的声明（payload部分）</span></span><br><span class="line">                .setClaims(payloadClaims)</span><br><span class="line">                <span class="comment">// 使用HS256算法和指定的密钥&quot;camellia&quot;对JWT进行签名</span></span><br><span class="line">                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)</span><br><span class="line">                <span class="comment">// 设置JWT的过期时间为当前时间加上24小时（单位为毫秒）</span></span><br><span class="line">                .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + <span class="number">24</span> * <span class="number">3600</span> * <span class="number">1000</span>))</span><br><span class="line">                <span class="comment">// 压缩JWT以生成最终的紧凑的JWT字符串</span></span><br><span class="line">                .compact();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 打印生成的JWT字符串</span></span><br><span class="line">        System.out.println(token);</span><br><span class="line">        <span class="comment">// 将生成的JWT字符串写入文件</span></span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileWriter</span> <span class="variable">fw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileWriter</span>(<span class="string">&quot;src/main/resources/token.txt&quot;</span>)) &#123;</span><br><span class="line">            fw.write(token);</span><br><span class="line">            fw.flush();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">verifyToken</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化token变量为空字符串</span></span><br><span class="line">        token = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="comment">// 从文件中读取JWT字符串</span></span><br><span class="line">        <span class="keyword">try</span> (<span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;src/main/resources/token.txt&quot;</span>))) &#123;</span><br><span class="line">            String line;</span><br><span class="line">            <span class="keyword">while</span> ((line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">                token += line;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            System.out.println(token);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析并验证JWT字符串</span></span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line">                .setSigningKey(SECRET_KEY)</span><br><span class="line">                .parseClaimsJws(token)</span><br><span class="line">                .getBody();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 打印JWT的声明部分</span></span><br><span class="line">        System.out.println(claims);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="JWT工具类"><a href="#JWT工具类" class="headerlink" title="JWT工具类"></a>JWT工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> camellia.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Jwts;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.SignatureAlgorithm;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 签名密钥，用于对JWT进行签名和验证签名</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">signKey</span> <span class="operator">=</span> <span class="string">&quot;camellia&quot;</span>;</span><br><span class="line">    <span class="comment">// 令牌过期时间，单位为毫秒，这里设置为12小时（43200000毫秒）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Long</span> <span class="variable">expire</span> <span class="operator">=</span> <span class="number">43200000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成JWT令牌</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> claims JWT第二部分负载（payload）中存储的内容，通常是一个包含用户信息的Map</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 生成的JWT字符串</span></span><br><span class="line"><span class="comment">     * 使用 JWT 的库（比如 io.jsonwebtoken）来创建 JWT，通常会默认添加这些必要的头部信息。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">generateJwt</span><span class="params">(Map&lt;String, Object&gt; claims)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用Jwts.builder()创建JWT构建器</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                <span class="comment">// 将传入的Map对象添加到JWT的声明中</span></span><br><span class="line">                .addClaims(claims)</span><br><span class="line">                <span class="comment">// 使用HS256算法和指定的签名密钥对JWT进行签名</span></span><br><span class="line">                .signWith(SignatureAlgorithm.HS256, signKey)</span><br><span class="line">                <span class="comment">// 设置JWT的过期时间为当前时间加上指定的过期时长</span></span><br><span class="line">                .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + expire))</span><br><span class="line">                <span class="comment">// 压缩JWT以生成最终的紧凑的JWT字符串</span></span><br><span class="line">                .compact();</span><br><span class="line">        <span class="comment">// 返回生成的JWT字符串</span></span><br><span class="line">        <span class="keyword">return</span> jwt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析JWT令牌</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jwt JWT令牌字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> JWT第二部分负载（payload）中存储的内容，通常是一个包含用户信息的Claims对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Claims <span class="title function_">parseJWT</span><span class="params">(String jwt)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用Jwts.parser()创建JWT解析器</span></span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line">                <span class="comment">// 设置签名密钥，用于验证JWT的签名</span></span><br><span class="line">                .setSigningKey(signKey)</span><br><span class="line">                <span class="comment">// 解析JWT字符串并获取其负载部分（payload）</span></span><br><span class="line">                .parseClaimsJws(jwt)</span><br><span class="line">                <span class="comment">// 获取JWT的负载部分（payload）</span></span><br><span class="line">                .getBody();</span><br><span class="line">        <span class="comment">// 返回负载部分（payload）</span></span><br><span class="line">        <span class="keyword">return</span> claims;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.</span> <span class="toc-text">JWT令牌</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFJWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是JWT令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90%E5%92%8C%E6%A0%A1%E9%AA%8CJWT%E4%BB%A4%E7%89%8C"><span class="toc-number">1.2.</span> <span class="toc-text">2. 生成和校验JWT令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">JWT工具类</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&text=JWT令牌"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&is_video=false&description=JWT令牌"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JWT令牌&body=Check out this article: http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&title=JWT令牌"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&name=JWT令牌&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/&t=JWT令牌"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

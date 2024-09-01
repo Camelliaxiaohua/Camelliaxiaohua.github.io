@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="子查询什么是子查询 select语句中嵌套select语句就叫做子查询。 select语句可以嵌套在哪里？ where后面、from后面、select后面都是可以的。    123select ..(select)..from ..(select)..where ..(select)..    where后面使用子查询案例：找出高于平均薪资的员工姓名和薪资。错误的示范： 1select ename">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第05章05节-子查询">
+<meta property="og:url" content="http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="子查询什么是子查询 select语句中嵌套select语句就叫做子查询。 select语句可以嵌套在哪里？ where后面、from后面、select后面都是可以的。    123select ..(select)..from ..(select)..where ..(select)..    where后面使用子查询案例：找出高于平均薪资的员工姓名和薪资。错误的示范： 1select ename">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/21376908/1677477788393-e2525a0a-2092-4a5e-80e7-7f8df04f6a6c.png#averageHue=%23151311&clientId=ud7d035d7-9c64-4&from=paste&height=163&id=u397cf064&originHeight=163&originWidth=303&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5620&status=done&style=shadow&taskId=uc8a5cf34-abe3-446f-9948-e3cedf385f9&title=&width=303">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/21376908/1677477892811-ef9b366b-82be-4407-86f1-8dfa81492d8c.png#averageHue=%23151311&clientId=ud7d035d7-9c64-4&from=paste&height=162&id=u5d9f4ab4&originHeight=162&originWidth=397&originalType=binary&ratio=1&rotation=0&showTitle=false&size=7422&status=done&style=shadow&taskId=uc90565b7-edc2-43bf-ba54-1e7db925c63&title=&width=397">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/21376908/1678063689524-a204a93a-6454-4ff7-a1c6-ac5229edae91.png#averageHue=%231a1714&clientId=ud9fded62-54bb-4&from=paste&height=428&id=u2b69cf05&originHeight=428&originWidth=276&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16342&status=done&style=shadow&taskId=ua4f4e977-d3e6-4e90-8781-42050638d4a&title=&width=276">
+<meta property="article:published_time" content="2024-06-10T13:37:04.000Z">
+<meta property="article:modified_time" content="2024-08-29T15:22:47.081Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2023/png/21376908/1677477788393-e2525a0a-2092-4a5e-80e7-7f8df04f6a6c.png#averageHue=%23151311&clientId=ud7d035d7-9c64-4&from=paste&height=163&id=u397cf064&originHeight=163&originWidth=303&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5620&status=done&style=shadow&taskId=uc8a5cf34-abe3-446f-9948-e3cedf385f9&title=&width=303">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>第05章05节-子查询</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/11/Blog/Java%20SE/34.%20%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/09/Blog/MySQL/17.%20%E7%AC%AC05%E7%AB%A004%E8%8A%82-%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2-%E5%85%A8%E8%BF%9E%E6%8E%A5&%E5%A4%9A%E5%BC%A0%E8%A1%A8%E8%BF%9E%E6%8E%A5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&text=第05章05节-子查询"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&is_video=false&description=第05章05节-子查询"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第05章05节-子查询&body=Check out this article: http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&name=第05章05节-子查询&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&t=第05章05节-子查询"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.</span> <span class="toc-text">什么是子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#where%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">where后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#from%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.</span> <span class="toc-text">from后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.4.</span> <span class="toc-text">select后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exists%E3%80%81not-exists"><span class="toc-number">1.5.</span> <span class="toc-text">exists、not exists</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in%E5%92%8Cexists%E5%8C%BA%E5%88%AB"><span class="toc-number">1.6.</span> <span class="toc-text">in和exists区别</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        第05章05节-子查询
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-10T13:37:04.000Z" class="dt-published" itemprop="datePublished">2024-06-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h1><h2 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h2><ol>
+<li>select语句中嵌套select语句就叫做子查询。</li>
+<li>select语句可以嵌套在哪里？<ul>
+<li>where后面、from后面、select后面都是可以的。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ..(<span class="keyword">select</span>)..</span><br><span class="line"><span class="keyword">from</span> ..(<span class="keyword">select</span>)..</span><br><span class="line"><span class="keyword">where</span> ..(<span class="keyword">select</span>)..</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="where后面使用子查询"><a href="#where后面使用子查询" class="headerlink" title="where后面使用子查询"></a>where后面使用子查询</h2><p>案例：找出高于平均薪资的员工姓名和薪资。<br>错误的示范：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ename,sal <span class="keyword">from</span> emp <span class="keyword">where</span> sal <span class="operator">&gt;</span> <span class="built_in">avg</span>(sal);</span><br></pre></td></tr></table></figure>
+
+<p>错误原因：where后面不能直接使用分组函数。<br>可以使用子查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ename,sal <span class="keyword">from</span> emp <span class="keyword">where</span> sal <span class="operator">&gt;</span> (<span class="keyword">select</span> <span class="built_in">avg</span>(sal) <span class="keyword">from</span> emp);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="from后面使用子查询"><a href="#from后面使用子查询" class="headerlink" title="from后面使用子查询"></a>from后面使用子查询</h2><p>小窍门：from后面的子查询可以看做一张临时表。<br>案例：找出每个部门的平均工资的等级。<br>第一步：先找出每个部门平均工资。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> deptno, <span class="built_in">avg</span>(sal) avgsal <span class="keyword">from</span> emp <span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/21376908/1677477788393-e2525a0a-2092-4a5e-80e7-7f8df04f6a6c.png#averageHue=%23151311&clientId=ud7d035d7-9c64-4&from=paste&height=163&id=u397cf064&originHeight=163&originWidth=303&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5620&status=done&style=shadow&taskId=uc8a5cf34-abe3-446f-9948-e3cedf385f9&title=&width=303" alt="image.png"><br>第二步：将以上查询结果当做临时表t，t表和salgrade表进行连接查询。条件：t.avgsal between s.losal and s.hisal</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t.<span class="operator">*</span>,s.grade <span class="keyword">from</span> (<span class="keyword">select</span> deptno, <span class="built_in">avg</span>(sal) avgsal <span class="keyword">from</span> emp <span class="keyword">group</span> <span class="keyword">by</span> deptno) t <span class="keyword">join</span> salgrade s <span class="keyword">on</span> t.avgsal <span class="keyword">between</span> s.losal <span class="keyword">and</span> s.hisal;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/21376908/1677477892811-ef9b366b-82be-4407-86f1-8dfa81492d8c.png#averageHue=%23151311&clientId=ud7d035d7-9c64-4&from=paste&height=162&id=u5d9f4ab4&originHeight=162&originWidth=397&originalType=binary&ratio=1&rotation=0&showTitle=false&size=7422&status=done&style=shadow&taskId=uc90565b7-edc2-43bf-ba54-1e7db925c63&title=&width=397" alt="image.png"></p>
+<h2 id="select后面使用子查询"><a href="#select后面使用子查询" class="headerlink" title="select后面使用子查询"></a>select后面使用子查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,(<span class="keyword">select</span> d.dname <span class="keyword">from</span> dept d <span class="keyword">where</span> e.deptno <span class="operator">=</span> d.deptno) <span class="keyword">as</span> dname <span class="keyword">from</span> emp e;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/21376908/1678063689524-a204a93a-6454-4ff7-a1c6-ac5229edae91.png#averageHue=%231a1714&clientId=ud9fded62-54bb-4&from=paste&height=428&id=u2b69cf05&originHeight=428&originWidth=276&originalType=binary&ratio=1&rotation=0&showTitle=false&size=16342&status=done&style=shadow&taskId=ua4f4e977-d3e6-4e90-8781-42050638d4a&title=&width=276" alt="image.png"></p>
+<h2 id="exists、not-exists"><a href="#exists、not-exists" class="headerlink" title="exists、not exists"></a>exists、not exists</h2><p>在 MySQL 数据库中，EXISTS（存在）用于检查子查询的查询结果行数是否大于0。如果子查询的查询结果行数大于0，则 EXISTS 条件为真。（即存在查询结果则是true。）</p>
+<p>主要应用场景：</p>
+<ul>
+<li>EXISTS 可以与 SELECT、UPDATE、DELETE 一起使用，用于检查另一个查询是否返回任何行；</li>
+<li>EXISTS 可以用于验证条件子句中的表达式是否存在；</li>
+<li>EXISTS 常用于子查询条件过滤，例如查询有订单的用户等。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> t_customer;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> t_order;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_customer(</span><br><span class="line">  customer_id <span class="type">int</span>,</span><br><span class="line">  customer_name <span class="type">varchar</span>(<span class="number">32</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_order(</span><br><span class="line">  order_id <span class="type">int</span>,</span><br><span class="line">  order_price <span class="type">decimal</span>(<span class="number">5</span>,<span class="number">1</span>),</span><br><span class="line">  customer_id <span class="type">int</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_customer(customer_id,customer_name) <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;zhangsan&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_customer(customer_id,customer_name) <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;lisi&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_customer(customer_id,customer_name) <span class="keyword">values</span>(<span class="number">3</span>,<span class="string">&#x27;wangwu&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_order(order_id, order_price, customer_id) <span class="keyword">values</span>(<span class="number">10</span>, <span class="number">1000.0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_order(order_id, order_price, customer_id) <span class="keyword">values</span>(<span class="number">20</span>, <span class="number">2000.0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_order(order_id, order_price, customer_id) <span class="keyword">values</span>(<span class="number">30</span>, <span class="number">3000.0</span>, <span class="number">2</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_order(order_id, order_price, customer_id) <span class="keyword">values</span>(<span class="number">40</span>, <span class="number">4000.0</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">commit</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_customer;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_order;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们来看一个简单的案例，假设我们要查询先前有过订单的顾客，而订单信息保存在 t_order 表中，顾客信息保存在 t_customer 表中。我们可以使用以下 sql 语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_customer c <span class="keyword">where</span> <span class="keyword">exists</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_order o <span class="keyword">where</span> o.customer_id<span class="operator">=</span>c.customer_id);</span><br></pre></td></tr></table></figure>
+
+<p>在这个查询语句中，子查询用于检查是否有订单与每个客户相关联。如果子查询返回至少一行，则表示该顾客已经下过订单，并返回此客户的所有信息，否则该顾客将不被包含在结果中。</p>
+<p>以下是这个查询语句的执行过程：</p>
+<ol>
+<li>首先查询表 t_customer 中的所有顾客信息（以下简称为顾客表）； </li>
+<li>对于顾客表中的每一行，都执行一次子查询，子查询查询该顾客有没有订单，如果有，则在结果集中保留该顾客信息；如果没有，则将该顾客排除； </li>
+<li>最终返回有订单顾客的所有信息。</li>
+</ol>
+<p>除了 EXISTS，也可以使用 NOT EXISTS 条件从 SELECT、UPDATE、DELETE 语句中获取子查询的返回结果。NOT EXISTS 用于检查一个子查询是否返回任何行，如果没有行返回，那么 NOT EXISTS 将返回 true。</p>
+<p>例如，我们想要查找所有没有下过订单的顾客，可以使用以下 sql 语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_customer c <span class="keyword">where</span> <span class="keyword">not</span> <span class="keyword">exists</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_order o <span class="keyword">where</span> o.customer_id<span class="operator">=</span>c.customer_id);</span><br></pre></td></tr></table></figure>
+
+<p>在这个查询语句中，如果没有任何与顾客相关联的订单，则 NOT EXISTS 子查询将返回一个空结果集，这时候 WHERE 条件为 true，并将返回所有顾客信息。如果顾客有订单，则 NOT EXISTS 子查询的结果集将不为空，WHERE 条件为 false，则不会返回该顾客的信息。</p>
+<p>总之，无论是 EXISTS 还是 NOT EXISTS，都是非常有用的 SQL 工具。可以通过它们来结合子查询来动态过滤查询结果，使 SQL 查询变得更加灵活和高效。</p>
+<h2 id="in和exists区别"><a href="#in和exists区别" class="headerlink" title="in和exists区别"></a>in和exists区别</h2><p>IN 和 EXISTS 都是用于关系型数据库查询的操作符。不同之处在于：</p>
+<ol>
+<li>IN 操作符是根据指定<strong>列表中的值</strong>来判断是否满足条件，而 EXISTS 操作符则是根据子查询的结果<strong>是否有返回记录集来判断</strong>。 </li>
+<li>**<u>EXISTS 操作符通常比 IN 操作符更快，尤其是在子查询返回记录数很大的情况下。</u>**因为 EXISTS 只需要判断是否存在符合条件的记录，而 IN 操作符需要比对整个列表，因此执行效率相对较低。 </li>
+<li>IN 操作符可同时匹配多个值，而 EXISTS 只能匹配一组条件。</li>
+</ol>
+<p>下面是一个简单的示例，用于演示 IN 和 EXISTS 之间的区别。假设我们有两个表 orders 和 products，orders 表中记录了订单信息，products 表中记录了商品信息。现在我们想查询所有“手机”和“平板电脑”这两种商品中，至少有一笔订单销售了 $1000 以上的商品：</p>
+<p>使用 IN 操作符：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> product_name <span class="keyword">IN</span> (<span class="string">&#x27;手机&#x27;</span>, <span class="string">&#x27;平板电脑&#x27;</span>)</span><br><span class="line"><span class="keyword">AND</span> product_id <span class="keyword">IN</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> product_id</span><br><span class="line">  <span class="keyword">FROM</span> orders</span><br><span class="line">  <span class="keyword">WHERE</span> order_amount <span class="operator">&gt;</span> <span class="number">1000</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>使用 EXISTS 操作符：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> product_name <span class="keyword">IN</span> (<span class="string">&#x27;手机&#x27;</span>, <span class="string">&#x27;平板电脑&#x27;</span>)</span><br><span class="line"><span class="keyword">AND</span> <span class="keyword">EXISTS</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> orders</span><br><span class="line">  <span class="keyword">WHERE</span> orders.product_id <span class="operator">=</span> products.product_id</span><br><span class="line">  <span class="keyword">AND</span> order_amount <span class="operator">&gt;</span> <span class="number">1000</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>总之，IN 和 EXISTS 都是用于条件过滤的操作符，但其实现方式和性能特点都不同，需要根据具体情况进行选择和使用。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.</span> <span class="toc-text">什么是子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#where%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">where后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#from%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.</span> <span class="toc-text">from后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select%E5%90%8E%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.4.</span> <span class="toc-text">select后面使用子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exists%E3%80%81not-exists"><span class="toc-number">1.5.</span> <span class="toc-text">exists、not exists</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in%E5%92%8Cexists%E5%8C%BA%E5%88%AB"><span class="toc-number">1.6.</span> <span class="toc-text">in和exists区别</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&text=第05章05节-子查询"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&is_video=false&description=第05章05节-子查询"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第05章05节-子查询&body=Check out this article: http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&title=第05章05节-子查询"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&name=第05章05节-子查询&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/10/Blog/MySQL/18.%20%E7%AC%AC05%E7%AB%A005%E8%8A%82-%E5%AD%90%E6%9F%A5%E8%AF%A2/&t=第05章05节-子查询"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

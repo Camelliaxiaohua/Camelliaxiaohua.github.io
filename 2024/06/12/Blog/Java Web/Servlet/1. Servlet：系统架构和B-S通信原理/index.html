@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    Servlet：系统架构&amp;B&#x2F;S通信原理一、关于系统架构 系统架构包括什么形式？ C&#x2F;S架构 B&#x2F;S架构   C&#x2F;S架构？ Client &#x2F; Server（客户端 &#x2F; 服务器） C&#x2F;S架构的软件或者说系统有哪些呢？ QQ（通过安装特定的软件客户端才能使用的软件）   C&#x2F;S架构的特点：需要安装特定的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet：系统架构和B&#x2F;S通信原理">
+<meta property="og:url" content="http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    Servlet：系统架构&amp;B&#x2F;S通信原理一、关于系统架构 系统架构包括什么形式？ C&#x2F;S架构 B&#x2F;S架构   C&#x2F;S架构？ Client &#x2F; Server（客户端 &#x2F; 服务器） C&#x2F;S架构的软件或者说系统有哪些呢？ QQ（通过安装特定的软件客户端才能使用的软件）   C&#x2F;S架构的特点：需要安装特定的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406270849356.png">
+<meta property="article:published_time" content="2024-06-12T06:49:47.000Z">
+<meta property="article:modified_time" content="2024-06-27T01:04:43.352Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406270849356.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Servlet：系统架构和B/S通信原理</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84&BS%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%20%20/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/12/Blog/MySQL/22.%20%E7%AC%AC06%E7%AB%A002%E8%8A%82-CURD/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&text=Servlet：系统架构和B/S通信原理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&is_video=false&description=Servlet：系统架构和B/S通信原理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Servlet：系统架构和B/S通信原理&body=Check out this article: http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&name=Servlet：系统架构和B/S通信原理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&t=Servlet：系统架构和B/S通信原理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-B-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Servlet：系统架构&amp;B&#x2F;S通信原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%B3%E4%BA%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">一、关于系统架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81B-S%E7%BB%93%E6%9E%84%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%EF%BC%88%E6%B2%A1%E6%9C%89%E6%B6%89%E5%8F%8A%E5%88%B0Java%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、B&#x2F;S结构的系统通信原理（没有涉及到Java小程序）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-WEB%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BF%E9%97%AE%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 WEB系统的访问过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%85%B3%E4%BA%8E%E5%9F%9F%E5%90%8D%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2  关于域名：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-IP%E5%9C%B0%E5%9D%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3  IP地址是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4  端口号是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%B8%80%E4%B8%AAWEB%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 2.5  一个WEB系统的通信原理 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E4%BB%80%E4%B9%88%E6%98%AFURL%EF%BC%9F"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6  什么是URL？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E4%BB%80%E4%B9%88%E6%98%AF%E8%AF%B7%E6%B1%82%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%EF%BC%9F"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 什么是请求，什么是响应？</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Servlet：系统架构和B/S通信原理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-12T06:49:47.000Z" class="dt-published" itemprop="datePublished">2024-06-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-Web/">Java Web</a> › <a class="category-link" href="/categories/Java-Web/Servlet/">Servlet</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Servlet：系统架构-B-S通信原理"><a href="#Servlet：系统架构-B-S通信原理" class="headerlink" title="Servlet：系统架构&amp;B&#x2F;S通信原理"></a>Servlet：系统架构&amp;B&#x2F;S通信原理</h1><h2 id="一、关于系统架构"><a href="#一、关于系统架构" class="headerlink" title="一、关于系统架构"></a>一、关于系统架构</h2><ol>
+<li>系统架构包括什么形式？<ul>
+<li><strong>C&#x2F;S架构</strong></li>
+<li><strong>B&#x2F;S架构</strong></li>
+</ul>
+</li>
+<li>C&#x2F;S架构？<ul>
+<li>Client &#x2F; Server（客户端 &#x2F; 服务器）</li>
+<li>C&#x2F;S架构的软件或者说系统有哪些呢？<ul>
+<li>QQ（通过安装特定的软件客户端才能使用的软件）</li>
+</ul>
+</li>
+<li>C&#x2F;S架构的特点：需要安装特定的客户端软件。</li>
+<li>C&#x2F;S架构的系统优点和缺点分别是什么？<ul>
+<li>优点：<ul>
+<li>速度快（软件中的数据大部分都是集成到客户端软件当中的，很少量的数据从服务器端传送过来，所以C&#x2F;S结构的系统速度快）</li>
+<li>体验好（速度又快，界面又酷炫，当然体验好了。）</li>
+<li>界面酷炫（专门的语言去实现界面的，更加灵活。）</li>
+<li>服务器压力小（因为大量的数据都是集成在客户端软件当中，所以服务器只需要传送很少的数据量，当然服务器压力小。）</li>
+<li><strong>安全</strong>（因为大量的数据是集成在客户端软件当中的，并且客户端有很多个，服务器虽然只有一个，就算服务器那边地震了，火灾了，服务器受损了，问题也不大，因为大量的数据在多个客户端上有缓存，有存储，所以从这个方面来说，C&#x2F;S结构的系统比较安全。）</li>
+<li>…..</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>升级维护比较差劲。（升级维护比较麻烦。成本比较高。每一个客户端软件都需要升级。有一些软件不是那么容易安装的。）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B&#x2F;S架构？<ul>
+<li>B&#x2F;S（Browser &#x2F; Server，浏览器 &#x2F; 服务器）</li>
+<li><a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jd.com/">http://www.jd.com</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.126.com/">http://www.126.com</a></li>
+<li>B&#x2F;S结构的系统是不是一个特殊的C&#x2F;S系统？<ul>
+<li>实际上B&#x2F;S结构的系统还是一个C&#x2F;S，只不过这个C比较特殊，这个Client是一个固定不变浏览器软件。</li>
+</ul>
+</li>
+<li>B&#x2F;S结构的系统优点和缺点是：<ul>
+<li>优点：<ul>
+<li>升级维护方便，成本比较低。（只需要升级服务器端即可。）</li>
+<li>不需要安装特定的客户端软件，用户操作极其方便。只需要打开浏览器，输入网址即可。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>速度慢（不是因为带宽低的问题，是因为所有的数据都是在服务器上，用户发送的每一个请求都是需要服务器全身心的响应数据，所以B&#x2F;S结构的系统在网络中传送的数据量比较大。）</li>
+<li>体验差（界面不是那么酷炫，因为浏览器只支持三个语言HTML CSS JavaScript。在加上速度慢。）</li>
+<li>不安全（所有的数据都在服务器上，只要服务器发生火灾，地震等不可抗力，最终数据全部丢失。）</li>
+<li>….</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>C&#x2F;S和B&#x2F;S结构的系统，哪个好，哪个不好？<ul>
+<li>不同结构的系统在不同的业务场景下有不同的适用场景。</li>
+<li>娱乐性软件建议使用？<ul>
+<li>C&#x2F;S 结构</li>
+</ul>
+</li>
+<li>公司内部使用的一些业务软件建议使用？<ul>
+<li>公司内部使用的系统，需要维护成本低。</li>
+<li>公司内部使用的系统，不需要很酷炫。</li>
+<li>公司内部使用的企业级系统主要是能够进行数据的维护即可。</li>
+<li>B&#x2F;S 结构。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注意了：开发B&#x2F;S结构的系统，其实就是开发网站，其实就是开发一个WEB系统。<ul>
+<li>开发一个WEB系统你需要会哪些技术？<ul>
+<li>WEB前端（运行在浏览器上的程序。）<ul>
+<li>HTML</li>
+<li>CSS</li>
+<li>JavaScript</li>
+</ul>
+</li>
+<li>WEB后端（WEB服务器端的程序。）<ul>
+<li>Java可以（Java做WEB开发我们称为JavaWEB开发。JavaWEB开发最核心的规范：Servlet【Server Applet服务器端的Java小程序。】）</li>
+<li>C语言也可以</li>
+<li>C++也可以</li>
+<li>Python也行</li>
+<li>PHP也可以</li>
+<li>….</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaEE是什么？<ul>
+<li>Java包括三大块：<ul>
+<li>JavaSE<ul>
+<li>Java标准版（一套类库：别人写好的一套类库，只不过这个类库是标准类库，走EE，或者走ME，这个SE一定是基础，先学。）</li>
+</ul>
+</li>
+<li>JavaEE（WEB方向，WEB系统。）<ul>
+<li>Java企业版（也是一套类库：也是别人写好的一套类库，只不过这套类库可以帮助我们完成企业级项目的开发，专门为企业内部提供解决方案的一套（多套）类库。）</li>
+<li>别人写好的，你用就行了，用它可以开发企业级项目。</li>
+<li>可以开发web系统。</li>
+<li>Java比较火爆的就是这个JavaEE方向。</li>
+</ul>
+</li>
+<li>JavaME<ul>
+<li>Java微型版（还是一套类库，只不过这套类库帮助我们进行电子微型设备内核程序的开发）</li>
+<li>机顶盒内核程序，吸尘器内核程序，电冰箱内核程序，电饭煲内核程序。。。。。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaEE实际上包括很多种规范，13种规范，其中Servlet就是JavaEE规范之一。学Servlet还是Java语言。</li>
+</ul>
+</li>
+</ol>
+<h2 id="二、B-S结构的系统通信原理（没有涉及到Java小程序）"><a href="#二、B-S结构的系统通信原理（没有涉及到Java小程序）" class="headerlink" title="二、B&#x2F;S结构的系统通信原理（没有涉及到Java小程序）"></a>二、B&#x2F;S结构的系统通信原理（没有涉及到Java小程序）</h2><h3 id="2-1-WEB系统的访问过程"><a href="#2-1-WEB系统的访问过程" class="headerlink" title="2.1 WEB系统的访问过程"></a>2.1 WEB系统的访问过程</h3><ol>
+<li>第一步：打开浏览器</li>
+<li>第二步：找到地址栏</li>
+<li>第三步：输入一个合法的网址</li>
+<li>第四步：回车</li>
+<li>第五步：在浏览器上会展示响应的结果。</li>
+</ol>
+<h3 id="2-2-关于域名："><a href="#2-2-关于域名：" class="headerlink" title="2.2  关于域名："></a>2.2  <strong>关于域名：</strong></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com/</a> （网址）</li>
+<li><a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 是一个域名</li>
+<li>在浏览器地址栏上输入域名，回车之后，域名解析器会将域名解析出来一个具体的IP地址和端口号等。</li>
+<li>解析结果也许是：<a target="_blank" rel="noopener" href="http://110.242.68.3/index.html">http://110.242.68.3:80/index.html</a></li>
+</ul>
+<h3 id="2-3-IP地址是什么？"><a href="#2-3-IP地址是什么？" class="headerlink" title="2.3  IP地址是什么？"></a>2.3  <strong>IP地址是什么？</strong></h3><ul>
+<li>计算机在网络当中的一个身份证号。在同一个网络当中，IP地址是唯一的。</li>
+<li>A计算机要想和B计算机通信，首先你需要知道B计算机的IP地址，有了IP地址才能建立连接。</li>
+</ul>
+<h3 id="2-4-端口号是什么？"><a href="#2-4-端口号是什么？" class="headerlink" title="2.4  端口号是什么？"></a>2.4  <strong>端口号是什么？</strong></h3><ul>
+<li>一个端口代表一个软件（一个端口代表一个应用，一个端口仅代表一个服务）。</li>
+<li>一个计算机当中有很多软件，每一个软件启动之后都有一个端口号。</li>
+<li>在同一个计算机上，端口号具有唯一性。</li>
+</ul>
+<h3 id="2-5-一个WEB系统的通信原理"><a href="#2-5-一个WEB系统的通信原理" class="headerlink" title=" 2.5  一个WEB系统的通信原理 "></a><a id="section1"> 2.5  <strong>一个WEB系统的通信原理</strong> </a></h3><ol>
+<li>第一步：用户输入网址（URL）</li>
+<li>第二步：域名解析器进行域名解析：<a target="_blank" rel="noopener" href="http://110.242.68.3/index.html">http://110.242.68.3:80/index.html</a></li>
+<li>第三步：浏览器软件在网络中搜索110.242.68.3这一台主机，直到找到这台主机。</li>
+<li>第四步：定位110.242.68.3这台主机上的服务器软件，因为是80端口，可以很轻松的定位到80端口对应的服务器软件。</li>
+<li>第五步：80端口对应的服务器软件得知浏览器想要的资源名是：index.html</li>
+<li>第六步：服务器软件找到index.html文件，并且将index.html文件中的内容直接输出响应到浏览器上。</li>
+<li>第七步：浏览器接收到来自服务器的代码（HTML CSS JS）</li>
+<li>第八步：浏览器渲染，执行HTML CSS JS代码，展示效果。</li>
+</ol>
+<h3 id="2-6-什么是URL？"><a href="#2-6-什么是URL？" class="headerlink" title="2.6  什么是URL？"></a>2.6  什么是URL？</h3><ul>
+<li>统一资源定位符（<a target="_blank" rel="noopener" href="http://www.baidu.com)/">http://www.baidu.com）</a></li>
+</ul>
+<h3 id="2-7-什么是请求，什么是响应？"><a href="#2-7-什么是请求，什么是响应？" class="headerlink" title="2.7 什么是请求，什么是响应？"></a>2.7 什么是请求，什么是响应？</h3><ul>
+<li>请求和响应实际上说的是数据的流向不同。</li>
+<li>从Browser端发送数据到Server端，我们称为请求。英语单词：request</li>
+<li>从Server端向浏览器Browser端发送数据，我们称为响应。英语单词：response</li>
+<li>B –&gt; S （请求request）</li>
+<li>S –&gt; B （响应response）</li>
+</ul>
+<p>  <img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406270849356.png"></p>
+<hr>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p><a href="#section1">WEB系统的通信原理</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-B-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Servlet：系统架构&amp;B&#x2F;S通信原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%B3%E4%BA%8E%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">一、关于系统架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81B-S%E7%BB%93%E6%9E%84%E7%9A%84%E7%B3%BB%E7%BB%9F%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%EF%BC%88%E6%B2%A1%E6%9C%89%E6%B6%89%E5%8F%8A%E5%88%B0Java%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、B&#x2F;S结构的系统通信原理（没有涉及到Java小程序）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-WEB%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BF%E9%97%AE%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 WEB系统的访问过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%85%B3%E4%BA%8E%E5%9F%9F%E5%90%8D%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2  关于域名：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-IP%E5%9C%B0%E5%9D%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3  IP地址是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%AB%AF%E5%8F%A3%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4  端口号是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%B8%80%E4%B8%AAWEB%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.5.</span> <span class="toc-text"> 2.5  一个WEB系统的通信原理 </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E4%BB%80%E4%B9%88%E6%98%AFURL%EF%BC%9F"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6  什么是URL？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E4%BB%80%E4%B9%88%E6%98%AF%E8%AF%B7%E6%B1%82%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E5%93%8D%E5%BA%94%EF%BC%9F"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 什么是请求，什么是响应？</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&text=Servlet：系统架构和B/S通信原理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&is_video=false&description=Servlet：系统架构和B/S通信原理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Servlet：系统架构和B/S通信原理&body=Check out this article: http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&title=Servlet：系统架构和B/S通信原理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&name=Servlet：系统架构和B/S通信原理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/12/Blog/Java%20Web/Servlet/1.%20Servlet%EF%BC%9A%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%92%8CB-S%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/&t=Servlet：系统架构和B/S通信原理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

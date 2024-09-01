@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    并发（Concurrency）和并行（Parallelism）并发（Concurrency）和并行（Parallelism）是计算机科学中两个重要的概念，它们在多任务处理和提高程序效率方面起着至关重要的作用。 一、并发（Concurrency）定义：并发是指在一个时间段内处理多个任务的能力。并发系统能够让多个任务（线程、进程等）交替进行执行，从而使得这些任务看起来是同时进行的，即使在单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发（Concurrency）和并行（Parallelism）">
+<meta property="og:url" content="http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    并发（Concurrency）和并行（Parallelism）并发（Concurrency）和并行（Parallelism）是计算机科学中两个重要的概念，它们在多任务处理和提高程序效率方面起着至关重要的作用。 一、并发（Concurrency）定义：并发是指在一个时间段内处理多个任务的能力。并发系统能够让多个任务（线程、进程等）交替进行执行，从而使得这些任务看起来是同时进行的，即使在单">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-21T01:48:14.000Z">
+<meta property="article:modified_time" content="2024-06-21T12:58:30.625Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>并发（Concurrency）和并行（Parallelism）</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/21/Blog/Java%20SE/74.%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/21/Blog/Java%20SE/72.%20%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E8%BF%B0/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&text=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&is_video=false&description=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=并发（Concurrency）和并行（Parallelism）&body=Check out this article: http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&name=并发（Concurrency）和并行（Parallelism）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&t=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">并发（Concurrency）和并行（Parallelism）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">一、并发（Concurrency）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、并行（Parallelism）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.</span> <span class="toc-text">三、对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%98%AF%E5%B9%B6%E5%8F%91%E8%BF%98%E6%98%AF%E5%B9%B6%E8%A1%8C%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、多线程实现的是并发还是并行？</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        并发（Concurrency）和并行（Parallelism）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-21T01:48:14.000Z" class="dt-published" itemprop="datePublished">2024-06-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="并发（Concurrency）和并行（Parallelism）"><a href="#并发（Concurrency）和并行（Parallelism）" class="headerlink" title="并发（Concurrency）和并行（Parallelism）"></a>并发（Concurrency）和并行（Parallelism）</h1><p>并发（Concurrency）和并行（Parallelism）是计算机科学中两个重要的概念，它们在多任务处理和提高程序效率方面起着至关重要的作用。</p>
+<h2 id="一、并发（Concurrency）"><a href="#一、并发（Concurrency）" class="headerlink" title="一、并发（Concurrency）"></a>一、并发（Concurrency）</h2><p><strong>定义</strong>：<br>并发是指在一个时间段内处理多个任务的能力。<br>并发系统能够让多个任务（线程、进程等）交替进行执行，从而使得这些任务看起来是同时进行的，即使在单核处理器上也是如此。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li><strong>任务切换</strong>：并发通过在不同任务之间快速切换来实现表面的“同时”执行。操作系统调度器负责管理这种切换。</li>
+<li><strong>共享资源</strong>：并发任务通常共享资源（如内存、文件），需要使用同步机制（如锁、信号量）来避免竞争条件和死锁等问题。</li>
+<li><strong>例子</strong>：一个用户界面程序同时处理用户输入和后台数据处理；Web服务器同时处理多个客户端请求。</li>
+</ul>
+<p><strong>实现方式</strong>：</p>
+<ul>
+<li><strong>线程</strong>：同一进程内的多个线程共享进程资源，可以并发执行。</li>
+<li><strong>协程</strong>：一种比线程更轻量级的并发单元，常见于一些现代编程语言（如Go、Python的asyncio）。</li>
+<li><strong>事件驱动</strong>：基于事件循环和回调函数的并发模型，如JavaScript中的Node.js。</li>
+</ul>
+<h2 id="二、并行（Parallelism）"><a href="#二、并行（Parallelism）" class="headerlink" title="二、并行（Parallelism）"></a>二、并行（Parallelism）</h2><p><strong>定义</strong>：<br>并行是指在同一时刻<strong>真正</strong>同时执行多个任务。并行计算依赖于多核处理器或多个处理器来同时处理不同的任务，从而提高计算效率。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li><strong>真正同时</strong>：并行在多个处理器核心上同时执行多个任务，是真正的并行执行。</li>
+<li><strong>独立任务</strong>：并行任务通常是独立的，相互之间没有依赖关系，可以同时执行而不影响彼此。</li>
+<li><strong>例子</strong>：科学计算中的矩阵乘法、图像处理中的并行像素操作。</li>
+</ul>
+<p><strong>实现方式</strong>：</p>
+<ul>
+<li><strong>多核处理器</strong>：利用现代多核处理器的多个核心来同时执行多个任务。</li>
+<li><strong>分布式计算</strong>：通过多台计算机协同工作来处理大规模计算任务，如Hadoop、Spark等大数据处理框架。</li>
+</ul>
+<h2 id="三、对比"><a href="#三、对比" class="headerlink" title="三、对比"></a>三、对比</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>并发 (Concurrency)</th>
+<th>并行 (Parallelism)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行方式</td>
+<td>任务交替执行，看起来同时进行</td>
+<td>任务真正同时执行</td>
+</tr>
+<tr>
+<td>依赖性</td>
+<td>任务之间可能有依赖，需要同步和协调</td>
+<td>任务之间通常独立，无需同步和协调</td>
+</tr>
+<tr>
+<td>处理单元</td>
+<td>线程、协程、事件驱动</td>
+<td>多核处理器、分布式计算</td>
+</tr>
+<tr>
+<td>资源共享</td>
+<td>共享资源，需要处理资源竞争和同步问题</td>
+<td>独立资源，资源竞争较少</td>
+</tr>
+<tr>
+<td>示例</td>
+<td>Web服务器处理多个请求</td>
+<td>图像处理并行操作、科学计算中的矩阵运算</td>
+</tr>
+</tbody></table>
+<h2 id="四、多线程实现的是并发还是并行？"><a href="#四、多线程实现的是并发还是并行？" class="headerlink" title="四、多线程实现的是并发还是并行？"></a>四、多线程实现的是并发还是并行？</h2><p>在CPU比较繁忙（假设为单核CPU），如果开启了很多个线程，则只能为一个线程分配仅有的CPU资源，这些线程就会为自己尽量多抢时间片，这就是通过多线程实现并发，线程之间会竞争CPU资源争取执行机会。<br>在CPU资源比较充足的时候，一个进程内的多个线程，可以被分配到不同的CPU资源，这就是通过多线程实现并行。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">并发（Concurrency）和并行（Parallelism）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">一、并发（Concurrency）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、并行（Parallelism）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.</span> <span class="toc-text">三、对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%98%AF%E5%B9%B6%E5%8F%91%E8%BF%98%E6%98%AF%E5%B9%B6%E8%A1%8C%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、多线程实现的是并发还是并行？</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&text=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&is_video=false&description=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=并发（Concurrency）和并行（Parallelism）&body=Check out this article: http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&title=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&name=并发（Concurrency）和并行（Parallelism）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/21/Blog/Java%20SE/73.%20%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89%E5%92%8C%E5%B9%B6%E8%A1%8C%EF%BC%88Parallelism%EF%BC%89/&t=并发（Concurrency）和并行（Parallelism）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

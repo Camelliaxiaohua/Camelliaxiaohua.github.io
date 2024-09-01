@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="SpringBoot入门1. SpringBootWeb快速入门1.1 需求需求：基于SpringBoot的方式开发一个web应用，浏览器发起请求&#x2F;hello后，给浏览器返回字符串 “Hello World ~”。  1.2 开发步骤第1步：创建SpringBoot工程项目 第2步：定义HelloController类，添加方法hello，并添加注解 第3步：测试运行 1.2.1 创建S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot入门">
+<meta property="og:url" content="http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpringBoot入门1. SpringBootWeb快速入门1.1 需求需求：基于SpringBoot的方式开发一个web应用，浏览器发起请求&#x2F;hello后，给浏览器返回字符串 “Hello World ~”。  1.2 开发步骤第1步：创建SpringBoot工程项目 第2步：定义HelloController类，添加方法hello，并添加注解 第3步：测试运行 1.2.1 创建S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021802604.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803448.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803282.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021805742.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803199.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803649.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803986.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803632.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021804195.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021804081.png">
+<meta property="article:published_time" content="2024-06-30T02:13:41.000Z">
+<meta property="article:modified_time" content="2024-08-28T13:20:28.409Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021802604.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SpringBoot入门</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/30/Blog/Redis/1.%20Redis%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/30/Blog/SpringBoot/SpringBoot%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&text=SpringBoot入门"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&is_video=false&description=SpringBoot入门"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot入门&body=Check out this article: http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&name=SpringBoot入门&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&t=SpringBoot入门"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%85%A5%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SpringBootWeb%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. SpringBootWeb快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%9C%80%E6%B1%82"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 开发步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E5%88%9B%E5%BB%BASpringBoot%E5%B7%A5%E7%A8%8B%EF%BC%88%E9%9C%80%E8%A6%81%E8%81%94%E7%BD%91%EF%BC%89"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">1.2.1 创建SpringBoot工程（需要联网）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E7%B1%BB"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">1.2.2 定义请求处理类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">1.2.3 运行测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Web%E5%88%86%E6%9E%90"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 Web分析</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpringBoot入门
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-30T02:13:41.000Z" class="dt-published" itemprop="datePublished">2024-06-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="SpringBoot入门"><a href="#SpringBoot入门" class="headerlink" title="SpringBoot入门"></a>SpringBoot入门</h1><h2 id="1-SpringBootWeb快速入门"><a href="#1-SpringBootWeb快速入门" class="headerlink" title="1. SpringBootWeb快速入门"></a>1. SpringBootWeb快速入门</h2><h3 id="1-1-需求"><a href="#1-1-需求" class="headerlink" title="1.1 需求"></a>1.1 需求</h3><p>需求：基于SpringBoot的方式开发一个web应用，浏览器发起请求&#x2F;hello后，给浏览器返回字符串 “Hello World ~”。</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021802604.png"></p>
+<h3 id="1-2-开发步骤"><a href="#1-2-开发步骤" class="headerlink" title="1.2 开发步骤"></a>1.2 开发步骤</h3><p>第1步：创建SpringBoot工程项目</p>
+<p>第2步：定义HelloController类，添加方法hello，并添加注解</p>
+<p>第3步：测试运行</p>
+<h4 id="1-2-1-创建SpringBoot工程（需要联网）"><a href="#1-2-1-创建SpringBoot工程（需要联网）" class="headerlink" title="1.2.1 创建SpringBoot工程（需要联网）"></a>1.2.1 创建SpringBoot工程（需要联网）</h4><p>基于Spring官方骨架，创建SpringBoot工程。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803448.png" alt="image-20221201184702136" style="zoom:80%;" />
+
+<p>基本信息描述完毕之后，勾选web开发相关依赖。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803282.png" alt="image-20221201184850248" style="zoom:80%;" />
+
+<p>点击Finish之后，就会联网创建这个SpringBoot工程，创建好之后，结构如下：</p>
+<ul>
+<li>&#x3D;&#x3D;注意：在联网创建过程中，会下载相关资源(请耐心等待)&#x3D;&#x3D;</li>
+</ul>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021805742.png" alt="image-20221201185910596"> </p>
+<h4 id="1-2-2-定义请求处理类"><a href="#1-2-2-定义请求处理类" class="headerlink" title="1.2.2 定义请求处理类"></a>1.2.2 定义请求处理类</h4><p>在com.itheima这个包下创建一个子包controller</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803199.png" alt="image-20221201190541295" style="zoom:80%;" />
+
+<p>然后在controller包下新建一个类：HelloController</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803649.png" alt="image-20221201190825439" style="zoom:80%;" />
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World ~&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World ~&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-2-3-运行测试"><a href="#1-2-3-运行测试" class="headerlink" title="1.2.3 运行测试"></a>1.2.3 运行测试</h4><p>运行SpringBoot自动生成的引导类</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803986.png" alt="image-20221201191028124"> </p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021803632.png" alt="image-20221201191348924"> </p>
+<p>打开浏览器，输入 <code>http://localhost:8080/hello</code></p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021804195.png" style="zoom: 67%;" />
+
+
+
+<h3 id="1-3-Web分析"><a href="#1-3-Web分析" class="headerlink" title="1.3 Web分析"></a>1.3 Web分析</h3><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021804081.png" alt="image-20221201224603497"></p>
+<p>浏览器：</p>
+<ul>
+<li><p>输入网址：<code>http://192.168.100.11:8080/hello</code></p>
+<ul>
+<li><p>通过IP地址192.168.100.11定位到网络上的一台计算机</p>
+<blockquote>
+<p>我们之前在浏览器中输入的localhost，就是127.0.0.1（本机）</p>
+</blockquote>
+</li>
+<li><p>通过端口号8080找到计算机上运行的程序</p>
+<blockquote>
+<p><code>localhost:8080</code>  , 意思是在本地计算机中找到正在运行的8080端口的程序</p>
+</blockquote>
+</li>
+<li><p>&#x2F;hello是请求资源位置</p>
+<ul>
+<li>资源：对计算机而言资源就是数据</li>
+<li>web资源：通过网络可以访问到的资源（通常是指存放在服务器上的数据）</li>
+</ul>
+<blockquote>
+<p><code>localhost:8080/hello</code> ，意思是向本地计算机中的8080端口程序，获取资源位置是&#x2F;hello的数据</p>
+<ul>
+<li>8080端口程序，在服务器找&#x2F;hello位置的资源数据，发给浏览器</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>服务器：（可以理解为ServerSocket）</p>
+<ul>
+<li>接收到浏览器发送的信息（如：&#x2F;hello）</li>
+<li>在服务器上找到&#x2F;hello的资源</li>
+<li>把资源发送给浏览器</li>
+</ul>
+<blockquote>
+<p>我们在JavaSE阶段学习网络编程时，有讲过网络三要素：</p>
+<ul>
+<li>IP  ：网络中计算机的唯一标识</li>
+<li>端口 ：计算机中运行程序的唯一标识</li>
+<li>协议 ：网络中计算机之间交互的规则</li>
+</ul>
+<p><strong>答案：浏览器和服务器两端进行数据交互，使用什么http协议</strong>。</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringBoot%E5%85%A5%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">SpringBoot入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SpringBootWeb%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. SpringBootWeb快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%9C%80%E6%B1%82"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 开发步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E5%88%9B%E5%BB%BASpringBoot%E5%B7%A5%E7%A8%8B%EF%BC%88%E9%9C%80%E8%A6%81%E8%81%94%E7%BD%91%EF%BC%89"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">1.2.1 创建SpringBoot工程（需要联网）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E7%B1%BB"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">1.2.2 定义请求处理类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">1.2.3 运行测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Web%E5%88%86%E6%9E%90"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 Web分析</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&text=SpringBoot入门"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&is_video=false&description=SpringBoot入门"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot入门&body=Check out this article: http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&title=SpringBoot入门"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&name=SpringBoot入门&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/30/Blog/SpringBoot/1.%20SpringBoot%E5%85%A5%E9%97%A8/&t=SpringBoot入门"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

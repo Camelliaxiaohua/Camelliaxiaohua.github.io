@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Git分支 在 Git 中，分支（Branch）是用于并行开发的一个重要特性。它允许你在不影响主线（通常是 main 或 master 分支）的情况下，进行独立的开发工作。 1. Git分支命令 1.1 查看本地分支 命令：git branch  1.2 创建本地分支 命令：git branch 分支名  1.3 *切换分支(checkout) 命令：git checkout 分支名  我们还可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git分支">
+<meta property="og:url" content="http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Git分支 在 Git 中，分支（Branch）是用于并行开发的一个重要特性。它允许你在不影响主线（通常是 main 或 master 分支）的情况下，进行独立的开发工作。 1. Git分支命令 1.1 查看本地分支 命令：git branch  1.2 创建本地分支 命令：git branch 分支名  1.3 *切换分支(checkout) 命令：git checkout 分支名  我们还可以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233982.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233341.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233249.png">
+<meta property="article:published_time" content="2022-03-10T06:33:04.000Z">
+<meta property="article:modified_time" content="2024-09-01T08:18:33.681Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233982.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Git分支</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/07/26/Blog/Utils/%E5%93%8D%E5%BA%94%E5%8C%85%E8%A3%85%E5%B7%A5%E5%85%B7%E7%B1%BB/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/03/10/Blog/git/3.%20Git%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&text=Git分支"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&is_video=false&description=Git分支"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git分支&body=Check out this article: http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&name=Git分支&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&t=Git分支"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E5%88%86%E6%94%AF"><span class="toc-number">1.</span> <span class="toc-text">Git分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Git%E5%88%86%E6%94%AF%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">1. Git分支命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 查看本地分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 创建本地分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF-checkout"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 *切换分支(checkout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF-merge"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 *合并分支(merge)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 解决冲突</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BC%80%E5%8F%91%E4%B8%AD%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99%E4%B8%8E%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2. 开发中分支使用原则与流程</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Git分支
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-10T06:33:04.000Z" class="dt-published" itemprop="datePublished">2022-03-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Git/">Git</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h1><hr>
+<p>在 Git 中，分支（Branch）是用于并行开发的一个重要特性。它允许你在不影响主线（通常是 <code>main</code> 或 <code>master</code> 分支）的情况下，进行独立的开发工作。</p>
+<h2 id="1-Git分支命令"><a href="#1-Git分支命令" class="headerlink" title="1. Git分支命令"></a>1. Git分支命令</h2><hr>
+<h3 id="1-1-查看本地分支"><a href="#1-1-查看本地分支" class="headerlink" title="1.1 查看本地分支"></a>1.1 查看本地分支</h3><ul>
+<li>命令：<code>git branch</code></li>
+</ul>
+<h3 id="1-2-创建本地分支"><a href="#1-2-创建本地分支" class="headerlink" title="1.2 创建本地分支"></a>1.2 创建本地分支</h3><ul>
+<li>命令：<code>git branch 分支名</code></li>
+</ul>
+<h3 id="1-3-切换分支-checkout"><a href="#1-3-切换分支-checkout" class="headerlink" title="1.3 *切换分支(checkout)"></a>1.3 *切换分支(checkout)</h3><ul>
+<li>命令：<code>git checkout 分支名</code></li>
+</ul>
+<p>我们还可以直接切换到一个不存在的分支（创建并切换）</p>
+<ul>
+<li>命令：<code>git checkout -b 分支名</code></li>
+</ul>
+<h3 id="1-4-合并分支-merge"><a href="#1-4-合并分支-merge" class="headerlink" title="1.4 *合并分支(merge)"></a>1.4 *合并分支(merge)</h3><p>一个分支（<strong>合并分支</strong>）上的提交可以合并到另一个分支（<strong>目标分支</strong>）</p>
+<ul>
+<li>需要先切换到目标分支：<code>git checkout 目标分支名</code></li>
+<li>合并命令：<code>git merge 合并分支名</code></li>
+</ul>
+<h3 id="1-5-删除分支"><a href="#1-5-删除分支" class="headerlink" title="1.5 删除分支"></a>1.5 删除分支</h3><p><strong>不能删除当前分支，只能删除其他分支</strong></p>
+<ul>
+<li><p><code>git branch -d 分支名</code> 删除分支时，需要做各种检查</p>
+</li>
+<li><p><code>git branch -D 分支名</code> 不做任何检查，强制删除</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233982.png" alt="删除分支" style="zoom: 67%;" /></li>
+</ul>
+<h3 id="1-6-解决冲突"><a href="#1-6-解决冲突" class="headerlink" title="1.6 解决冲突"></a>1.6 解决冲突</h3><p>当两个分支上对文件的修改可能会存在冲突，例如同时修改了同一个文件的同一行，这时就需要手动解决冲突，解决冲突步骤如下：</p>
+<ol>
+<li>处理文件中冲突的地方</li>
+<li>将解决完冲突的文件加入暂存区(add)</li>
+<li>提交到仓库(commit)</li>
+</ol>
+<p>冲突部分的内容处理如下所示：</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233341.png" alt="冲突处理.png" style="zoom:67%;" />
+
+
+
+<h2 id="2-开发中分支使用原则与流程"><a href="#2-开发中分支使用原则与流程" class="headerlink" title="2. 开发中分支使用原则与流程"></a>2. 开发中分支使用原则与流程</h2><p>几乎所有的版本控制系统都以某种形式支持分支。 使用分支意味着可以把我们的工作从开发主线上分离开来进行重大的Bug修改、开发新的功能，以免影响开发主线。</p>
+<p>在开发中，一般有如下分支使用原则与流程：</p>
+<ul>
+<li><strong>master （生产） 分支</strong><br>线上分支，主分支，中小规模项目作为线上运行的应用对应的分支。</li>
+<li><strong>develop（开发）分支</strong><br>是从master创建的分支，一般作为开发部门的主要开发分支，如果没有其他并行开发不同期上线要求，都可以在此版本进行开发，阶段开发完成后，需要是合并到master分支,准备上线。</li>
+<li><strong>feature&#x2F;xxxx分支</strong><br>从develop创建的分支，一般是同期并行开发，但不同期上线时创建的分支，分支上的研发任务完成后合并到develop分支。</li>
+<li><strong>hotfix&#x2F;xxxx分支</strong><br>从master派生的分支，一般作为线上bug修复使用，修复完成后需要合并到master、test、develop分支。</li>
+<li>还有一些其他分支，例如test分支（用于代码测试）、pre分支（预上线分支）等等。<br> <img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202405172233249.png" alt="分支"></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E5%88%86%E6%94%AF"><span class="toc-number">1.</span> <span class="toc-text">Git分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Git%E5%88%86%E6%94%AF%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">1. Git分支命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 查看本地分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 创建本地分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF-checkout"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 *切换分支(checkout)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF-merge"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 *合并分支(merge)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 解决冲突</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BC%80%E5%8F%91%E4%B8%AD%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99%E4%B8%8E%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2. 开发中分支使用原则与流程</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&text=Git分支"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&is_video=false&description=Git分支"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git分支&body=Check out this article: http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&title=Git分支"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&name=Git分支&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/03/10/Blog/git/4.%20Git%E5%88%86%E6%94%AF/&t=Git分支"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

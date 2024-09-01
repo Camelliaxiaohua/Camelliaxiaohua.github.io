@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="*用户登录流程及会话管理详解 连接服务器后端，得到一个 session 返回给前端：  用户在前端（浏览器）输入登录信息（如用户名和密码）。 前端将登录信息发送到后端服务器进行验证。   登录成功后，得到成功登录的 session，返回给前端一个设置 cookie 的命令：  服务器验证用户的登录信息（通常通过数据库查询）。 验证成功后，服务器创建一个新的 session 并将用户信息存储在 se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用户登录流程及会话管理详解">
+<meta property="og:url" content="http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="*用户登录流程及会话管理详解 连接服务器后端，得到一个 session 返回给前端：  用户在前端（浏览器）输入登录信息（如用户名和密码）。 前端将登录信息发送到后端服务器进行验证。   登录成功后，得到成功登录的 session，返回给前端一个设置 cookie 的命令：  服务器验证用户的登录信息（通常通过数据库查询）。 验证成功后，服务器创建一个新的 session 并将用户信息存储在 se">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-11T14:28:48.000Z">
+<meta property="article:modified_time" content="2024-08-28T14:39:17.430Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="Tips">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>用户登录流程及会话管理详解</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/07/11/Blog/Tips/9.%20%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E8%84%B1%E6%95%8F/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&text=用户登录流程及会话管理详解"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&is_video=false&description=用户登录流程及会话管理详解"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用户登录流程及会话管理详解&body=Check out this article: http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&name=用户登录流程及会话管理详解&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&t=用户登录流程及会话管理详解"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">*用户登录流程及会话管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">代码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%EF%BC%88Java-Servlet%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">后端代码（Java Servlet）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E4%BC%9A%E8%AF%9D%E8%BF%87%E6%9C%9F"><span class="toc-number">1.2.</span> <span class="toc-text">开启会话过期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%BC%9A%E8%AF%9D%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.</span> <span class="toc-text">获取会话状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E7%99%BB%E5%85%A5"><span class="toc-number">1.4.</span> <span class="toc-text">退出登入</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        用户登录流程及会话管理详解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-11T14:28:48.000Z" class="dt-published" itemprop="datePublished">2024-07-11</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tips/">Tips</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Tips/" rel="tag">Tips</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="用户登录流程及会话管理详解"><a href="#用户登录流程及会话管理详解" class="headerlink" title="*用户登录流程及会话管理详解"></a>*用户登录流程及会话管理详解</h2><ol>
+<li><p><strong>连接服务器后端，得到一个 session 返回给前端</strong>：</p>
+<ul>
+<li>用户在前端（浏览器）输入登录信息（如用户名和密码）。</li>
+<li>前端将登录信息发送到后端服务器进行验证。</li>
+</ul>
+</li>
+<li><p><strong>登录成功后，得到成功登录的 session，返回给前端一个设置 cookie 的命令</strong>：</p>
+<ul>
+<li>服务器验证用户的登录信息（通常通过数据库查询）。</li>
+<li>验证成功后，服务器创建一个新的 session 并将用户信息存储在 session 中。</li>
+<li>服务器将 session ID 发送回前端，通常通过设置 HTTP 响应头中的 <code>Set-Cookie</code>。</li>
+</ul>
+</li>
+<li><p><strong>前端接收到后端命令，设置 cookie，保存到浏览器中</strong>：</p>
+<ul>
+<li>浏览器接收到服务器的响应，并自动将 session ID 存储在 cookie 中。</li>
+<li>这可以通过 <code>document.cookie</code> 或者浏览器的内置功能来实现。</li>
+</ul>
+</li>
+<li><p><strong>前端再次请求后端的时候（相同域名），在请求头上带上 cookie 去请求</strong>：</p>
+<ul>
+<li>浏览器在后续的请求中，会自动将 cookie 中的 session ID 发送到服务器。</li>
+<li>这由浏览器自动处理，开发者无需手动设置。</li>
+</ul>
+</li>
+<li><p><strong>后端拿到前端传来的 cookie，找到对应的 session</strong>：</p>
+<ul>
+<li>服务器接收到请求后，会检查请求头中的 cookie。</li>
+<li>服务器提取出 session ID 并查找对应的 session 信息。</li>
+</ul>
+</li>
+<li><p><strong>后端从 session 中可以取出基于该 session 存储的变量值（用户的登录信息，登录名）</strong>：</p>
+<ul>
+<li>服务器找到 session 后，可以从中获取存储的用户信息。</li>
+<li>服务器可以根据需要对用户进行身份验证或授权操作。</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">userLogin</span><span class="params">(String userAccount, String userPassword, HttpServletRequest request)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//校验and脱敏....</span></span><br><span class="line"></span><br><span class="line">        request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, safetyUser);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> safetyUser;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, safetyUser);</code> 这段代码的作用是将经过脱敏处理的 safetyUser 对象存储在当前会话（session）中，如果会话不存在则创建一个新的。然后使用 <code>UserConstant.USER_LOGIN_STATE</code> 作为这个对象的键（key）。如果之前的会话中已经存在同名属性（即 <code>UserConstant.USER_LOGIN_STATE</code>），则会更新该属性对应的值为新的 safetyUser 对象。</p>
+<p>这段代码中向session中存放一个共享数据safetyUser，并且他的键是<code>UserConstant.USER_LOGIN_STATE</code>。所以在下一次请求中可以通过cookie承载的session ID找到对应的session，然后通过<code>UserConstant.USER_LOGIN_STATE</code>找到session存储的safetyUser。</p>
+<p>如果整个后端程序中只使用一个固定的键来管理会话（session），那么对每个用户浏览器的会话只能存储一个信息对象。每次向会话中存储新的信息时，会替换之前存储的信息，因为会话存储是基于键值对的。这种方式适合简单的应用场景，例如只需存储当前用户的登录状态。</p>
+<p>在典型的Web应用程序中，Java程序员编写的Java代码负责创建和管理会话（session），通常通过Servlet容器或者框架（如Spring框架）来实现。一旦会话被创建，服务器会生成一个唯一的会话标识符（Session ID），并将它发送回给前端，通常通过HTTP响应的 Set-Cookie 头部。<br>前端开发人员负责处理这个 Set-Cookie 头部，然后将会话ID存储在用户的浏览器中，通常是作为cookie。浏览器会在后续的请求中自动将这个cookie（即会话ID）发送回服务器。</p>
+<ul>
+<li><strong>示例代码</strong></li>
+</ul>
+<p>以下是使用 Java Servlet 的一个简单示例，展示如何实现上述流程：</p>
+<h4 id="后端代码（Java-Servlet）"><a href="#后端代码（Java-Servlet）" class="headerlink" title="后端代码（Java Servlet）"></a>后端代码（Java Servlet）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet(&quot;/login&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">// 从请求中获取用户名和密码</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;password&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 假设这里有一个简单的用户验证逻辑</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;admin&quot;</span>.equals(username) &amp;&amp; <span class="string">&quot;password123&quot;</span>.equals(password)) &#123;</span><br><span class="line">            <span class="comment">// 用户验证通过，创建一个会话并存储用户信息</span></span><br><span class="line">            <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(username);</span><br><span class="line">            request.getSession().setAttribute(<span class="string">&quot;currentUser&quot;</span>, user);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 重定向到登录成功页面</span></span><br><span class="line">            response.sendRedirect(request.getContextPath() + <span class="string">&quot;/dashboard.jsp&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 用户验证失败，重定向回登录页面或返回错误信息</span></span><br><span class="line">            response.sendRedirect(request.getContextPath() + <span class="string">&quot;/login.jsp?error=1&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="开启会话过期"><a href="#开启会话过期" class="headerlink" title="开启会话过期"></a>开启会话过期</h3><ol>
+<li>使用Servlet API设置会话过期时间</li>
+</ol>
+<p>在Java Servlet中，可以通过调用HttpSession对象的setMaxInactiveInterval(int interval)方法来设置会话的最大非活动时间。这个方法定义了会话在客户端最后一次访问后保持活动状态的时间长度，单位为秒。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取当前请求的HttpSession对象</span></span><br><span class="line"><span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置会话过期时间为30分钟（1800秒）</span></span><br><span class="line">session.setMaxInactiveInterval(<span class="number">1800</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用Spring Session管理会话超时</li>
+</ol>
+<p>在Spring Boot应用程序中，可以通过配置文件或Java配置来设置会话超时时间。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 设置会话超时时间为30分钟（以秒为单位）</span></span><br><span class="line"><span class="attr">spring.session.timeout.seconds</span>=<span class="string">1800</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">session:</span></span><br><span class="line">    <span class="attr">timeout:</span></span><br><span class="line">      <span class="attr">seconds:</span> <span class="number">1800</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.session.web.http.CookieSerializer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.session.web.http.DefaultCookieSerializer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableJdbcHttpSession</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionConfig</span> <span class="keyword">extends</span> <span class="title class_">AbstractHttpSessionApplicationInitializer</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> CookieSerializer <span class="title function_">cookieSerializer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">DefaultCookieSerializer</span> <span class="variable">serializer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultCookieSerializer</span>();</span><br><span class="line">        serializer.setCookieMaxAge(<span class="number">1800</span>); <span class="comment">// 设置Cookie的最大过期时间为30分钟</span></span><br><span class="line">        <span class="keyword">return</span> serializer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="获取会话状态"><a href="#获取会话状态" class="headerlink" title="获取会话状态"></a>获取会话状态</h3><p>开始学的时候一直不能理解为何叫获取用户的会话状态，其实就是获取用户的信息。在上文中介绍了可以在session中存入要共享的信息（主要是一次请求结束后信息就没了），所以我们可以在用户成功登入的时候将用户的信息存入session中。以便我们在后面的请求中获取用户的信息，或者判断用户的登入状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/current&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> BaseResponse&lt;User&gt; <span class="title function_">getCurrentUser</span><span class="params">(HttpServletRequest request)</span> &#123;</span><br><span class="line">       <span class="comment">//根据键从session中获取对象。</span></span><br><span class="line">       <span class="type">Object</span> <span class="variable">userObj</span> <span class="operator">=</span> request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);</span><br><span class="line">       <span class="type">User</span> <span class="variable">currentUser</span> <span class="operator">=</span> (User) userObj;</span><br><span class="line">       <span class="comment">//判断用户的登入信息</span></span><br><span class="line">       <span class="keyword">if</span> (currentUser == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(ErrorCode.PARAMS_ERROR);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//取用信息</span></span><br><span class="line">       currentUser.getId();</span><br><span class="line">       ....</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="退出登入"><a href="#退出登入" class="headerlink" title="退出登入"></a>退出登入</h3><p>登入是将用户对象存入session，那退出登录就是把session中对应键用户对象移除呗。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//移除用户登入态</span></span><br><span class="line">request.getSession().removeAttribute(UserConstant.USER_LOGIN_STATE);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]<br>在向session存入的对象最好是脱敏的用户信息的对象。</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">*用户登录流程及会话管理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">代码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%EF%BC%88Java-Servlet%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">后端代码（Java Servlet）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E4%BC%9A%E8%AF%9D%E8%BF%87%E6%9C%9F"><span class="toc-number">1.2.</span> <span class="toc-text">开启会话过期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%BC%9A%E8%AF%9D%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.</span> <span class="toc-text">获取会话状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E7%99%BB%E5%85%A5"><span class="toc-number">1.4.</span> <span class="toc-text">退出登入</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&text=用户登录流程及会话管理详解"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&is_video=false&description=用户登录流程及会话管理详解"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=用户登录流程及会话管理详解&body=Check out this article: http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&title=用户登录流程及会话管理详解"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&name=用户登录流程及会话管理详解&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/&t=用户登录流程及会话管理详解"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

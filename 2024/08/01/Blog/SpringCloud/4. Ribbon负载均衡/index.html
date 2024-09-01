@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Ribbon负载均衡 在Eureka服务拉取中，通过添加@LoadBalanced注解，即可实现负载均衡功能，这是什么原理呢？ 1. 负载均衡原理 SpringCloud底层其实是利用了一个名为Ribbon的组件，来实现负载均衡功能的。     2. LoadBalancerInterceptor 还有我们发出的请求明明是http:&#x2F;&#x2F;userservice&#x2F;user&#x2F;1，但为什么变成了http:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ribbon负载均衡">
+<meta property="og:url" content="http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Ribbon负载均衡 在Eureka服务拉取中，通过添加@LoadBalanced注解，即可实现负载均衡功能，这是什么原理呢？ 1. 负载均衡原理 SpringCloud底层其实是利用了一个名为Ribbon的组件，来实现负载均衡功能的。     2. LoadBalancerInterceptor 还有我们发出的请求明明是http:&#x2F;&#x2F;userservice&#x2F;user&#x2F;1，但为什么变成了http:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291912721.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291918781.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921361.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921684.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921684.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291937307.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291940472.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291941696.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291942670.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291945688.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291949211.png">
+<meta property="article:published_time" content="2024-08-01T09:33:01.000Z">
+<meta property="article:modified_time" content="2024-08-09T02:25:55.460Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291912721.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Ribbon负载均衡</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/08/02/Blog/SpringCloud/5.%20Nacos%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/08/01/Blog/SpringCloud/3.%20Eureka%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&text=Ribbon负载均衡"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&is_video=false&description=Ribbon负载均衡"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ribbon负载均衡&body=Check out this article: http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&name=Ribbon负载均衡&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&t=Ribbon负载均衡"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">1.</span> <span class="toc-text">Ribbon负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1. 负载均衡原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-LoadBalancerInterceptor"><span class="toc-number">1.2.</span> <span class="toc-text">2. LoadBalancerInterceptor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-LoadBalancerIntercepor"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 LoadBalancerIntercepor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-LoadBalancerClient"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 LoadBalancerClient</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5IRule"><span class="toc-number">1.3.</span> <span class="toc-text">3. 负载均衡策略IRule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">4. Ribbon负载均衡流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5. 负载均衡策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 负载均衡策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 自定义负载均衡策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%A5%A5%E9%A5%BF%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.6.</span> <span class="toc-text">6. 饥饿加载</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Ribbon负载均衡
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-01T09:33:01.000Z" class="dt-published" itemprop="datePublished">2024-08-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringCloud/">SpringCloud</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Ribbon负载均衡"><a href="#Ribbon负载均衡" class="headerlink" title="Ribbon负载均衡"></a>Ribbon负载均衡</h1><hr>
+<p>在Eureka服务拉取中，通过添加@LoadBalanced注解，即可实现负载均衡功能，这是什么原理呢？</p>
+<h2 id="1-负载均衡原理"><a href="#1-负载均衡原理" class="headerlink" title="1. 负载均衡原理"></a>1. 负载均衡原理</h2><hr>
+<p>SpringCloud底层其实是利用了一个名为Ribbon的组件，来实现负载均衡功能的。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291912721.png" alt="image-20210713224517686" style="zoom:80%;" />
+
+
+
+<h2 id="2-LoadBalancerInterceptor"><a href="#2-LoadBalancerInterceptor" class="headerlink" title="2. LoadBalancerInterceptor"></a>2. LoadBalancerInterceptor</h2><hr>
+<p>还有我们发出的请求明明是<a target="_blank" rel="noopener" href="http://userservice/user/1%EF%BC%8C%E4%BD%86%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%98%E6%88%90%E4%BA%86http://localhost:8081%E7%9A%84%E5%91%A2%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E5%8F%AA%E8%BE%93%E5%85%A5%E4%BA%86service%E5%90%8D%E7%A7%B0%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%E4%BA%86%E5%91%A2%EF%BC%9F%E4%B9%8B%E5%89%8D%E8%BF%98%E8%A6%81%E8%8E%B7%E5%8F%96ip%E5%92%8C%E7%AB%AF%E5%8F%A3%E3%80%82">http://userservice/user/1，但为什么变成了http://localhost:8081的呢？为什么我们只输入了service名称就可以访问了呢？之前还要获取ip和端口。</a></p>
+<p>显然有人帮我们根据service名称，获取到了服务实例的ip和端口。它就是<code>LoadBalancerInterceptor</code>，这个类会在对RestTemplate的请求进行拦截，然后从Eureka根据服务id获取服务列表，随后利用负载均衡算法得到真实的服务地址信息，替换服务id。</p>
+<h3 id="2-1-LoadBalancerIntercepor"><a href="#2-1-LoadBalancerIntercepor" class="headerlink" title="2.1 LoadBalancerIntercepor"></a>2.1 LoadBalancerIntercepor</h3><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291918781.png" alt="1525620483637"></p>
+<p>可以看到这里的intercept方法，拦截了用户的HttpRequest请求，然后做了几件事：</p>
+<ul>
+<li><code>request.getURI()</code>：获取请求uri，本例中就是 <a target="_blank" rel="noopener" href="http://user-service/user/8">http://user-service/user/8</a></li>
+<li><code>originalUri.getHost()</code>：获取uri路径的主机名，其实就是服务id，<code>user-service</code></li>
+<li><code>this.loadBalancer.execute()</code>：处理服务id，和用户请求。</li>
+</ul>
+<p>这里的<code>this.loadBalancer</code>是<code>LoadBalancerClient</code>类型，我们继续跟入。</p>
+<h3 id="2-2-LoadBalancerClient"><a href="#2-2-LoadBalancerClient" class="headerlink" title="2.2 LoadBalancerClient"></a>2.2 LoadBalancerClient</h3><p>继续跟入execute方法：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921361.png" alt="1525620787090"></p>
+<p>代码是这样的：</p>
+<ul>
+<li>getLoadBalancer(serviceId)：根据服务id获取ILoadBalancer，而ILoadBalancer会拿着服务id去eureka中获取服务列表并保存起来。</li>
+<li>getServer(loadBalancer)：利用内置的负载均衡算法，从服务列表中选择一个。本例中，可以看到获取了8082端口的服务</li>
+</ul>
+<p>放行后，再次访问并跟踪，发现获取的是8081：</p>
+<p> <img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921684.png" alt="1525620835911"></p>
+<p>果然实现了负载均衡。</p>
+<h2 id="3-负载均衡策略IRule"><a href="#3-负载均衡策略IRule" class="headerlink" title="3. 负载均衡策略IRule"></a>3. 负载均衡策略IRule</h2><hr>
+<p>在上面的代码分析中，可以看到获取服务是通过一个<code>getServer</code>方法来做负载均衡:</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291921684.png" alt="1525620835911"></p>
+<p>继续跟入：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291937307.png" alt="1544361421671"></p>
+<p>继续跟踪源码chooseServer方法，发现这么一段代码：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291940472.png" alt="1525622652849"></p>
+<p>我们看看这个rule是谁：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291941696.png" alt="1525622699666"></p>
+<p>这里的rule默认值是一个<code>RoundRobinRule</code>，看类的介绍：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291942670.png" alt="1525622754316"></p>
+<p>通过阅读介绍，我们了解到这就是轮询的意思。到这里，整个负载均衡的流程我们就清楚了。</p>
+<h2 id="4-Ribbon负载均衡流程"><a href="#4-Ribbon负载均衡流程" class="headerlink" title="4. Ribbon负载均衡流程"></a>4. Ribbon负载均衡流程</h2><hr>
+<p>SpringCloudRibbon的底层采用了一个拦截器，拦截了RestTemplate发出的请求，对地址做了修改。用一幅图来总结一下：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291945688.png" alt="image-20210713224724673"></p>
+<p>基本流程如下：</p>
+<ul>
+<li>拦截我们的RestTemplate请求<a target="_blank" rel="noopener" href="http://userservice/user/1">http://userservice/user/1</a></li>
+<li>RibbonLoadBalancerClient会从请求url中获取服务名称，也就是user-service</li>
+<li>DynamicServerListLoadBalancer根据user-service到eureka拉取服务列表</li>
+<li>eureka返回列表，localhost:8081、localhost:8082</li>
+<li>IRule利用内置负载均衡规则，从列表中选择一个，例如localhost:8081</li>
+<li>RibbonLoadBalancerClient修改请求地址，用localhost:8081替代userservice，得到<a target="_blank" rel="noopener" href="http://localhost:8081/user/1%EF%BC%8C%E5%8F%91%E8%B5%B7%E7%9C%9F%E5%AE%9E%E8%AF%B7%E6%B1%82%E3%80%82">http://localhost:8081/user/1，发起真实请求。</a></li>
+</ul>
+<h2 id="5-负载均衡策略"><a href="#5-负载均衡策略" class="headerlink" title="5. 负载均衡策略"></a>5. 负载均衡策略</h2><hr>
+<h3 id="5-1-负载均衡策略"><a href="#5-1-负载均衡策略" class="headerlink" title="5.1 负载均衡策略"></a>5.1 负载均衡策略</h3><p>负载均衡的规则都定义在IRule接口中，而IRule有很多不同的实现类：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407291949211.png" alt="image-20210713225653000"></p>
+<p>不同规则的含义如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>内置负载均衡规则类</strong></th>
+<th><strong>规则描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RoundRobinRule</strong></td>
+<td><strong>简单轮询</strong>服务列表来选择服务器。它是Ribbon默认的负载均衡规则。</td>
+</tr>
+<tr>
+<td>AvailabilityFilteringRule</td>
+<td>对以下两种服务器进行忽略：   （1）在默认情况下，这台服务器如果3次连接失败，这台服务器就会被设置为“短路”状态。短路状态将持续30秒，如果再次连接失败，短路的持续时间就会几何级地增加。  （2）并发数过高的服务器。如果一个服务器的并发连接数过高，配置了AvailabilityFilteringRule规则的客户端也会将其忽略。并发连接数的上限，可以由客户端的<clientName>.<clientConfigNameSpace>.ActiveConnectionsLimit属性进行配置。</td>
+</tr>
+<tr>
+<td>WeightedResponseTimeRule</td>
+<td>为每一个服务器赋予一个权重值。服务器响应时间越长，这个服务器的权重就越小。这个规则会随机选择服务器，这个权重值会影响服务器的选择。</td>
+</tr>
+<tr>
+<td><strong>ZoneAvoidanceRule</strong></td>
+<td>以区域可用的服务器为基础进行服务器的选择。使用Zone对服务器进行分类，这个Zone可以理解为一个机房、一个机架等。而后再对Zone内的多个服务做轮询。</td>
+</tr>
+<tr>
+<td>BestAvailableRule</td>
+<td>忽略那些短路的服务器，并选择并发数较低的服务器。</td>
+</tr>
+<tr>
+<td><strong>RandomRule</strong></td>
+<td><strong>随机选择</strong>一个可用的服务器。</td>
+</tr>
+<tr>
+<td>RetryRule</td>
+<td>重试机制的选择逻辑</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>默认的实现就是ZoneAvoidanceRule，是一种轮询方案</p>
+</blockquote>
+<h3 id="5-2-自定义负载均衡策略"><a href="#5-2-自定义负载均衡策略" class="headerlink" title="5.2 自定义负载均衡策略"></a>5.2 自定义负载均衡策略</h3><p>通过定义IRule实现可以修改负载均衡规则，有两种方式：</p>
+<ol>
+<li><strong>代码方式：</strong>在order-service中的OrderApplication类中，定义一个新的IRule：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> IRule <span class="title function_">randomRule</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RandomRule</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!tip]</p>
+<p>通过定义一个新的IRule实现的服务是全局服务，只要是在order-service中调用的微服务都使用修改后的负载均衡规则。</p>
+</blockquote>
+<ol start="2">
+<li><strong>配置文件方式：</strong>在order-service的application.yml文件中，添加新的配置也可以修改规则：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">userservice:</span> <span class="comment"># 给某个微服务配置负载均衡规则，这里是userservice服务</span></span><br><span class="line">  <span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span> <span class="comment"># 负载均衡规则 </span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!tip]</p>
+<p>使用配置文件自定义负载均衡策略只针对某个微服务。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>，一般用默认的负载均衡规则，不做修改。</p>
+</blockquote>
+<h2 id="6-饥饿加载"><a href="#6-饥饿加载" class="headerlink" title="6. 饥饿加载"></a>6. 饥饿加载</h2><p>Ribbon默认是采用懒加载，即第一次访问时才会去创建LoadBalanceClient，请求时间会很长。</p>
+<p>而饥饿加载则会在项目启动时创建，降低第一次访问的耗时，通过下面配置开启饥饿加载：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">  <span class="attr">eager-load:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment">#开启饥饿加载</span></span><br><span class="line">    <span class="attr">clients:</span> <span class="string">userservice</span>  <span class="comment">#指定对userservice这个服务开启饥饿加载</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">1.</span> <span class="toc-text">Ribbon负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1. 负载均衡原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-LoadBalancerInterceptor"><span class="toc-number">1.2.</span> <span class="toc-text">2. LoadBalancerInterceptor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-LoadBalancerIntercepor"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 LoadBalancerIntercepor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-LoadBalancerClient"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 LoadBalancerClient</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5IRule"><span class="toc-number">1.3.</span> <span class="toc-text">3. 负载均衡策略IRule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">4. Ribbon负载均衡流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5. 负载均衡策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 负载均衡策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 自定义负载均衡策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%A5%A5%E9%A5%BF%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.6.</span> <span class="toc-text">6. 饥饿加载</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&text=Ribbon负载均衡"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&is_video=false&description=Ribbon负载均衡"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ribbon负载均衡&body=Check out this article: http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&title=Ribbon负载均衡"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&name=Ribbon负载均衡&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&t=Ribbon负载均衡"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

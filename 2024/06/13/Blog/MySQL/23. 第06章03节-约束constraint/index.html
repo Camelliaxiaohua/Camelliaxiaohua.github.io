@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="约束constraint  创建表时，可以给表的字段添加约束，可以保证数据的完整性、有效性。比如我们上网注册用户时常见的：用户名不能为空。对不起，用户名已存在。等提示信息。约束通常包括：  非空约束：not null  检查约束：check  唯一性约束：unique  主键约束：primary key  外键约束：foreign key   1. 非空约束  not null  语法格式： 12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第06章03节-约束constraint">
+<meta property="og:url" content="http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="约束constraint  创建表时，可以给表的字段添加约束，可以保证数据的完整性、有效性。比如我们上网注册用户时常见的：用户名不能为空。对不起，用户名已存在。等提示信息。约束通常包括：  非空约束：not null  检查约束：check  唯一性约束：unique  主键约束：primary key  外键约束：foreign key   1. 非空约束  not null  语法格式： 12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282047046.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282049241.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282049945.png">
+<meta property="article:published_time" content="2024-06-13T01:37:04.000Z">
+<meta property="article:modified_time" content="2024-08-29T15:25:40.237Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282047046.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>第06章03节-约束constraint</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/13/Blog/Java%20SE/38.%20Comparable%E5%92%8CComparator%E6%AF%94%E8%BE%83/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/12/Blog/Java%20Web/Servlet/4.%20Servlet%EF%BC%9A%E6%A8%A1%E6%8B%9FServlet%E6%9C%AC%E8%B4%A8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&text=第06章03节-约束constraint"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&is_video=false&description=第06章03节-约束constraint"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第06章03节-约束constraint&body=Check out this article: http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&name=第06章03节-约束constraint&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&t=第06章03节-约束constraint"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9Fconstraint"><span class="toc-number">1.</span> <span class="toc-text">约束constraint</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 非空约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E6%9F%A5%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 检查约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 唯一性约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BB%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.4.</span> <span class="toc-text">4. 主键约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5. 外键约束</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        第06章03节-约束constraint
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-13T01:37:04.000Z" class="dt-published" itemprop="datePublished">2024-06-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="约束constraint"><a href="#约束constraint" class="headerlink" title="约束constraint"></a>约束constraint</h2><hr>
+<hr>
+<p>创建表时，可以给表的字段添加约束，可以保证数据的完整性、有效性。比如我们上网注册用户时常见的：用户名不能为空。对不起，用户名已存在。等提示信息。<br>约束通常包括：</p>
+<ul>
+<li><p>非空约束：not null</p>
+</li>
+<li><p>检查约束：check</p>
+</li>
+<li><p>唯一性约束：unique</p>
+</li>
+<li><p>主键约束：primary key</p>
+</li>
+<li><p>外键约束：foreign key</p>
+</li>
+</ul>
+<h3 id="1-非空约束"><a href="#1-非空约束" class="headerlink" title="1. 非空约束"></a>1. 非空约束</h3><hr>
+<ul>
+<li><mark><strong>not null</strong></mark></li>
+</ul>
+<p>语法格式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  age <span class="type">int</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>name字段不能为空。插入数据时如果没有给name指定值，则报错。</p>
+<h3 id="2-检查约束"><a href="#2-检查约束" class="headerlink" title="2. 检查约束"></a>2. 检查约束</h3><hr>
+<ul>
+<li><mark><strong>check</strong></mark></li>
+</ul>
+<p>语法格式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  age <span class="type">int</span>,</span><br><span class="line">  <span class="keyword">check</span>(age <span class="operator">&gt;</span> <span class="number">18</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-唯一性约束"><a href="#3-唯一性约束" class="headerlink" title="3. 唯一性约束"></a>3. 唯一性约束</h3><hr>
+<ul>
+<li><mark><strong>unique</strong></mark></li>
+</ul>
+<p>语法格式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  email <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>email字段设置为唯一性，唯一性的字段值是可以为NULL的。但不能重复。以上在字段后面添加的约束，叫做<strong>列级约束</strong>。<br>当然，添加约束还有另一种方式，<strong>表级约束</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  email <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  <span class="keyword">unique</span>(email)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>使用<strong>表级约束</strong>可以为多个字段添加<strong>联合唯一</strong>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  email <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  <span class="keyword">unique</span>(name,email)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>意思是name,email中可以有一个重复，但是都重复了就报错。</p>
+</blockquote>
+<p>创建约束时也可以<strong>给约束起名字</strong>，将来可以通过<strong>约束的名字</strong>来<strong>删除约束</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_stu(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  email <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  <span class="keyword">constraint</span> t_stu_name_email_unique <span class="keyword">unique</span>(name,email)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>所有的约束都存储在一个系统表当中：table_constraints，这个系统表在这个数据库当中：information_schema。</p>
+<h3 id="4-主键约束"><a href="#4-主键约束" class="headerlink" title="4. 主键约束"></a>4. 主键约束</h3><hr>
+<ol>
+<li><strong>主键：</strong>primary key，简称PK。</li>
+<li>主键约束的字段<strong>不能为NULL</strong>，并且<strong>不能重复</strong>。</li>
+<li>任何一张表都应该有主键，没有主键的表可以视为无效表。</li>
+<li>主键值是这行记录的身份证号，是唯一标识。在数据库表中即使两条数据一模一样，但由于主键值不同，我们也会认为是两条完全的不同的数据。</li>
+<li>主键分类：<ol>
+<li>根据字段数量分类：<ol>
+<li>单一主键（1个字段作为主键）  [&#x2713;]</li>
+<li>复合主键（2个或2个以上的字段作为主键）</li>
+</ol>
+</li>
+<li>根据业务分类：<ol>
+<li>自然主键（主键和任何业务都无关，只是一个单纯的自然数据） [&#x2713;]</li>
+<li>业务主键（主键和业务挂钩，例如：银行卡账号作为主键）</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><strong>单一主键</strong>（建议使用这种方式）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_student(</span><br><span class="line">  id <span class="type">bigint</span> <span class="keyword">primary</span> key,</span><br><span class="line">  sno <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">unique</span>,</span><br><span class="line">  sname <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="keyword">null</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>复合主键</strong>（很少用，了解）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_user(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span>,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">  age <span class="type">int</span>,</span><br><span class="line">  <span class="keyword">primary</span> key(<span class="keyword">no</span>,name)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>主键自增</strong>：既然主键值是一个自然的数字，mysql为主键值提供了一种自增机制，不需要程序员维护，mysql自动维护该字段</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_vip(</span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="5-外键约束"><a href="#5-外键约束" class="headerlink" title="5. 外键约束"></a>5. 外键约束</h3><hr>
+<p>有这样一个需求：要求设计表，能够存储学生以及学校信息。</p>
+<ol>
+<li>第一种方案：一张表</li>
+</ol>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282047046.png" alt="image.png"><br>这种方式会导致数据冗余，浪费空间。</p>
+<ol start="2">
+<li>第二种方案：两张表：一张存储学校，一张存储学生。</li>
+</ol>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282049241.png" alt="image.png"></p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202407282049945.png" alt="image.png"></p>
+<p>如果采用以上两张表存储数据，对于学生表来说，sno这个字段的值是不能随便填的，这个sno是学校编号，必须要求这个字段中的值来自学校表的sno。为了达到要求，此时就必须要给t_student表的sno字段添加外键约束了。</p>
+<ol>
+<li>外键约束：<strong>foreign key</strong>，简称<strong>FK</strong>。</li>
+<li>添加了外键约束的字段中的数据<strong>必须来自其他字段</strong>，不能随便填。</li>
+<li>假设给a字段添加了外键约束，要求a字段中的数据必须来自b字段，b字段<strong>不一定是主键</strong>，但<strong>至少要有唯一性</strong>。</li>
+<li>外键约束可以给单个字段添加，叫做<strong>单一外键</strong>。也可以给多个字段联合添加，叫做<strong>复合外键</strong>。复合外键很少用。</li>
+<li>a表如果引用b表中的数据，可以把b表叫做父表，把a表叫做子表。<ol>
+<li>创建表时，<strong>先创建</strong>父表，<strong>再创建</strong>子表。</li>
+<li>插入数据时，<strong>先插入</strong>父表，<strong>在插入</strong>子表。</li>
+<li>删除数据时，<strong>先删除</strong>子表，<strong>再删除</strong>父表。</li>
+<li>删除表时，<strong>先删除</strong>子表，<strong>再删除</strong>父表。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><strong>如何添加外键：</strong></li>
+</ul>
+<blockquote>
+<p>[!tip]</p>
+<p><strong>constraint 外键名称 foreign key(添加外键的字段)  references  父表(主键字段)</strong></p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_school( </span><br><span class="line">  sno <span class="type">int</span> <span class="keyword">primary</span> key, </span><br><span class="line">  sname <span class="type">varchar</span>(<span class="number">255</span>) </span><br><span class="line">); </span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_student( </span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span> <span class="keyword">primary</span> key, </span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>), </span><br><span class="line">  age <span class="type">int</span>, </span><br><span class="line">  sno <span class="type">int</span>, </span><br><span class="line">  <span class="keyword">constraint</span> t_school_sno_fk <span class="keyword">foreign</span> key(sno) <span class="keyword">references</span> t_school(sno) </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>级联删除</strong></p>
+<blockquote>
+<p>on delete cascade</p>
+</blockquote>
+</li>
+</ul>
+<p>​           创建子表时，<strong>外键可以添加：on delete cascade</strong>，这样在<strong>删除父表数据</strong>时，<strong>子表会级联删除</strong>。谨慎使用。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_student( </span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span> <span class="keyword">primary</span> key, </span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>), </span><br><span class="line">  age <span class="type">int</span>, </span><br><span class="line">  sno <span class="type">int</span>, </span><br><span class="line">  <span class="keyword">constraint</span> t_school_sno_fk <span class="keyword">foreign</span> key(sno) <span class="keyword">references</span> t_school(sno) <span class="keyword">on</span> <span class="keyword">delete</span> cascade </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">###删除约束</span><br><span class="line">alert <span class="keyword">table</span> t_student <span class="keyword">drop</span> <span class="keyword">foreign</span> key t_student_sno_fk;</span><br><span class="line">###添加约束</span><br><span class="line">alert <span class="keyword">table</span> t_student <span class="keyword">add</span> <span class="keyword">constraint</span> t_student_sno_fk <span class="keyword">foreign</span> key(sno) <span class="keyword">references</span> t_school(sno) <span class="keyword">on</span> <span class="keyword">delete</span> cascade;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>级联更新</strong> </p>
+<blockquote>
+<p>on update cascade</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_student( </span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span> <span class="keyword">primary</span> key, </span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>), </span><br><span class="line">  age <span class="type">int</span>, </span><br><span class="line">  sno <span class="type">int</span>, </span><br><span class="line">  <span class="keyword">constraint</span> t_school_sno_fk <span class="keyword">foreign</span> key(sno) <span class="keyword">references</span> t_school(sno) <span class="keyword">on</span> <span class="keyword">update</span> cascade </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>级联置空</strong></p>
+<blockquote>
+<p>on delete set null</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_student( </span><br><span class="line">  <span class="keyword">no</span> <span class="type">int</span> <span class="keyword">primary</span> key, </span><br><span class="line">  name <span class="type">varchar</span>(<span class="number">255</span>), </span><br><span class="line">  age <span class="type">int</span>, </span><br><span class="line">  sno <span class="type">int</span>, </span><br><span class="line">  <span class="keyword">constraint</span> t_school_sno_fk <span class="keyword">foreign</span> key(sno) <span class="keyword">references</span> t_school(sno) <span class="keyword">on</span> <span class="keyword">delete</span> <span class="keyword">set</span> <span class="keyword">null</span> </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9Fconstraint"><span class="toc-number">1.</span> <span class="toc-text">约束constraint</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 非空约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E6%9F%A5%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 检查约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3. 唯一性约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BB%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.4.</span> <span class="toc-text">4. 主键约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5. 外键约束</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&text=第06章03节-约束constraint"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&is_video=false&description=第06章03节-约束constraint"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=第06章03节-约束constraint&body=Check out this article: http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&title=第06章03节-约束constraint"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&name=第06章03节-约束constraint&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/13/Blog/MySQL/23.%20%E7%AC%AC06%E7%AB%A003%E8%8A%82-%E7%BA%A6%E6%9D%9Fconstraint/&t=第06章03节-约束constraint"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

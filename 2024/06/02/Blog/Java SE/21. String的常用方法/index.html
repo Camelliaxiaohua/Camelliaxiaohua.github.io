@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    字符串的常用方法一、第一部分1.1  char  charAt(int index)charAt(int index) 方法在 Java 中用于从字符串中获取指定索引位置的字符。     12345 @Testpublic void testCharAt() &#123;    String str &#x3D; &quot;重剑无锋，大道无工。&quot;;    System.out.pri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String的常用方法">
+<meta property="og:url" content="http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    字符串的常用方法一、第一部分1.1  char  charAt(int index)charAt(int index) 方法在 Java 中用于从字符串中获取指定索引位置的字符。     12345 @Testpublic void testCharAt() &#123;    String str &#x3D; &quot;重剑无锋，大道无工。&quot;;    System.out.pri">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-02T08:54:13.000Z">
+<meta property="article:modified_time" content="2024-06-05T16:31:32.359Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>String的常用方法</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/05/Blog/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/1.%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BB%8B%E7%BB%8D/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/01/Blog/HTML/HTML/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&text=String的常用方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&is_video=false&description=String的常用方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=String的常用方法&body=Check out this article: http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&name=String的常用方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&t=String的常用方法"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">字符串的常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">一、第一部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-char-charAt-int-index"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1  char  charAt(int index)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-int-length"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 int length()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-boolean-isEmpty"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 boolean isEmpty()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-boolean-equals-Object-anObject"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 boolean equals(Object anObject)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-boolean-equalsIgnoreCase-String-anotherString"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 boolean equalsIgnoreCase(String anotherString)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-boolean-contains-CharSequence-s"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 boolean contains(CharSequence s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-boolean-startsWith-String-prefix"><span class="toc-number">1.1.7.</span> <span class="toc-text">1.7 boolean startsWith(String prefix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-boolean-endsWith-String-suffix"><span class="toc-number">1.1.8.</span> <span class="toc-text">1.8 boolean endsWith(String suffix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-int-compareTo-String-anotherString"><span class="toc-number">1.1.9.</span> <span class="toc-text">1.9 int compareTo(String anotherString)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-10-int-compareToIgnoreCase-String-str"><span class="toc-number">1.1.10.</span> <span class="toc-text">1.10 int compareToIgnoreCase(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-11-int-indexOf-String-str"><span class="toc-number">1.1.11.</span> <span class="toc-text">1.11 int indexOf(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-12-int-indexOf-String-str-int-fromIndex"><span class="toc-number">1.1.12.</span> <span class="toc-text">1.12 int indexOf(String str , int fromIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-13-int-lastIndexOf-String-str"><span class="toc-number">1.1.13.</span> <span class="toc-text">1.13 int lastIndexOf(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-14-int-lastIndexOf-String-str-int-fromIndex"><span class="toc-number">1.1.14.</span> <span class="toc-text">1.14 int lastIndexOf(String str, int fromIndex)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、第二部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-char-toCharArray"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 char[] toCharArray()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-String-toLowerCase"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 String toLowerCase()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-String-toUpperCase"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 String toUpperCase()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-String-concat-String-str-%E4%BB%A5%E5%8F%8A%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 String concat(String str)以及和 + 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-String-substring-int-beginIndex"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 String substring(int beginIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-String-substring-int-beginIndex-int-endIndex"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 String substring(int beginIndex,int endIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-String-trim"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 String trim()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-String-strip"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 String strip()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-String-stripLeading"><span class="toc-number">1.2.9.</span> <span class="toc-text">2.9 String stripLeading()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-10-Stirng-stripTrailing"><span class="toc-number">1.2.10.</span> <span class="toc-text">2.10 Stirng stripTrailing()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-11-String-intern"><span class="toc-number">1.2.11.</span> <span class="toc-text">2.11 String intern()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%8C%E7%9B%B4%E6%8E%A5%E7%94%A8%E7%B1%BB%E5%90%8D%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">三、第三部分(静态方法，直接用类名调用)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-static-String-join-CharSequence-d-CharSequence%E2%80%A6elements"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 static String join(CharSequence d,CharSequence…elements)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-static-String-join-CharSequence-delimiter-Iterable-elements"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 static String join(CharSequence delimiter,Iterable&lt;? extends CharSequence&gt; elements)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-static-String-valueOf"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 static String valueOf()</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        String的常用方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-02T08:54:13.000Z" class="dt-published" itemprop="datePublished">2024-06-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="字符串的常用方法"><a href="#字符串的常用方法" class="headerlink" title="字符串的常用方法"></a>字符串的常用方法</h1><h2 id="一、第一部分"><a href="#一、第一部分" class="headerlink" title="一、第一部分"></a>一、第一部分</h2><h3 id="1-1-char-charAt-int-index"><a href="#1-1-char-charAt-int-index" class="headerlink" title="1.1  char  charAt(int index)"></a>1.1  char  charAt(int index)</h3><p><code>charAt(int index) </code>方法在 Java 中用于从字符串中获取指定索引位置的字符。    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testCharAt</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;重剑无锋，大道无工。&quot;</span>;</span><br><span class="line">    System.out.println(str.charAt(<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-int-length"><a href="#1-2-int-length" class="headerlink" title="1.2 int length()"></a>1.2 int length()</h3><p>对于字符串，<code>length() </code>是一个方法，用于获取字符串的长度（即字符串中字符的个数）。   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLength</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//注意：数组是length属性，字符串是length()方法。</span></span><br><span class="line">        System.out.println(<span class="string">&quot;重剑无锋，大道无工。&quot;</span>.length());</span><br><span class="line">        <span class="type">int</span>[] arr=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</span><br><span class="line">        System.out.println(arr.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-boolean-isEmpty"><a href="#1-3-boolean-isEmpty" class="headerlink" title="1.3 boolean isEmpty()"></a>1.3 boolean isEmpty()</h3><p><code>isEmpty() </code>方法在 Java 中用于检查字符串是否为空。该方法返回一个布尔值<code>true</code>或 <code>false</code>，用以指示字符串是否不包含任何字符。    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testIsEmpty</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//只要数组长度为0，就是空。</span></span><br><span class="line">        String s=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        System.out.println(s.isEmpty());   <span class="comment">//true</span></span><br><span class="line">        s=<span class="string">&quot;hello&quot;</span>;</span><br><span class="line">        System.out.println(s.isEmpty());   <span class="comment">//false</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-boolean-equals-Object-anObject"><a href="#1-4-boolean-equals-Object-anObject" class="headerlink" title="1.4 boolean equals(Object anObject)"></a>1.4 boolean equals(Object anObject)</h3><p><code>equals(Object anObject) </code>方法在 Java 中用于比较两个对象是否相等。<strong>对于字符串对象</strong>，<code>equals </code>方法比较的是字符串的内容，而不是它们的引用地址。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testEquals</span><span class="params">()</span>&#123;</span><br><span class="line">        String s1=<span class="string">&quot;abc&quot;</span>;</span><br><span class="line">        String s2=<span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        System.out.println(s1.equals(s2));  <span class="comment">//true</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-boolean-equalsIgnoreCase-String-anotherString"><a href="#1-5-boolean-equalsIgnoreCase-String-anotherString" class="headerlink" title="1.5 boolean equalsIgnoreCase(String anotherString)"></a>1.5 boolean equalsIgnoreCase(String anotherString)</h3><p><code>equalsIgnoreCase(String anotherString) </code>方法在 Java 中用于比较两个字符串是否相等，而忽略大小写。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testEquals</span><span class="params">()</span>&#123;</span><br><span class="line">      String s3=<span class="string">&quot;Java&quot;</span>;</span><br><span class="line">      String s4=<span class="string">&quot;java&quot;</span>;</span><br><span class="line">      System.out.println(s3.equals(s4));    <span class="comment">//false</span></span><br><span class="line">      System.out.println(s3.equalsIgnoreCase(s4));  <span class="comment">//true</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-boolean-contains-CharSequence-s"><a href="#1-6-boolean-contains-CharSequence-s" class="headerlink" title="1.6 boolean contains(CharSequence s)"></a>1.6 boolean contains(CharSequence s)</h3><p><code>contains(CharSequence s) </code>方法在 Java 中用于判断一个字符串是否包含指定的字符序列。    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testContains</span><span class="params">()</span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;Hello World.java&quot;</span>.contains(<span class="string">&quot;.java&quot;</span>));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-boolean-startsWith-String-prefix"><a href="#1-7-boolean-startsWith-String-prefix" class="headerlink" title="1.7 boolean startsWith(String prefix)"></a>1.7 boolean startsWith(String prefix)</h3><p><code>startsWith(String prefix)</code> 方法在 Java 中用于检查字符串是否以指定的前缀开始。该方法返回一个布尔值 true 或 false，用以指示字符串是否以指定的前缀开头。   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testStartsWith</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;https://camelliaxiaohua.online&quot;</span>.startsWith(<span class="string">&quot;https://&quot;</span>));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-8-boolean-endsWith-String-suffix"><a href="#1-8-boolean-endsWith-String-suffix" class="headerlink" title="1.8 boolean endsWith(String suffix)"></a>1.8 boolean endsWith(String suffix)</h3><p><code>endsWith(String suffix) </code>方法在 Java 中用于检查字符串是否以指定的后缀结尾。该方法返回一个布尔值 true 或 false，用以指示字符串是否以指定的后缀结尾。    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testEndsWith</span><span class="params">()</span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;https://camelliaxiaohua.online&quot;</span>.endsWith(<span class="string">&quot;.online&quot;</span>));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-9-int-compareTo-String-anotherString"><a href="#1-9-int-compareTo-String-anotherString" class="headerlink" title="1.9 int compareTo(String anotherString)"></a>1.9 int compareTo(String anotherString)</h3><p><code>compareTo(String anotherString) </code>方法在 Java 中用于比较两个字符串的字典顺序。它返回一个整数，表示字符串的相对顺序。</p>
+<ul>
+<li>返回<strong>负整数</strong>，表示当前字符串在字典顺序中位于 anotherString 之前。</li>
+<li>返回<strong>零</strong>，表示两个字符串在字典顺序中相等。</li>
+<li>返回<strong>正整数</strong>，表示当前字符串在字典顺序中位于 anotherString 之后。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testCompareTo</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;apple&quot;</span>.compareTo(<span class="string">&quot;banana&quot;</span>));  <span class="comment">//-1</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-10-int-compareToIgnoreCase-String-str"><a href="#1-10-int-compareToIgnoreCase-String-str" class="headerlink" title="1.10 int compareToIgnoreCase(String str)"></a>1.10 int compareToIgnoreCase(String str)</h3><p><code>compareToIgnoreCase(String str)</code>方法在 Java 中用于比较两个字符串的字典顺序，忽略大小写。它返回一个整数，表示字符串的相对顺序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span>  <span class="title function_">testCompareToIgnoreCase</span><span class="params">()</span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;apple&quot;</span>.compareTo(<span class="string">&quot;Apple&quot;</span>));    <span class="comment">// 32</span></span><br><span class="line">       System.out.println(<span class="string">&quot;apple&quot;</span>.compareToIgnoreCase(<span class="string">&quot;Apple&quot;</span>));  <span class="comment">// 0</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-11-int-indexOf-String-str"><a href="#1-11-int-indexOf-String-str" class="headerlink" title="1.11 int indexOf(String str)"></a>1.11 int indexOf(String str)</h3><p><code>indexOf(String str) </code>方法在 Java 中用于查找子字符串在字符串中首次出现的索引位置。如果子字符串不在字符串中，则返回-1。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testIndesOf</span><span class="params">()</span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;重剑无锋，大巧无工。&quot;</span>.indexOf(<span class="string">&quot;锋&quot;</span>));  <span class="comment">//3</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-12-int-indexOf-String-str-int-fromIndex"><a href="#1-12-int-indexOf-String-str-int-fromIndex" class="headerlink" title="1.12 int indexOf(String str , int fromIndex)"></a>1.12 int indexOf(String str , int fromIndex)</h3><p><code>indexOf(String str, int fromIndex) </code>方法在 Java 中用于查找子字符串在字符串中首次出现的索引位置，从指定的索引位置开始。如果子字符串不在字符串中，则返回-1。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testIndesOf</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;重剑无锋，大巧无工。&quot;</span>.indexOf(<span class="string">&quot;工&quot;</span>,<span class="number">5</span>));  <span class="comment">// 8</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-13-int-lastIndexOf-String-str"><a href="#1-13-int-lastIndexOf-String-str" class="headerlink" title="1.13 int lastIndexOf(String str)"></a>1.13 int lastIndexOf(String str)</h3><p><code>lastIndexOf(String str) </code>方法在 Java 中用于查找子字符串在字符串中最后一次出现的索引位置。如果子字符串不在字符串中，则返回-1。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLastIndexOf</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;javac++andmysqlc++&quot;</span>.lastIndexOf(<span class="string">&quot;c++&quot;</span>));  <span class="comment">//15</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-14-int-lastIndexOf-String-str-int-fromIndex"><a href="#1-14-int-lastIndexOf-String-str-int-fromIndex" class="headerlink" title="1.14 int lastIndexOf(String str, int fromIndex)"></a>1.14 int lastIndexOf(String str, int fromIndex)</h3><p><code>lastIndexOf(String str, int fromIndex)</code> 方法在 Java 中用于查找子字符串在字符串中最后一次出现的索引位置，从指定的索引位置开始向前查找。如果子字符串不在字符串中，则返回-1。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testLastIndexOf</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;javac++andmysqlc++&quot;</span>.lastIndexOf(<span class="string">&quot;c++&quot;</span>,<span class="number">14</span>));  <span class="comment">//4</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、第二部分"><a href="#二、第二部分" class="headerlink" title="二、第二部分"></a>二、第二部分</h2><h3 id="2-1-char-toCharArray"><a href="#2-1-char-toCharArray" class="headerlink" title="2.1 char[] toCharArray()"></a>2.1 char[] toCharArray()</h3><p><code>toCharArray() </code>方法在 Java 中用于将字符串转换为一个新的字符数组。该方法返回一个字符数组，其中包含此字符串中的每个字符。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testToCharArray</span><span class="params">()</span>&#123;</span><br><span class="line">       <span class="type">char</span>[] charArray = <span class="string">&quot;重剑无锋，大巧无工。&quot;</span>.toCharArray();</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">char</span> ch: charArray)&#123;</span><br><span class="line">          System.out.print(ch+<span class="string">&quot;\t&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-String-toLowerCase"><a href="#2-2-String-toLowerCase" class="headerlink" title="2.2 String toLowerCase()"></a>2.2 String toLowerCase()</h3><p><code>toLowerCase() </code>方法在 Java 中用于将字符串转换为小写形式。该方法返回一个新的字符串，表示将此字符串中的所有字符都转换为小写后的结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testToLowerCase</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Camellia.xiaohua&quot;</span>.toLowerCase());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-String-toUpperCase"><a href="#2-3-String-toUpperCase" class="headerlink" title="2.3 String toUpperCase()"></a>2.3 String toUpperCase()</h3><p><code>toUpperCase()</code> 方法在 Java 中用于将字符串转换为大写形式。该方法返回一个新的字符串，表示将此字符串中的所有字符都转换为大写后的结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testToUpperCase</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Camellia.xiaohua&quot;</span>.toUpperCase());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-String-concat-String-str-以及和-的区别"><a href="#2-4-String-concat-String-str-以及和-的区别" class="headerlink" title="2.4 String concat(String str)以及和 + 的区别"></a>2.4 String concat(String str)以及和 + 的区别</h3><ol>
+<li><code>concat(String str) </code>方法在 Java 中用于将指定的字符串连接到此字符串的末尾。该方法返回一个新的字符串，表示将指定字符串连接到此字符串末尾后的结果。   </li>
+<li>和 + 号的区别<ul>
+<li>+既可以求和，也可以进行字符串的拼接，底层拼接时会<strong>创建</strong>String Builder对象进行拼接，然后通过调用toString转成字符串。</li>
+<li>+拼接null时<strong>不会出现空指针异常</strong>。</li>
+<li>concat方法参数<strong>只能</strong>是字符串类型，拼接时<strong>不会创建</strong>StringBulider对象，拼接完成后直接返回一个新的String对象。</li>
+<li>concat拼接null<strong>会出现空指针异常</strong>。</li>
+<li>+使用较多，如果进行大量字符拼接，这两个都不合适。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testConcat</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;重剑无锋,&quot;</span>.concat(<span class="string">&quot;大巧无工。&quot;</span>));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-String-substring-int-beginIndex"><a href="#2-5-String-substring-int-beginIndex" class="headerlink" title="2.5 String substring(int beginIndex)"></a>2.5 String substring(int beginIndex)</h3><p><code>substring(int beginIndex)</code> 方法在 Java 中用于返回一个新的字符串，该字符串是从指定的 beginIndex 开始到此字符串末尾的一个子字符串。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSubstring</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;https://camelliaxiaohua.online&quot;</span>.substring(<span class="number">8</span>));  <span class="comment">//camelliaxiaohua.online</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-String-substring-int-beginIndex-int-endIndex"><a href="#2-6-String-substring-int-beginIndex-int-endIndex" class="headerlink" title="2.6 String substring(int beginIndex,int endIndex)"></a>2.6 String substring(int beginIndex,int endIndex)</h3><p><code>substring(int beginIndex, int endIndex)</code> 方法在 Java 中用于返回一个新的字符串，该字符串是从指定的 <code>beginIndex </code>开始到指定的 <code>endIndex </code>结束的一个子字符串。</p>
+<blockquote>
+<p>注意，子字符串包括 <code>beginIndex</code> 处的字符，但不包括<code>endIndex</code>处的字符。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSubstring</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;https://camelliaxiaohua.online/archives/&quot;</span>.substring(<span class="number">31</span>,<span class="number">39</span>)); <span class="comment">//archives</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-String-trim"><a href="#2-7-String-trim" class="headerlink" title="2.7 String trim()"></a>2.7 String trim()</h3><p><code>trim() </code>方法在 Java 中用于<strong>移除字符串两端的空白字符</strong>，包括空格、制表符（Tab）、换行符等。该方法返回一个新的字符串，表示移除两端空白字符后的结果。   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testTrim</span><span class="params">()</span>&#123;</span><br><span class="line">       String s1=<span class="string">&quot;   重剑无锋  大巧无工   &quot;</span>;</span><br><span class="line">       System.out.println(s1.trim());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>去除字符串的前后空白<br>注意：trim()方法只能去除什么空白？ASCII码的空白以及制表符tab。（无法去除全角空白）</p>
+</blockquote>
+<h3 id="2-8-String-strip"><a href="#2-8-String-strip" class="headerlink" title="2.8 String strip()"></a>2.8 String strip()</h3><p><code>strip() </code>方法在 Java 中用于移除字符串两端的空白字符，包括空格、制表符（Tab）、换行符等。<br>这个方法与 trim() 类似，但在处理空白字符上更加全面和严格。strip() 方法是在 Java 11 中引入的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testStrip</span><span class="params">()</span>&#123;</span><br><span class="line">        String s1=<span class="string">&quot;\u3000\u3000重剑无锋  大巧无工\u3000\u3000&quot;</span>;</span><br><span class="line">        System.out.println(s1.strip());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>strip可以处理全角空格，但是性能比trim弱。<br>一般很少使用全角空格，所以推荐trim。</p>
+</blockquote>
+<h3 id="2-9-String-stripLeading"><a href="#2-9-String-stripLeading" class="headerlink" title="2.9 String stripLeading()"></a>2.9 String stripLeading()</h3><p><code>stripLeading() </code>方法在 Java 中用于移除字符串前端的空白字符，包括空格、制表符（Tab）、换行符等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testStripLeading</span><span class="params">()</span>&#123;</span><br><span class="line">        String s1=<span class="string">&quot;   重剑无锋  大巧无工   &quot;</span>;</span><br><span class="line">        System.out.println(s1.stripLeading());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-10-Stirng-stripTrailing"><a href="#2-10-Stirng-stripTrailing" class="headerlink" title="2.10 Stirng stripTrailing()"></a>2.10 Stirng stripTrailing()</h3><p><code>stripTrailing() </code>方法在 Java 中用于移除字符串后端的空白字符，包括空格、制表符（Tab）、换行符等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testStripTrailing</span><span class="params">()</span>&#123;</span><br><span class="line">        String s1=<span class="string">&quot;   重剑无锋  大巧无工   &quot;</span>;</span><br><span class="line">        System.out.println(s1.stripTrailing());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-11-String-intern"><a href="#2-11-String-intern" class="headerlink" title="2.11 String intern()"></a>2.11 String intern()</h3><p><code>intern() </code>方法在 Java 中用于将字符串放入字符串池<code>（string pool）</code>中，并返回字符串池中的字符串引用。字符串池是 JVM 内部维护的一组唯一字符串对象，目的是为了优化内存使用和提高性能。</p>
+<ul>
+<li><strong>返回值</strong><ol>
+<li>如果字符串池中已经包含了与该字符串内容相同的字符串，则返回池中的该字符串的引用；</li>
+<li>否则，将该字符串添加到字符串池中，并返回其引用。</li>
+</ol>
+</li>
+</ul>
+<p><strong>工作原理</strong></p>
+<ol>
+<li>字符串常量池：在 Java 中，字符串常量池是一个专门存储字符串常量的区域。当你使用字面量创建字符串时，这个字符串会被自动放入字符串池中。</li>
+<li>字符串池：当你通过 new 关键字创建字符串时，会在堆内存中创建一个新的字符串对象，不会自动将其放入字符串池中。调用 intern() 方法可以手动将其放入字符串池中。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testIntern</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">byte</span>[] bytes=&#123;<span class="number">97</span>,<span class="number">98</span>,<span class="number">99</span>,<span class="number">100</span>&#125;;</span><br><span class="line">        String s1=<span class="keyword">new</span> <span class="title class_">String</span>(bytes);</span><br><span class="line">        s1.intern();</span><br><span class="line">        String s2=<span class="string">&quot;abcd&quot;</span>;</span><br><span class="line">        System.out.println(s1==s2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、第三部分-静态方法，直接用类名调用"><a href="#三、第三部分-静态方法，直接用类名调用" class="headerlink" title="三、第三部分(静态方法，直接用类名调用)"></a>三、第三部分(静态方法，直接用类名调用)</h2><h3 id="3-1-static-String-join-CharSequence-d-CharSequence…elements"><a href="#3-1-static-String-join-CharSequence-d-CharSequence…elements" class="headerlink" title="3.1 static String join(CharSequence d,CharSequence…elements)"></a>3.1 static String join(CharSequence d,CharSequence…elements)</h3><p><code>join(CharSequence delimiter, CharSequence... elements)</code> 是 Java 中<code>String</code>类的一个静态方法，<br>用于将多个<code>CharSequence</code>元素连接成一个字符串，中间用指定的分隔符分隔。这个方法是在 Java 8 中引入的，<br>非常方便用于构建带有分隔符的字符串，例如构建 CSV 行或路径等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testJoin</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">join</span> <span class="operator">=</span> String.join(<span class="string">&quot;、&quot;</span>, <span class="string">&quot;Java&quot;</span>, <span class="string">&quot;C++&quot;</span>, <span class="string">&quot;PHP&quot;</span>, <span class="string">&quot;Go&quot;</span>, <span class="string">&quot;C#&quot;</span>);</span><br><span class="line">        System.out.println(join);</span><br><span class="line">        String year=<span class="string">&quot;2002&quot;</span>;</span><br><span class="line">        String month=<span class="string">&quot;10&quot;</span>;</span><br><span class="line">        String day=<span class="string">&quot;01&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> String.join(<span class="string">&quot;/&quot;</span>, year, month, day);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-static-String-join-CharSequence-delimiter-Iterable-elements"><a href="#3-2-static-String-join-CharSequence-delimiter-Iterable-elements" class="headerlink" title="3.2 static String join(CharSequence delimiter,Iterable&lt;? extends CharSequence&gt; elements)"></a>3.2 static String join(CharSequence delimiter,Iterable&lt;? extends CharSequence&gt; elements)</h3><p>join(CharSequence delimiter, Iterable&lt;? extends CharSequence&gt; elements) 是 Java 中 String 类的一个静态方法，<br>用于将多个 CharSequence 元素连接成一个字符串，中间用指定的分隔符分隔。这个方法是在 Java 8 中引入的，<br>与上一个方法相似，但它接受一个 <strong>Iterable 对象</strong>作为参数，可以方便地<strong>处理集合类</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testJoin</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//创建一个集合</span></span><br><span class="line">        <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        list.add(<span class="string">&quot;camellia&quot;</span>);</span><br><span class="line">        list.add(<span class="string">&quot;xiao&quot;</span>);</span><br><span class="line">        list.add(<span class="string">&quot;hua&quot;</span>);</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;-&quot;</span>, list));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-static-String-valueOf"><a href="#3-3-static-String-valueOf" class="headerlink" title="3.3 static String valueOf()"></a>3.3 static String valueOf()</h3><p><code>valueOf() </code>方法是 Java 中 String 类的静态方法之一，用于将其他数据类型转换为字符串。</p>
+<ol>
+<li><code>public static String valueOf(boolean b)</code></li>
+<li><code>public static String valueOf(char c)</code></li>
+<li><code>public static String valueOf(char[] data)</code></li>
+<li><code>public static String valueOf(char[] data, int offset, int count)</code></li>
+<li><code>public static String valueOf(double d)</code></li>
+<li><code>public static String valueOf(float f)</code></li>
+<li><code>public static String valueOf(int i)</code></li>
+<li><code>public static String valueOf(long l)</code></li>
+<li><code>public static String valueOf(Object obj)</code></li>
+</ol>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">字符串的常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">一、第一部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-char-charAt-int-index"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1  char  charAt(int index)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-int-length"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 int length()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-boolean-isEmpty"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 boolean isEmpty()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-boolean-equals-Object-anObject"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 boolean equals(Object anObject)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-boolean-equalsIgnoreCase-String-anotherString"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 boolean equalsIgnoreCase(String anotherString)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-boolean-contains-CharSequence-s"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 boolean contains(CharSequence s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-boolean-startsWith-String-prefix"><span class="toc-number">1.1.7.</span> <span class="toc-text">1.7 boolean startsWith(String prefix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-boolean-endsWith-String-suffix"><span class="toc-number">1.1.8.</span> <span class="toc-text">1.8 boolean endsWith(String suffix)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-int-compareTo-String-anotherString"><span class="toc-number">1.1.9.</span> <span class="toc-text">1.9 int compareTo(String anotherString)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-10-int-compareToIgnoreCase-String-str"><span class="toc-number">1.1.10.</span> <span class="toc-text">1.10 int compareToIgnoreCase(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-11-int-indexOf-String-str"><span class="toc-number">1.1.11.</span> <span class="toc-text">1.11 int indexOf(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-12-int-indexOf-String-str-int-fromIndex"><span class="toc-number">1.1.12.</span> <span class="toc-text">1.12 int indexOf(String str , int fromIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-13-int-lastIndexOf-String-str"><span class="toc-number">1.1.13.</span> <span class="toc-text">1.13 int lastIndexOf(String str)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-14-int-lastIndexOf-String-str-int-fromIndex"><span class="toc-number">1.1.14.</span> <span class="toc-text">1.14 int lastIndexOf(String str, int fromIndex)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、第二部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-char-toCharArray"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 char[] toCharArray()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-String-toLowerCase"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 String toLowerCase()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-String-toUpperCase"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 String toUpperCase()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-String-concat-String-str-%E4%BB%A5%E5%8F%8A%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 String concat(String str)以及和 + 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-String-substring-int-beginIndex"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 String substring(int beginIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-String-substring-int-beginIndex-int-endIndex"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 String substring(int beginIndex,int endIndex)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-String-trim"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 String trim()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-String-strip"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 String strip()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-String-stripLeading"><span class="toc-number">1.2.9.</span> <span class="toc-text">2.9 String stripLeading()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-10-Stirng-stripTrailing"><span class="toc-number">1.2.10.</span> <span class="toc-text">2.10 Stirng stripTrailing()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-11-String-intern"><span class="toc-number">1.2.11.</span> <span class="toc-text">2.11 String intern()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%EF%BC%8C%E7%9B%B4%E6%8E%A5%E7%94%A8%E7%B1%BB%E5%90%8D%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">三、第三部分(静态方法，直接用类名调用)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-static-String-join-CharSequence-d-CharSequence%E2%80%A6elements"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 static String join(CharSequence d,CharSequence…elements)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-static-String-join-CharSequence-delimiter-Iterable-elements"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 static String join(CharSequence delimiter,Iterable&lt;? extends CharSequence&gt; elements)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-static-String-valueOf"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 static String valueOf()</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&text=String的常用方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&is_video=false&description=String的常用方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=String的常用方法&body=Check out this article: http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&title=String的常用方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&name=String的常用方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/02/Blog/Java%20SE/21.%20String%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/&t=String的常用方法"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="目录    Servlet：生命周期一、Servlet对象的生命周期1.1 什么是Servlet对象生命周期？ Servlet对象什么时候被创建？ Servlet对象什么时候被销毁？ Servlet对象创建了几个？ Servlet对象的生命周期表示：一个Servlet对象从出生到最终死亡的整个过程是怎样的？  1.2 Servlet对象是由谁来维护的？ Servlet对象的创建、方法调用和最终销毁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet对象的生命周期">
+<meta property="og:url" content="http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录    Servlet：生命周期一、Servlet对象的生命周期1.1 什么是Servlet对象生命周期？ Servlet对象什么时候被创建？ Servlet对象什么时候被销毁？ Servlet对象创建了几个？ Servlet对象的生命周期表示：一个Servlet对象从出生到最终死亡的整个过程是怎样的？  1.2 Servlet对象是由谁来维护的？ Servlet对象的创建、方法调用和最终销毁">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406151536485.png">
+<meta property="article:published_time" content="2024-06-15T11:01:19.000Z">
+<meta property="article:modified_time" content="2024-06-27T02:47:06.904Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406151536485.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Servlet对象的生命周期</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/15/Blog/Java%20Web/Servlet/8.%20GenericServlet/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/15/Blog/Java%20Web/Servlet/6.%20%E5%9C%A8%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%BD%93%E4%B8%AD%E5%BC%80%E5%8F%91Servlet%E7%A8%8B%E5%BA%8F/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&text=Servlet对象的生命周期"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&is_video=false&description=Servlet对象的生命周期"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Servlet对象的生命周期&body=Check out this article: http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&name=Servlet对象的生命周期&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&t=Servlet对象的生命周期"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.</span> <span class="toc-text">Servlet：生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.1.</span> <span class="toc-text">一、Servlet对象的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFServlet%E5%AF%B9%E8%B1%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 什么是Servlet对象生命周期？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Servlet%E5%AF%B9%E8%B1%A1%E6%98%AF%E7%94%B1%E8%B0%81%E6%9D%A5%E7%BB%B4%E6%8A%A4%E7%9A%84%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Servlet对象是由谁来维护的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%87%AA%E5%B7%B1new%E7%9A%84Servlet%E5%AF%B9%E8%B1%A1%E5%8F%97WEB%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AE%A1%E7%90%86%E5%90%97%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 自己new的Servlet对象受WEB容器的管理吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%A8%E5%90%AF%E5%8A%A8%E6%97%B6Servlet%E5%AF%B9%E8%B1%A1%E6%9C%89%E6%B2%A1%E6%9C%89%E8%A2%AB%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%EF%BC%88%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%89%EF%BC%9F"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 服务器在启动时Servlet对象有没有被创建出来（默认情况下）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%80%8E%E4%B9%88%E8%AE%A9%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BAServlet%E5%AF%B9%E8%B1%A1%E5%91%A2%EF%BC%9F"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 怎么让服务器启动的时候创建Servlet对象呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-Servlet%E5%AF%B9%E8%B1%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 Servlet对象生命周期</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Servlet对象的生命周期
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-15T11:01:19.000Z" class="dt-published" itemprop="datePublished">2024-06-15</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-Web/">Java Web</a> › <a class="category-link" href="/categories/Java-Web/Servlet/">Servlet</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="admonition note"><p class="admonition-title">目录
+</p><!-- toc -->
+</div>
+
+<h1 id="Servlet：生命周期"><a href="#Servlet：生命周期" class="headerlink" title="Servlet：生命周期"></a>Servlet：生命周期</h1><h2 id="一、Servlet对象的生命周期"><a href="#一、Servlet对象的生命周期" class="headerlink" title="一、Servlet对象的生命周期"></a>一、Servlet对象的生命周期</h2><h3 id="1-1-什么是Servlet对象生命周期？"><a href="#1-1-什么是Servlet对象生命周期？" class="headerlink" title="1.1 什么是Servlet对象生命周期？"></a>1.1 什么是Servlet对象生命周期？</h3><ul>
+<li>Servlet对象什么时候被创建？</li>
+<li>Servlet对象什么时候被销毁？</li>
+<li>Servlet对象创建了几个？</li>
+<li><strong>Servlet对象的生命周期表示：一个Servlet对象从出生到最终死亡的整个过程是怎样的？</strong></li>
+</ul>
+<h3 id="1-2-Servlet对象是由谁来维护的？"><a href="#1-2-Servlet对象是由谁来维护的？" class="headerlink" title="1.2 Servlet对象是由谁来维护的？"></a>1.2 Servlet对象是由谁来维护的？</h3><ul>
+<li>Servlet对象的创建、方法调用和最终销毁，Java Web程序员是无权干预的。</li>
+<li>Servlet对象的生命周期由Tomcat服务器（WEB Server）全权负责。</li>
+<li>Tomcat服务器通常又称为：WEB容器。（这个叫法你要知道【WEB Container】）</li>
+<li><strong>WEB容器负责管理Servlet对象的生命周期。</strong></li>
+</ul>
+<h3 id="1-3-自己new的Servlet对象受WEB容器的管理吗？"><a href="#1-3-自己new的Servlet对象受WEB容器的管理吗？" class="headerlink" title="1.3 自己new的Servlet对象受WEB容器的管理吗？"></a>1.3 自己new的Servlet对象受WEB容器的管理吗？</h3><ul>
+<li><p>自己new的Servlet对象是不受WEB容器管理的。</p>
+</li>
+<li><p>WEB容器创建的Servlet对象，这些Servlet对象都会被放到一个集合当中（HashMap），只有放到这个HashMap集合中的Servlet才能够被WEB容器管理，自己new的Servlet对象不会被WEB容器管理。（自己new的Servlet对象不在容器当中）</p>
+</li>
+<li><p>web容器底层应该有一个HashMap这样的集合，在这个集合当中存储了Servlet对象和请求路径之间的关系</p>
+<ul>
+<li><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202406151536485.png" style="zoom: 67%;" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-4-服务器在启动时Servlet对象有没有被创建出来（默认情况下）？"><a href="#1-4-服务器在启动时Servlet对象有没有被创建出来（默认情况下）？" class="headerlink" title="1.4 服务器在启动时Servlet对象有没有被创建出来（默认情况下）？"></a>1.4 服务器在启动时Servlet对象有没有被创建出来（默认情况下）？</h3><ul>
+<li>在Servlet中提供一个无参数的构造方法，启动服务器的时候测试构造方法是否执行。<ul>
+<li>经过测试得出结论：默认情况下，服务器在启动的时候Servlet对象并不会被实例化。</li>
+</ul>
+</li>
+<li>这种设计是合理的。在用户发送请求之前，提前创建所有的Servlet对象会浪费内存资源。如果某些Servlet对象一直未被访问，它们将成为无用的对象，因此没有必要提前创建。</li>
+</ul>
+<h3 id="1-5-怎么让服务器启动的时候创建Servlet对象呢？"><a href="#1-5-怎么让服务器启动的时候创建Servlet对象呢？" class="headerlink" title="1.5 怎么让服务器启动的时候创建Servlet对象呢？"></a>1.5 怎么让服务器启动的时候创建Servlet对象呢？</h3><ul>
+<li><p>在servlet标签中添加<load-on-startup>子标签，在该子标签中填写整数，越小的整数优先级越高。</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Aservlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>servlet.AServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Aservlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/camellia/Aservlet<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-6-Servlet对象生命周期"><a href="#1-6-Servlet对象生命周期" class="headerlink" title="1.6 Servlet对象生命周期"></a>1.6 Servlet对象生命周期</h3><ul>
+<li><p>默认情况下服务器启动的时候AServlet对象并没有被实例化</p>
+</li>
+<li><p>用户发送第一次请求的时候，控制台输出了以下内容：</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AServlet无参数构造方法执行了</span><br><span class="line">AServlet&#x27;s init method execute!</span><br><span class="line">AServlet&#x27;s service method execute!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据以上输出内容得出结论：</p>
+<ul>
+<li><p><u>用户在发送第一次请求的时候Servlet对象被实例化（AServlet的构造方法被执行了。并且执行的是无参数构造方法。）</u></p>
+</li>
+<li><p>AServlet对象被创建出来之后，Tomcat服务器马上调用了AServlet对象的init方法。（init方法在执行的时候，AServlet对象已经存在了。已经被创建出来了。）</p>
+</li>
+<li><p>用户发送第一次请求的时候，init方法执行之后，Tomcat服务器马上调用AServlet对象的service方法。</p>
+</li>
+<li><p>用户继续发送第二次请求，控制台输出了以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AServlet&#x27;s service method execute!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据以上输出结果得知，用户在发送第二次，或者第三次，或者第四次请求的时候，Servlet对象并没有新建，还是使用之前创建好的Servlet对象，直接调用该Servlet对象的service方法，这说明：</p>
+<ol>
+<li>第一：<u><strong>Servlet对象是单例的</strong>（<strong>注意</strong>：Servlet对象是单实例的，但Servlet类并不符合单例模式，因此我们称其为“假单例”。单实例的原因在于Servlet对象的创建由Tomcat控制，而不是由Java Web程序员控制。Tomcat只创建一个Servlet对象，因此是单实例，但属于假单例。真正的单例模式要求构造方法私有化。）</u></li>
+<li>第二：无参数构造方法、init方法只在第一次用户发送请求的时候执行。也就是说无参数构造方法只执行一次。init方法也只被Tomcat服务器调用一次。</li>
+<li>第三：只要用户发送一次请求：service方法必然会被Tomcat服务器调用一次。发送100次请求，service方法会被调用100次。</li>
+</ol>
+</li>
+<li><p>关闭服务器的时候，控制台输出了以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AServlet&#x27;s destroy method execute!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过以上输出内容，可以得出以下结论：</p>
+<ul>
+<li>Servlet的destroy方法只被Tomcat服务器调用一次。</li>
+<li>destroy方法是在什么时候被调用的？<ul>
+<li>在服务器关闭的时候。</li>
+<li>因为服务器关闭的时候要销毁AServlet对象的内存。</li>
+<li>服务器在销毁AServlet对象内存之前，Tomcat服务器会自动调用AServlet对象的destroy方法。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>destroy方法调用的时候，对象销毁了还是没有销毁呢？</p>
+<ul>
+<li>destroy方法执行的时候AServlet对象还在，没有被销毁。destroy方法执行结束之后，AServlet对象的内存才会被Tomcat释放。</li>
+</ul>
+</li>
+<li><p>Servlet对象更像一个人的一生：</p>
+<ul>
+<li>Servlet的无参数构造方法执行：标志着你出生了。</li>
+<li>Servlet对象的init方法的执行：标志着你正在接受教育。</li>
+<li>Servlet对象的service方法的执行：标志着你已经开始工作了，已经开始为人类提供服务了。</li>
+<li>Servlet对象的destroy方法的执行：标志着临终。有什么遗言，抓紧的。要不然，来不及了。</li>
+</ul>
+</li>
+<li><p>关于Servlet类中方法的调用次数？</p>
+<ul>
+<li>构造方法只执行一次。</li>
+<li>init方法只执行一次。</li>
+<li>service方法：用户发送一次请求则执行一次，发送N次请求则执行N次。</li>
+<li>destroy方法只执行一次。</li>
+</ul>
+</li>
+<li><p><strong><u>当我们Servlet类中编写一个有参数的构造方法，如果没有手动编写无参数构造方法会出现什么问题？</u></strong></p>
+<ul>
+<li>报错了：500错误。</li>
+<li>注意：500是一个HTTP协议的错误状态码。</li>
+<li>500一般情况下是因为服务器端的Java程序出现了异常。（服务器端的错误都是500错误：服务器内部错误。）</li>
+<li>如果没有无参数的构造方法，会导致出现500错误，无法实例化Servlet对象。</li>
+<li>所以，一定要注意：在Servlet开发当中，不建议程序员来定义构造方法，因为定义不当，一不小心就会导致无法实例化Servlet对象。</li>
+</ul>
+</li>
+<li><p>思考：Servlet的无参数构造方法是在对象第一次创建的时候执行，并且只执行一次。init方法也是在对象第一次创建的时候执行，并且只执行一次。那么这个无参数构造方法可以代替掉init方法吗？</p>
+<ul>
+<li>不能。</li>
+<li><strong>Servlet规范中有要求，作为javaweb程序员，编写Servlet类的时候，不建议手动编写构造方法</strong>，因为编写构造方法，很容易让无参数构造方法消失，这个操作可能会导致Servlet对象无法实例化。所以init方法是有存在的必要的。</li>
+</ul>
+</li>
+<li><p>init、service、destroy方法中使用最多的是哪个方法？</p>
+<ul>
+<li><strong>使用最多就是service方法，service方法是一定要实现的，因为service方法是处理用户请求的核心方法。</strong></li>
+<li>什么时候使用init方法呢？<ul>
+<li>init方法很少用。</li>
+<li>通常在init方法当中做初始化操作，并且这个初始化操作只需要执行一次。例如：初始化数据库连接池，初始化线程池….</li>
+</ul>
+</li>
+<li>什么时候使用destroy方法呢？<ul>
+<li>destroy方法也很少用。</li>
+<li>通常在destroy方法当中，进行资源的关闭。马上对象要被销毁了，还有什么没有关闭的，抓紧时间关闭资源。还有什么资源没保存的，抓紧时间保存一下。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet%EF%BC%9A%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.</span> <span class="toc-text">Servlet：生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.1.</span> <span class="toc-text">一、Servlet对象的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFServlet%E5%AF%B9%E8%B1%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 什么是Servlet对象生命周期？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Servlet%E5%AF%B9%E8%B1%A1%E6%98%AF%E7%94%B1%E8%B0%81%E6%9D%A5%E7%BB%B4%E6%8A%A4%E7%9A%84%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Servlet对象是由谁来维护的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%87%AA%E5%B7%B1new%E7%9A%84Servlet%E5%AF%B9%E8%B1%A1%E5%8F%97WEB%E5%AE%B9%E5%99%A8%E7%9A%84%E7%AE%A1%E7%90%86%E5%90%97%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 自己new的Servlet对象受WEB容器的管理吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9C%A8%E5%90%AF%E5%8A%A8%E6%97%B6Servlet%E5%AF%B9%E8%B1%A1%E6%9C%89%E6%B2%A1%E6%9C%89%E8%A2%AB%E5%88%9B%E5%BB%BA%E5%87%BA%E6%9D%A5%EF%BC%88%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%89%EF%BC%9F"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 服务器在启动时Servlet对象有没有被创建出来（默认情况下）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%80%8E%E4%B9%88%E8%AE%A9%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BAServlet%E5%AF%B9%E8%B1%A1%E5%91%A2%EF%BC%9F"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 怎么让服务器启动的时候创建Servlet对象呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-Servlet%E5%AF%B9%E8%B1%A1%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 Servlet对象生命周期</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&text=Servlet对象的生命周期"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&is_video=false&description=Servlet对象的生命周期"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Servlet对象的生命周期&body=Check out this article: http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&title=Servlet对象的生命周期"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&name=Servlet对象的生命周期&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/15/Blog/Java%20Web/Servlet/7.%20Servlet%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/&t=Servlet对象的生命周期"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

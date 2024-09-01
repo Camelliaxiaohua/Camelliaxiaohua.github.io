@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="密码加密开发中使用明文将密码存入数据库是一个很可怕的事，这直接暴露在开发人员的面前。所以要对存入数据库的密码进行加密，加密密码可以防止未经授权的访问者或攻击者轻易获取用户的明文密码。即使数据库被入侵或泄露，加密后的密码也不会直接暴露用户的真实密码。 这里将介绍三种加密方式 使用MD5 算法进行加密1. 使用 MessageDigest 类来计算字符串的 MD5 摘要这个方法不太友好，可以了解一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码加密">
+<meta property="og:url" content="http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="密码加密开发中使用明文将密码存入数据库是一个很可怕的事，这直接暴露在开发人员的面前。所以要对存入数据库的密码进行加密，加密密码可以防止未经授权的访问者或攻击者轻易获取用户的明文密码。即使数据库被入侵或泄露，加密后的密码也不会直接暴露用户的真实密码。 这里将介绍三种加密方式 使用MD5 算法进行加密1. 使用 MessageDigest 类来计算字符串的 MD5 摘要这个方法不太友好，可以了解一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-10T13:34:25.000Z">
+<meta property="article:modified_time" content="2024-07-11T16:56:52.640Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="Tips">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>密码加密</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/07/10/Blog/Tips/8.%20JWT%E4%BB%A4%E7%89%8C%E4%BB%A4%E7%89%8C/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/10/Blog/Tips/12.%20%E6%80%A7%E8%83%BD%EF%BC%9A%E8%AF%AD%E5%8F%A5%E9%A1%BA%E5%BA%8F%E5%BD%B1%E5%93%8D%E6%80%A7%E8%83%BD/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&text=密码加密"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&is_video=false&description=密码加密"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=密码加密&body=Check out this article: http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&name=密码加密&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&t=密码加密"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="toc-number">1.</span> <span class="toc-text">密码加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8MD5-%E7%AE%97%E6%B3%95%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86"><span class="toc-number">1.1.</span> <span class="toc-text">使用MD5 算法进行加密</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-MessageDigest-%E7%B1%BB%E6%9D%A5%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84-MD5-%E6%91%98%E8%A6%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 使用 MessageDigest 类来计算字符串的 MD5 摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-DigestUtils-md5DigestAsHex-%E6%96%B9%E6%B3%95%E8%AE%A1%E7%AE%97%E5%B8%A6%E6%9C%89%E7%9B%90%E5%80%BC%E7%9A%84-MD5-%E6%91%98%E8%A6%81"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.  DigestUtils.md5DigestAsHex 方法计算带有盐值的 MD5 摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E7%9B%90%EF%BC%88Salt%EF%BC%89%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 为什么要使用盐（Salt）？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%9B%90%E7%9A%84%E9%80%89%E6%8B%A9%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 盐的选择和管理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Spring-Security"><span class="toc-number">1.2.</span> <span class="toc-text">使用Spring Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Argon2-%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">使用 Argon2 加密算法</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        密码加密
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-10T13:34:25.000Z" class="dt-published" itemprop="datePublished">2024-07-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tips/">Tips</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Tips/" rel="tag">Tips</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h2><p>开发中使用明文将密码存入数据库是一个很可怕的事，这直接暴露在开发人员的面前。所以要对存入数据库的密码进行加密，加密密码可以防止未经授权的访问者或攻击者轻易获取用户的明文密码。即使数据库被入侵或泄露，加密后的密码也不会直接暴露用户的真实密码。</p>
+<p>这里将介绍三种加密方式</p>
+<h3 id="使用MD5-算法进行加密"><a href="#使用MD5-算法进行加密" class="headerlink" title="使用MD5 算法进行加密"></a>使用MD5 算法进行加密</h3><h4 id="1-使用-MessageDigest-类来计算字符串的-MD5-摘要"><a href="#1-使用-MessageDigest-类来计算字符串的-MD5-摘要" class="headerlink" title="1. 使用 MessageDigest 类来计算字符串的 MD5 摘要"></a>1. 使用 <code>MessageDigest</code> 类来计算字符串的 MD5 摘要</h4><p>这个方法不太友好，可以了解一下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试使用 MD5 算法进行摘要计算。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchAlgorithmException 如果指定的算法（MD5）不可用时抛出此异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testDigest</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException &#123;</span><br><span class="line">    <span class="comment">// 获取 MD5 摘要算法的实例</span></span><br><span class="line">    <span class="type">MessageDigest</span> <span class="variable">md5</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对字符串 &quot;camellia24211&quot; 进行编码并计算其摘要</span></span><br><span class="line">    <span class="type">byte</span>[] digest = md5.digest(<span class="string">&quot;camellia24211&quot;</span>.getBytes());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将摘要字节数组转换为十六进制字符串表示</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">digestHex</span> <span class="operator">=</span> bytesToHex(digest);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印计算得到的摘要字符串</span></span><br><span class="line">    System.out.println(digestHex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将字节数组转换为十六进制字符串。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> bytes 字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 十六进制字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> String <span class="title function_">bytesToHex</span><span class="params">(<span class="type">byte</span>[] bytes)</span> &#123;</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">hexString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">byte</span> b : bytes) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">hex</span> <span class="operator">=</span> String.format(<span class="string">&quot;%02X&quot;</span>, b); <span class="comment">// 将每个字节转换为两位十六进制表示</span></span><br><span class="line">        hexString.append(hex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hexString.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>使用 <code>MessageDigest.getInstance(&quot;MD5&quot;)</code> 获取 MD5 摘要算法的实例。在实际使用中，可以选择其他摘要算法，如 SHA-256 等。</li>
+</ul>
+</blockquote>
+<h4 id="2-DigestUtils-md5DigestAsHex-方法计算带有盐值的-MD5-摘要"><a href="#2-DigestUtils-md5DigestAsHex-方法计算带有盐值的-MD5-摘要" class="headerlink" title="2.  DigestUtils.md5DigestAsHex 方法计算带有盐值的 MD5 摘要"></a>2.  <code>DigestUtils.md5DigestAsHex</code> 方法计算带有盐值的 MD5 摘要</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试使用 MD5 算法计算字符串的十六进制摘要。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 校验方法是将要验证的密码加密，判断与已加密的密码是否一致。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testDigestAsHex</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 原始密码，待加密的明文密码</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">rawPassword</span> <span class="operator">=</span> <span class="string">&quot;Camellia24211&quot;</span>;</span><br><span class="line">    <span class="comment">// 盐值，用于增强密码的安全性</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">SALT</span> <span class="operator">=</span> <span class="string">&quot;a&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 Apache Commons Codec 提供的 DigestUtils 计算字符串 &quot;a&quot; + &quot;Camellia24211&quot; 的 MD5 摘要并转换为十六进制字符串</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">encodedPassword</span> <span class="operator">=</span> DigestUtils.md5DigestAsHex((SALT + rawPassword).getBytes());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印加密后的密码</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Encoded Password: &quot;</span> + encodedPassword);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 验证密码，判断原始密码加盐后的 MD5 摘要与加密后的密码是否匹配</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">checkPassword</span> <span class="operator">=</span> DigestUtils.md5DigestAsHex((SALT + rawPassword).getBytes());</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">matches</span> <span class="operator">=</span> encodedPassword.equals(checkPassword);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印验证结果</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Password Matches: &quot;</span> + matches);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在实际应用中，将字符串”a”添加到密码前面，通常是为了增加密码的复杂性和安全性。这种做法通常被称为“盐”（salt），它是一个随机或固定的额外字符串，会与密码结合在一起进行哈希处理，从而使得相同的密码在存储时有不同的哈希结果。</p>
+</blockquote>
+<h4 id="3-为什么要使用盐（Salt）？"><a href="#3-为什么要使用盐（Salt）？" class="headerlink" title="3. 为什么要使用盐（Salt）？"></a>3. 为什么要使用盐（Salt）？</h4><ol>
+<li><p><strong>增加安全性</strong>：使用盐可以防止彩虹表攻击（Rainbow Table Attack）。彩虹表是一种预先计算好的哈希值与其对应的明文密码的对应表，通过使用盐，即使密码相同，不同用户的哈希值也不同，使得彩虹表攻击变得更加困难。</p>
+</li>
+<li><p><strong>密码复杂性</strong>：通过添加盐，即使用户使用简单的密码，也能产生更加复杂的哈希结果，提高了密码的复杂性。</p>
+</li>
+<li><p><strong>唯一性</strong>：每个用户可以有独特的盐，确保即使两个用户使用相同的密码，其哈希值也是不同的。</p>
+</li>
+</ol>
+<h4 id="4-盐的选择和管理"><a href="#4-盐的选择和管理" class="headerlink" title="4. 盐的选择和管理"></a>4. 盐的选择和管理</h4><ul>
+<li><strong>随机性</strong>：盐通常是随机生成的，确保唯一性和不可预测性。</li>
+<li><strong>存储</strong>：盐通常会与哈希后的密码一起存储，以便在验证时重新计算哈希值。</li>
+<li><strong>长度</strong>：盐的长度通常是根据具体的安全需求而定，通常建议至少16个字节长。</li>
+</ul>
+<p>综上所述，添加字符串”a”到密码前面，实际上是模拟了使用盐来提高密码的安全性和复杂性。</p>
+<h3 id="使用Spring-Security"><a href="#使用Spring-Security" class="headerlink" title="使用Spring Security"></a>使用Spring Security</h3><p> <code>BCryptPasswordEncoder</code> 是 Spring Security 提供的一种密码编码器，用于安全地存储和验证用户密码。</p>
+<p>在使用 Spring Security 的项目中，通常会配置 <code>BCryptPasswordEncoder</code> 作为密码编码器，用来对用户密码进行加密存储。这种加密方式基于 BCrypt 算法，具有以下特点：</p>
+<ul>
+<li><p><strong>安全性高</strong>：BCrypt 算法是一种哈希算法，每次加密结果都不同，即使相同的密码每次加密后的结果也会不同，增加了安全性。</p>
+</li>
+<li><p><strong>自带盐值</strong>：<code>BCryptPasswordEncoder</code> 自动处理盐值，不需要在代码中显式提供盐值，简化了密码管理和验证的流程。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * rawPassword: 这是需要加密的原始密码。在实际应用中，这个密码通常是用户输入的明文密码。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * BCryptPasswordEncoder 是 Spring Security 提供的一个类，用于对密码进行加密和验证。</span></span><br><span class="line"><span class="comment"> * 它使用 BCrypt 加密算法，该算法通过一个内置的 salt（盐）机制来增强密码的安全性。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testBCrypt</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 原始密码，待加密的明文密码</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">rawPassword</span> <span class="operator">=</span> <span class="string">&quot;camellia24211&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个 BCryptPasswordEncoder 实例，用于密码加密和验证</span></span><br><span class="line">    <span class="type">BCryptPasswordEncoder</span> <span class="variable">encoder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BCryptPasswordEncoder</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 BCryptPasswordEncoder 对原始密码进行加密</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">encodedPassword</span> <span class="operator">=</span> encoder.encode(rawPassword);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印加密后的密码</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Encoded Password: &quot;</span> + encodedPassword);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 验证密码，判断原始密码与加密后的密码是否匹配</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">matches</span> <span class="operator">=</span> encoder.matches(rawPassword, encodedPassword);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印验证结果</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Password Matches: &quot;</span> + matches);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>坐标：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用-Argon2-加密算法"><a href="#使用-Argon2-加密算法" class="headerlink" title="使用 Argon2 加密算法"></a>使用 Argon2 加密算法</h3><p><strong>Argon2 加密特点：</strong>Argon2 是一种密码哈希函数，设计用于安全地存储密码。它具有抗密码攻击和抗侧信道攻击的特性，适合于密码加密场景。</p>
+<p><strong>密码验证：</strong>使用 verify 方法验证密码时，确保提供的原始密码和加密后的密码相匹配，以便确认用户输入的密码正确性。</p>
+<p>Argon2 是当前推荐使用的密码哈希算法之一，特别适合存储和验证密码，提供了更高的安全性和防御性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">testArgon2</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 原始密码，待加密的明文密码</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">rawPassword</span> <span class="operator">=</span> <span class="string">&quot;password123&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个 Argon2 实例，用于密码加密和验证</span></span><br><span class="line">        <span class="type">Argon2</span> <span class="variable">argon2</span> <span class="operator">=</span> Argon2Factory.create();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 使用 Argon2 对原始密码进行加密</span></span><br><span class="line">            <span class="comment">// 这里的参数分别是：迭代次数、内存消耗（KB）、并行度（线程数）、待加密的密码字符数组</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">hashedPassword</span> <span class="operator">=</span> argon2.hash(<span class="number">10</span>, <span class="number">65536</span>, <span class="number">1</span>, rawPassword.toCharArray());</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 打印加密后的密码</span></span><br><span class="line">            System.out.println(<span class="string">&quot;Hashed Password: &quot;</span> + hashedPassword);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 验证密码，判断原始密码与加密后的密码是否匹配</span></span><br><span class="line">            <span class="type">boolean</span> <span class="variable">matches</span> <span class="operator">=</span> argon2.verify(hashedPassword, rawPassword.toCharArray());</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 打印验证结果</span></span><br><span class="line">            System.out.println(<span class="string">&quot;Password Matches: &quot;</span> + matches);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 清理 Argon2 实例，确保密码数据不会在内存中残留</span></span><br><span class="line">            argon2.wipeArray(rawPassword.toCharArray());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="toc-number">1.</span> <span class="toc-text">密码加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8MD5-%E7%AE%97%E6%B3%95%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86"><span class="toc-number">1.1.</span> <span class="toc-text">使用MD5 算法进行加密</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-MessageDigest-%E7%B1%BB%E6%9D%A5%E8%AE%A1%E7%AE%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84-MD5-%E6%91%98%E8%A6%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 使用 MessageDigest 类来计算字符串的 MD5 摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-DigestUtils-md5DigestAsHex-%E6%96%B9%E6%B3%95%E8%AE%A1%E7%AE%97%E5%B8%A6%E6%9C%89%E7%9B%90%E5%80%BC%E7%9A%84-MD5-%E6%91%98%E8%A6%81"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.  DigestUtils.md5DigestAsHex 方法计算带有盐值的 MD5 摘要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E7%9B%90%EF%BC%88Salt%EF%BC%89%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 为什么要使用盐（Salt）？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%9B%90%E7%9A%84%E9%80%89%E6%8B%A9%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 盐的选择和管理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Spring-Security"><span class="toc-number">1.2.</span> <span class="toc-text">使用Spring Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Argon2-%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">使用 Argon2 加密算法</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&text=密码加密"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&is_video=false&description=密码加密"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=密码加密&body=Check out this article: http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&title=密码加密"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&name=密码加密&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/10/Blog/Tips/13.%20%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/&t=密码加密"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

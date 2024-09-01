@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="2. Maven概述2.1 Maven介绍Apache Maven是一个项目管理和构建工具，它基于项目对象模型(Project Object Model , 简称: POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。 官网：https:&#x2F;&#x2F;maven.apache.org&#x2F; Maven的作用：   方便的依赖管理 统一的项目结构 标准的项目构建流程  2.2 Maven模型 项目对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven概述">
+<meta property="og:url" content="http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2. Maven概述2.1 Maven介绍Apache Maven是一个项目管理和构建工具，它基于项目对象模型(Project Object Model , 简称: POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。 官网：https:&#x2F;&#x2F;maven.apache.org&#x2F; Maven的作用：   方便的依赖管理 统一的项目结构 标准的项目构建流程  2.2 Maven模型 项目对象">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646002.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646367.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646567.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646023.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646413.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646775.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646673.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647452.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647801.gif">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647297.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647559.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647749.gif">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647741.gif">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647532.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647380.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647056.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647829.png">
+<meta property="article:published_time" content="2024-07-02T08:42:35.000Z">
+<meta property="article:modified_time" content="2024-07-02T08:56:47.786Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646002.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Maven概述</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/07/02/Blog/Maven/3.%20IDEA%E9%9B%86%E6%88%90Maven/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/07/02/Blog/Maven/1.%20Maven%E4%BB%8B%E7%BB%8D/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&text=Maven概述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&is_video=false&description=Maven概述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Maven概述&body=Check out this article: http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&name=Maven概述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&t=Maven概述"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Maven%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">2. Maven概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Maven%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">2.1 Maven介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Maven%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2.2 Maven模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Maven%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.</span> <span class="toc-text">2.3 Maven仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Maven%E5%AE%89%E8%A3%85"><span class="toc-number">1.4.</span> <span class="toc-text">2.4 Maven安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.4.1 下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.4.2 安装步骤</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Maven概述
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-02T08:42:35.000Z" class="dt-published" itemprop="datePublished">2024-07-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Maven/">Maven</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="2-Maven概述"><a href="#2-Maven概述" class="headerlink" title="2. Maven概述"></a>2. Maven概述</h2><h3 id="2-1-Maven介绍"><a href="#2-1-Maven介绍" class="headerlink" title="2.1 Maven介绍"></a>2.1 Maven介绍</h3><p>Apache Maven是一个项目管理和构建工具，它基于项目对象模型(Project Object Model , 简称: POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://maven.apache.org/">https://maven.apache.org/</a></p>
+<p>Maven的作用： </p>
+<ol>
+<li>方便的依赖管理</li>
+<li>统一的项目结构</li>
+<li>标准的项目构建流程</li>
+</ol>
+<h3 id="2-2-Maven模型"><a href="#2-2-Maven模型" class="headerlink" title="2.2 Maven模型"></a>2.2 Maven模型</h3><ul>
+<li>项目对象模型 (Project Object Model)</li>
+<li>依赖管理模型(Dependency)</li>
+<li>构建生命周期&#x2F;阶段(Build lifecycle &amp; phases)</li>
+</ul>
+<p>1). 构建生命周期&#x2F;阶段(Build lifecycle &amp; phases)</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646002.png" alt="image-20221130142100703"></p>
+<p>以上图中紫色框起来的部分，就是用来完成标准化构建流程 。当我们需要编译，Maven提供了一个编译插件供我们使用；当我们需要打包，Maven就提供了一个打包插件供我们使用等。 </p>
+<p>2). 项目对象模型 (Project Object Model)</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646367.png" alt="image-20221130142643255"></p>
+<p>以上图中紫色框起来的部分属于项目对象模型，<u>就是将我们自己的项目抽象成一个对象模型，有自己专属的坐标</u>，如下图所示是一个Maven项目：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646567.png" alt="image-20220616094113852"></p>
+<blockquote>
+<p><strong><u>坐标，就是资源(jar包)的唯一标识，通过坐标可以定位到所需资源(jar包)位置</u></strong></p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646023.png" alt="image-20221130230134757"></p>
+</blockquote>
+<p>3). 依赖管理模型(Dependency)</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646413.png" alt="image-20221130143139644"></p>
+<p>以上图中紫色框起来的部分属于依赖管理模型，是使用坐标来描述当前项目依赖哪些第三方jar包</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646775.png" alt="image-20221130174805973"></p>
+<p>之前我们项目中需要jar包时，直接就把jar包复制到项目下的lib目录，而现在书写在pom.xml文件中的坐标又是怎么能找到所要的jar包文件的呢？</p>
+<blockquote>
+<p>答案：Maven仓库</p>
+</blockquote>
+<h3 id="2-3-Maven仓库"><a href="#2-3-Maven仓库" class="headerlink" title="2.3 Maven仓库"></a>2.3 Maven仓库</h3><p>仓库：用于存储资源，管理各种jar包</p>
+<blockquote>
+<p>仓库的本质就是一个目录(文件夹)，这个目录被用来存储开发中所有依赖(就是jar包)和插件</p>
+</blockquote>
+<p>Maven仓库分为：</p>
+<ul>
+<li><strong>本地仓库：</strong>自己计算机上的一个目录(用来存储jar包)</li>
+<li><strong>中央仓库：</strong>由Maven团队维护的全球唯一的。仓库地址：<a target="_blank" rel="noopener" href="https://repo1.maven.org/maven2/">https://repo1.maven.org/maven2/</a></li>
+<li><strong>远程仓库(私服)：</strong>一般由公司团队搭建的私有仓库</li>
+</ul>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021646673.png" alt="image-20220616095633552"></p>
+<p>当项目中使用坐标引入对应依赖jar包后，首先会查找本地仓库中是否有对应的jar包</p>
+<ul>
+<li><p>如果有，则在项目直接引用</p>
+</li>
+<li><p>如果没有，则去中央仓库中下载对应的jar包到本地仓库</p>
+</li>
+</ul>
+<p>如果还可以搭建远程仓库(私服)，将来jar包的查找顺序则变为： 本地仓库 –&gt; 远程仓库–&gt; 中央仓库</p>
+<blockquote>
+<p>在国内连接中央仓库时，网络比较慢，此时可以考虑搭建远程仓库或者使用一些其他的仓库。</p>
+<p>当我们导入jar包时会检查本地仓库有没有，没有的话就去远程仓库查找并下载。若远程仓库也没有就去中央仓库下载。</p>
+</blockquote>
+<h3 id="2-4-Maven安装"><a href="#2-4-Maven安装" class="headerlink" title="2.4 Maven安装"></a>2.4 Maven安装</h3><p>认识了Maven后，我们就要开始使用Maven了，那么首先我们要进行Maven的下载与安装。</p>
+<h4 id="2-4-1-下载"><a href="#2-4-1-下载" class="headerlink" title="2.4.1 下载"></a>2.4.1 下载</h4><p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+<p>如下： </p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647452.png" alt="image-20220616100211209"> </p>
+<h4 id="2-4-2-安装步骤"><a href="#2-4-2-安装步骤" class="headerlink" title="2.4.2 安装步骤"></a>2.4.2 安装步骤</h4><p>Maven安装配置步骤：</p>
+<ol>
+<li>解压安装</li>
+<li>配置仓库</li>
+<li>配置Maven环境变量</li>
+</ol>
+<p><strong>1、解压 apache-maven-3.6.1-bin.zip（解压即安装）</strong></p>
+<blockquote>
+<p>建议解压到没有中文、特殊字符的路径下。如解压到 <code>E:\develop</code> 下。</p>
+</blockquote>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647801.gif"> </p>
+<p>解压缩后的目录结构如下：</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647297.png" alt="image-20220616100529868"> </p>
+<ul>
+<li>bin目录 ： 存放的是可执行命令。（mvn 命令重点关注）</li>
+<li>conf目录 ：存放Maven的配置文件。（settings.xml配置文件后期需要修改）</li>
+<li>lib目录 ：存放Maven依赖的jar包。（Maven也是使用java开发的，所以它也依赖其他的jar包）</li>
+</ul>
+<p><strong>2、配置本地仓库</strong></p>
+<p>2.1、在自己计算机上新一个目录（<strong>本地仓库，用来存储jar包</strong>）</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647559.png" alt="image-20221130231857537"> </p>
+<p>2.2、进入到conf目录下修改settings.xml配置文件 </p>
+<p>1). 使用超级记事本软件，打开settings.xml文件，定位到53行</p>
+<p>2). 复制<localRepository>标签，粘贴到注释的外面（55行）</p>
+<p>3). 复制之前新建的用来存储jar包的路径，替换掉<localRepository>标签体内容。（**<u>也就是你本地仓库的存储路径</u>**）</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647749.gif" style="zoom:80%;" />
+
+
+
+<p><strong>3、配置阿里云私服</strong></p>
+<p>由于中央仓库在国外，所以下载jar包速度可能比较慢，而阿里公司提供了一个远程仓库，里面基本也都有开源项目的jar包。</p>
+<p>进入到conf目录下修改settings.xml配置文件：</p>
+<p>1). 使用超级记事本软件，打开settings.xml文件，定位到160行左右</p>
+<p>2). 在<mirrors>标签下为其添加子标签<mirror>，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>          </span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647741.gif"></p>
+<blockquote>
+<p><strong>注意配置的位置，在<mirrors> … </mirrors> 中间添加配置。如下图所示：</strong></p>
+</blockquote>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647532.png" alt="image-20221130161346565"></p>
+<p>&#x3D;&#x3D;注:  只可配置一个<mirror>(另一个要注释!) ，不然两个可能发生冲突，导致jar包无法下载!!!!!!!&#x3D;&#x3D;</p>
+<p><strong>4、配置环境变量</strong></p>
+<blockquote>
+<p>Maven环境变量的配置类似于JDK环境变量配置一样</p>
+</blockquote>
+<p>1). 在系统变量处新建一个变量MAVEN_HOME</p>
+<ul>
+<li>MAVEN_HOME环境变量的值，设置为maven的解压安装目录</li>
+</ul>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647380.png" style="zoom:80%;" />
+
+
+
+<p>2). 在Path中进行配置</p>
+<ul>
+<li>PATH环境变量的值，设置为：%MAVEN_HOME%\bin</li>
+</ul>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647056.png" style="zoom:80%;" /> 
+
+
+
+<p>3). 打开DOS命令提示符进行验证，出现如图所示表示安装成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407021647829.png" alt="image-20220616102554143"> </p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Maven%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">2. Maven概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Maven%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">2.1 Maven介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Maven%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2.2 Maven模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Maven%E4%BB%93%E5%BA%93"><span class="toc-number">1.3.</span> <span class="toc-text">2.3 Maven仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Maven%E5%AE%89%E8%A3%85"><span class="toc-number">1.4.</span> <span class="toc-text">2.4 Maven安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.4.1 下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.4.2 安装步骤</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&text=Maven概述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&is_video=false&description=Maven概述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Maven概述&body=Check out this article: http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&title=Maven概述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&name=Maven概述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/02/Blog/Maven/2.%20Maven%E6%A6%82%E8%BF%B0/&t=Maven概述"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

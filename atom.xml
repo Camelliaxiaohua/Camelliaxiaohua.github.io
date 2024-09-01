@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-06-18T15:47:05.873Z</updated>
+  <updated>2024-08-09T02:29:40.858Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,542 +17,491 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>System.out 标准输出流</title>
-    <link href="http://example.com/2024/06/18/Java%20SE/66.%20System-out-%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E6%B5%81/"/>
-    <id>http://example.com/2024/06/18/Java%20SE/66.%20System-out-%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E6%B5%81/</id>
-    <published>2024-06-18T07:45:11.000Z</published>
-    <updated>2024-06-18T15:47:05.873Z</updated>
+    <title>Gateway服务网关</title>
+    <link href="http://example.com/2024/08/03/Blog/SpringCloud/9.%20Gateway%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/"/>
+    <id>http://example.com/2024/08/03/Blog/SpringCloud/9.%20Gateway%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3/</id>
+    <published>2024-08-03T02:39:01.000Z</published>
+    <updated>2024-08-09T02:29:40.858Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;System-out-标准输出流&quot;&gt;&lt;a href=&quot;#System-out-标准输出流&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;Gateway服务网关&quot;&gt;&lt;a href=&quot;#Gateway服务网关&quot; class=&quot;headerlink&quot; title=&quot;Gateway服务网关&quot;&gt;&lt;/a&gt;Gateway服务网关&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;Spring Cloud Gateway 是</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>System.in标准输入流</title>
-    <link href="http://example.com/2024/06/18/Java%20SE/65.%20System-in%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81/"/>
-    <id>http://example.com/2024/06/18/Java%20SE/65.%20System-in%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81/</id>
-    <published>2024-06-18T07:06:49.000Z</published>
-    <updated>2024-06-18T15:46:56.638Z</updated>
+    <title>Feign远程调用</title>
+    <link href="http://example.com/2024/08/03/Blog/SpringCloud/8.%20Feign%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
+    <id>http://example.com/2024/08/03/Blog/SpringCloud/8.%20Feign%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/</id>
+    <published>2024-08-03T01:39:01.000Z</published>
+    <updated>2024-08-09T02:28:49.411Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;System-in标准输入流&quot;&gt;&lt;a href=&quot;#System-in标准输入流&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;Feign远程调用&quot;&gt;&lt;a href=&quot;#Feign远程调用&quot; class=&quot;headerlink&quot; title=&quot;Feign远程调用&quot;&gt;&lt;/a&gt;Feign远程调用&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;先前利用RestTemplate发起远程调用的代码：&lt;/p&gt;
+&lt;img</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>PrintStream打印流</title>
-    <link href="http://example.com/2024/06/18/Java%20SE/64.%20PrintStream%E6%89%93%E5%8D%B0%E6%B5%81/"/>
-    <id>http://example.com/2024/06/18/Java%20SE/64.%20PrintStream%E6%89%93%E5%8D%B0%E6%B5%81/</id>
-    <published>2024-06-18T06:50:52.000Z</published>
-    <updated>2024-06-18T15:46:48.661Z</updated>
+    <title>Nacos配置管理</title>
+    <link href="http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/"/>
+    <id>http://example.com/2024/08/02/Blog/SpringCloud/7.%20Nacos%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86/</id>
+    <published>2024-08-02T08:39:01.000Z</published>
+    <updated>2024-08-09T02:27:54.305Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;PrintStream打印流&quot;&gt;&lt;a href=&quot;#PrintStream打印流&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;Nacos配置管理&quot;&gt;&lt;a href=&quot;#Nacos配置管理&quot; class=&quot;headerlink&quot; title=&quot;Nacos配置管理&quot;&gt;&lt;/a&gt;Nacos配置管理&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;Nacos 不仅可以作为服务注册中心，还可以用作配置管理。Nacos</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>PrintWriter打印流</title>
-    <link href="http://example.com/2024/06/18/Java%20SE/63.%20PrintWriter%E6%89%93%E5%8D%B0%E6%B5%81/"/>
-    <id>http://example.com/2024/06/18/Java%20SE/63.%20PrintWriter%E6%89%93%E5%8D%B0%E6%B5%81/</id>
-    <published>2024-06-18T06:25:52.000Z</published>
-    <updated>2024-06-18T15:46:41.272Z</updated>
+    <title>Nacos集群搭建</title>
+    <link href="http://example.com/2024/08/02/Blog/SpringCloud/6.%20Nacos%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"/>
+    <id>http://example.com/2024/08/02/Blog/SpringCloud/6.%20Nacos%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</id>
+    <published>2024-08-02T06:33:01.000Z</published>
+    <updated>2024-08-09T02:27:24.327Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;PrintWriter打印流&quot;&gt;&lt;a href=&quot;#PrintWriter打印流&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;Nacos集群搭建&quot;&gt;&lt;a href=&quot;#Nacos集群搭建&quot; class=&quot;headerlink&quot; title=&quot;Nacos集群搭建&quot;&gt;&lt;/a&gt;Nacos集群搭建&lt;/h1&gt;&lt;hr&gt;
+&lt;h2 id=&quot;1-集群结构图&quot;&gt;&lt;a href=&quot;#1-集群结构图&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>序列化和反序列化</title>
-    <link href="http://example.com/2024/06/18/Java%20SE/62.%20%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    <id>http://example.com/2024/06/18/Java%20SE/62.%20%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</id>
-    <published>2024-06-18T03:02:06.000Z</published>
-    <updated>2024-06-18T03:03:31.834Z</updated>
+    <title>Nacos注册中心</title>
+    <link href="http://example.com/2024/08/02/Blog/SpringCloud/5.%20Nacos%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/"/>
+    <id>http://example.com/2024/08/02/Blog/SpringCloud/5.%20Nacos%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/</id>
+    <published>2024-08-02T02:33:01.000Z</published>
+    <updated>2024-08-09T02:26:43.912Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;序列化和反序列化&quot;&gt;&lt;a href=&quot;#序列化和反序列化&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;Nacos注册中心&quot;&gt;&lt;a href=&quot;#Nacos注册中心&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>DataInputStream数据输入流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/60.%20DataInputStream%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/60.%20DataInputStream%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5%E6%B5%81/</id>
-    <published>2024-06-17T10:02:12.000Z</published>
-    <updated>2024-06-17T14:52:48.810Z</updated>
+    <title>Ribbon负载均衡</title>
+    <link href="http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
+    <id>http://example.com/2024/08/01/Blog/SpringCloud/4.%20Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</id>
+    <published>2024-08-01T09:33:01.000Z</published>
+    <updated>2024-08-09T02:25:55.460Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;DataInputStream数据输入流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;Ribbon负载均衡&quot;&gt;&lt;a href=&quot;#Ribbon负载均衡&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>DataOutputStream数据输出流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/61.%20DataOutputStream%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/61.%20DataOutputStream%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA%E6%B5%81/</id>
-    <published>2024-06-17T10:01:14.000Z</published>
-    <updated>2024-06-17T14:53:04.514Z</updated>
+    <title>Eureka注册中心</title>
+    <link href="http://example.com/2024/08/01/Blog/SpringCloud/3.%20Eureka%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/"/>
+    <id>http://example.com/2024/08/01/Blog/SpringCloud/3.%20Eureka%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/</id>
+    <published>2024-08-01T06:26:01.000Z</published>
+    <updated>2024-08-09T02:25:15.563Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;DataOutputStream数据输出流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;Eureka注册中心&quot;&gt;&lt;a href=&quot;#Eureka注册中心&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>FileReader读和FileWriter写乱码问题</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/59.%20FileReader%E8%AF%BB%E5%92%8CFileWriter%E5%86%99%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/59.%20FileReader%E8%AF%BB%E5%92%8CFileWriter%E5%86%99%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</id>
-    <published>2024-06-17T08:51:04.000Z</published>
-    <updated>2024-06-17T14:52:37.441Z</updated>
+    <title>服务拆分和远程调用</title>
+    <link href="http://example.com/2024/08/01/Blog/SpringCloud/2.%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E5%92%8C%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
+    <id>http://example.com/2024/08/01/Blog/SpringCloud/2.%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E5%92%8C%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/</id>
+    <published>2024-08-01T05:22:01.000Z</published>
+    <updated>2024-08-09T02:24:20.387Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;FileReader读和FileWriter写乱码问题&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;服务拆分和远程调用&quot;&gt;&lt;a href=&quot;#服务拆分和远程调用&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>BufferedWriter字符输出缓冲流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/58.%20%20BufferedWriter%E5%AD%97%E7%AC%A6%E8%BE%93%E5%87%BA%E7%BC%93%E5%86%B2%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/58.%20%20BufferedWriter%E5%AD%97%E7%AC%A6%E8%BE%93%E5%87%BA%E7%BC%93%E5%86%B2%E6%B5%81/</id>
-    <published>2024-06-17T03:53:18.000Z</published>
-    <updated>2024-06-17T06:45:01.626Z</updated>
+    <title>认识微服务</title>
+    <link href="http://example.com/2024/08/01/Blog/SpringCloud/1.%20%E8%AE%A4%E8%AF%86%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://example.com/2024/08/01/Blog/SpringCloud/1.%20%E8%AE%A4%E8%AF%86%E5%BE%AE%E6%9C%8D%E5%8A%A1/</id>
+    <published>2024-08-01T02:02:01.000Z</published>
+    <updated>2024-08-09T02:24:15.432Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;BufferedWriter字符输出缓冲流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;认识微服务&quot;&gt;&lt;a href=&quot;#认识微服务&quot; class=&quot;headerlink&quot; title=&quot;认识微服务&quot;&gt;&lt;/a&gt;认识微服务&lt;/h1&gt;&lt;hr&gt;
+&lt;h2 id=&quot;1-单体架构&quot;&gt;&lt;a href=&quot;#1-单体架构&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>BufferedReader字符输入缓冲流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/57.%20BufferedReader%20BufferedReader%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/57.%20BufferedReader%20BufferedReader%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/</id>
-    <published>2024-06-17T03:52:40.000Z</published>
-    <updated>2024-06-17T07:18:17.022Z</updated>
+    <title>Redis简单介绍</title>
+    <link href="http://example.com/2024/08/01/Blog/Redis/2.%20Redis%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/"/>
+    <id>http://example.com/2024/08/01/Blog/Redis/2.%20Redis%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4/</id>
+    <published>2024-08-01T01:13:41.000Z</published>
+    <updated>2024-08-29T15:17:45.204Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;BufferedReader字符输入缓冲流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;Redis常见命令&quot;&gt;&lt;a href=&quot;#Redis常见命令&quot; class=&quot;headerlink&quot; title=&quot;Redis常见命令&quot;&gt;&lt;/a&gt;Redis常见命令&lt;/h2&gt;&lt;hr&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;1-Redis数据结构介绍&quot;&gt;&lt;a</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Redis" scheme="http://example.com/categories/Redis/"/>
     
     
   </entry>
   
   <entry>
-    <title>BufferedReader字符输入缓冲流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/57.%20BufferedReader%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/57.%20BufferedReader%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/</id>
-    <published>2024-06-17T03:52:40.000Z</published>
-    <updated>2024-06-17T07:18:17.022Z</updated>
+    <title>Nacos安装指南</title>
+    <link href="http://example.com/2024/08/01/Blog/SpringCloud/Nacos%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/"/>
+    <id>http://example.com/2024/08/01/Blog/SpringCloud/Nacos%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/</id>
+    <published>2024-08-01T00:02:01.000Z</published>
+    <updated>2024-08-29T15:36:58.299Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;BufferedReader字符输入缓冲流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;Nacos安装指南&quot;&gt;&lt;a href=&quot;#Nacos安装指南&quot; class=&quot;headerlink&quot; title=&quot;Nacos安装指南&quot;&gt;&lt;/a&gt;Nacos安装指南&lt;/h1&gt;&lt;h1 id=&quot;1-Windows安装&quot;&gt;&lt;a href=&quot;#1-Windows安装&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="SpringCloud" scheme="http://example.com/categories/SpringCloud/"/>
     
     
   </entry>
   
   <entry>
-    <title>带缓冲区和不带缓冲区文件读写效率对比</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/56.%20%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E5%92%8C%E4%B8%8D%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/56.%20%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E5%92%8C%E4%B8%8D%E5%B8%A6%E7%BC%93%E5%86%B2%E5%8C%BA%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94/</id>
-    <published>2024-06-17T03:51:52.000Z</published>
-    <updated>2024-06-17T06:29:26.331Z</updated>
+    <title>MySQL常用指令</title>
+    <link href="http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/"/>
+    <id>http://example.com/2024/07/22/Blog/MySQL/SQL%E7%AE%80%E5%8D%95%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86/</id>
+    <published>2024-07-21T23:02:01.000Z</published>
+    <updated>2024-07-23T15:25:28.250Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;带缓冲区和不带缓冲区文件读写效率对比&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;记住：如果别名中有空格的话，可以将这个别名使用双引号或者单引号将其括起来。&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="MySQL" scheme="http://example.com/categories/MySQL/"/>
     
     
   </entry>
   
   <entry>
-    <title>BufferedOutputStream字节输出缓冲流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/55.%20BufferedOutputStream%E5%AD%97%E8%8A%82%E8%BE%93%E5%87%BA%E7%BC%93%E5%86%B2%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/55.%20BufferedOutputStream%E5%AD%97%E8%8A%82%E8%BE%93%E5%87%BA%E7%BC%93%E5%86%B2%E6%B5%81/</id>
-    <published>2024-06-17T03:50:58.000Z</published>
-    <updated>2024-06-18T03:03:46.488Z</updated>
+    <title>Redis实现共享存储(session)</title>
+    <link href="http://example.com/2024/07/16/Blog/Tips/20.%20Redis%E5%AE%9E%E7%8E%B0%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8(session)/"/>
+    <id>http://example.com/2024/07/16/Blog/Tips/20.%20Redis%E5%AE%9E%E7%8E%B0%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8(session)/</id>
+    <published>2024-07-16T06:08:17.000Z</published>
+    <updated>2024-07-16T14:49:49.431Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;BufferedOutputStream字节输出缓冲流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;Redis实现共享存储-session&quot;&gt;&lt;a href=&quot;#Redis实现共享存储-session&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>BufferedInputStream字节输入缓冲流</title>
-    <link href="http://example.com/2024/06/17/Java%20SE/54.%20BufferedInputStream%E5%AD%97%E8%8A%82%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/"/>
-    <id>http://example.com/2024/06/17/Java%20SE/54.%20BufferedInputStream%E5%AD%97%E8%8A%82%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E6%B5%81/</id>
-    <published>2024-06-17T03:21:54.000Z</published>
-    <updated>2024-06-17T07:18:43.880Z</updated>
+    <title>设置种session的范围</title>
+    <link href="http://example.com/2024/07/16/Blog/Tips/19.%20%E8%AE%BE%E7%BD%AE%E7%A7%8Dsession%E7%9A%84%E8%8C%83%E5%9B%B4/"/>
+    <id>http://example.com/2024/07/16/Blog/Tips/19.%20%E8%AE%BE%E7%BD%AE%E7%A7%8Dsession%E7%9A%84%E8%8C%83%E5%9B%B4/</id>
+    <published>2024-07-16T01:15:17.000Z</published>
+    <updated>2024-07-16T14:48:05.737Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;BufferedInputStream字节输入缓冲流&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;设置种session的范围&quot;&gt;&lt;a href=&quot;#设置种session的范围&quot; class=&quot;headerlink&quot; title=&quot;设置种session的范围&quot;&gt;&lt;/a&gt;设置种session的范围&lt;/h2&gt;&lt;p&gt;共享 Cookie</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>关于文件路径的Java代码笔记</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/53.%20%E5%85%B3%E4%BA%8E%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84Java%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/53.%20%E5%85%B3%E4%BA%8E%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84Java%E4%BB%A3%E7%A0%81%E7%AC%94%E8%AE%B0/</id>
-    <published>2024-06-16T14:32:00.000Z</published>
-    <updated>2024-06-17T06:29:03.659Z</updated>
+    <title>OpenAPI3 + Knife4j</title>
+    <link href="http://example.com/2024/07/15/Blog/Tips/18.%20OpenAPI3%20+%20Knife4j/"/>
+    <id>http://example.com/2024/07/15/Blog/Tips/18.%20OpenAPI3%20+%20Knife4j/</id>
+    <published>2024-07-15T01:48:17.000Z</published>
+    <updated>2024-07-19T08:00:38.110Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;关于文件路径的Java代码笔记&quot;&gt;&lt;a href=&quot;#关于文件路径的Java代码笔记&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;OpenAPI3-Knife4j&quot;&gt;&lt;a href=&quot;#OpenAPI3-Knife4j&quot; class=&quot;headerlink&quot; title=&quot;OpenAPI3 + Knife4j&quot;&gt;&lt;/a&gt;OpenAPI3 + Knife4j&lt;/h2&gt;&lt;h3</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>Try-With-Resources</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/52.%20Try-With-Resources/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/52.%20Try-With-Resources/</id>
-    <published>2024-06-16T14:30:45.000Z</published>
-    <updated>2024-06-17T06:28:57.036Z</updated>
+    <title>响应包装类</title>
+    <link href="http://example.com/2024/07/13/Blog/Tips/17.%20%E5%93%8D%E5%BA%94%E5%8C%85%E8%A3%85%E7%B1%BB/"/>
+    <id>http://example.com/2024/07/13/Blog/Tips/17.%20%E5%93%8D%E5%BA%94%E5%8C%85%E8%A3%85%E7%B1%BB/</id>
+    <published>2024-07-13T06:48:17.000Z</published>
+    <updated>2024-07-16T14:48:13.564Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;Try-With-Resources&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;响应包装类&quot;&gt;&lt;a href=&quot;#响应包装类&quot; class=&quot;headerlink&quot; title=&quot;响应包装类&quot;&gt;&lt;/a&gt;响应包装类&lt;/h2&gt;&lt;p&gt;响应包装类（Response</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>字符流输入输出示例</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/51.%20%E5%AD%97%E7%AC%A6%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/51.%20%E5%AD%97%E7%AC%A6%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B/</id>
-    <published>2024-06-16T14:29:38.000Z</published>
-    <updated>2024-06-17T06:28:50.674Z</updated>
+    <title>静态常量类</title>
+    <link href="http://example.com/2024/07/12/Blog/Tips/14.%20%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E7%B1%BB/"/>
+    <id>http://example.com/2024/07/12/Blog/Tips/14.%20%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E7%B1%BB/</id>
+    <published>2024-07-11T16:48:29.000Z</published>
+    <updated>2024-07-11T16:56:56.318Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;字符流输入输出示例&quot;&gt;&lt;a href=&quot;#字符流输入输出示例&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;静态常量类&quot;&gt;&lt;a href=&quot;#静态常量类&quot; class=&quot;headerlink&quot; title=&quot;静态常量类&quot;&gt;&lt;/a&gt;静态常量类&lt;/h2&gt;&lt;p&gt;常量接口（Constant Interface）是指一个接口，其中仅包含常量的声明。常量接口中的所有字段默认都是</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>FileWriter</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/50.%20FileWriter/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/50.%20FileWriter/</id>
-    <published>2024-06-16T14:28:34.000Z</published>
-    <updated>2024-06-17T06:28:45.096Z</updated>
+    <title>封装请求参数</title>
+    <link href="http://example.com/2024/07/12/Blog/Tips/16.%20%E5%B0%81%E8%A3%85%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"/>
+    <id>http://example.com/2024/07/12/Blog/Tips/16.%20%E5%B0%81%E8%A3%85%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/</id>
+    <published>2024-07-11T16:47:40.000Z</published>
+    <updated>2024-07-11T16:57:04.118Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;FileWriter&quot;&gt;&lt;a href=&quot;#FileWriter&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;封装请求参数&quot;&gt;&lt;a href=&quot;#封装请求参数&quot; class=&quot;headerlink&quot; title=&quot;封装请求参数&quot;&gt;&lt;/a&gt;封装请求参数&lt;/h2&gt;&lt;p&gt;将请求参数封装成用户请求体是一个常见的操作，尤其是在开发 RESTful API</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>FileReader</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/49.%20FileReader/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/49.%20FileReader/</id>
-    <published>2024-06-16T14:27:31.000Z</published>
-    <updated>2024-06-17T06:28:38.568Z</updated>
+    <title>用户信息脱敏</title>
+    <link href="http://example.com/2024/07/11/Blog/Tips/9.%20%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E8%84%B1%E6%95%8F/"/>
+    <id>http://example.com/2024/07/11/Blog/Tips/9.%20%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E8%84%B1%E6%95%8F/</id>
+    <published>2024-07-11T14:45:40.000Z</published>
+    <updated>2024-07-11T16:56:37.351Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;FileReader&quot;&gt;&lt;a href=&quot;#FileReader&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;用户信息脱敏&quot;&gt;&lt;a href=&quot;#用户信息脱敏&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   
   <entry>
-    <title>字节流输入输出示例</title>
-    <link href="http://example.com/2024/06/16/Java%20SE/48.%20%E5%AD%97%E8%8A%82%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B/"/>
-    <id>http://example.com/2024/06/16/Java%20SE/48.%20%E5%AD%97%E8%8A%82%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B/</id>
-    <published>2024-06-16T14:23:08.000Z</published>
-    <updated>2024-06-17T06:28:19.821Z</updated>
+    <title>用户登录流程及会话管理详解</title>
+    <link href="http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://example.com/2024/07/11/Blog/Tips/11.%20%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</id>
+    <published>2024-07-11T14:28:48.000Z</published>
+    <updated>2024-08-28T14:39:17.430Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;目录
-&lt;/p&gt;&lt;!-- toc --&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;字节流输入输出示例&quot;&gt;&lt;a href=&quot;#字节流输入输出示例&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;用户登录流程及会话管理详解&quot;&gt;&lt;a href=&quot;#用户登录流程及会话管理详解&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="Java SE" scheme="http://example.com/categories/Java-SE/"/>
+    <category term="Tips" scheme="http://example.com/categories/Tips/"/>
     
+    
+    <category term="Tips" scheme="http://example.com/tags/Tips/"/>
     
   </entry>
   

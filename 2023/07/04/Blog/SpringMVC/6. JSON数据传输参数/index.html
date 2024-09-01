@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="JSON数据传输参数 现在比较流行的开发方式为异步调用。前后台以异步方式进行交换，传输的数据使用的是&#x3D;&#x3D;JSON&#x3D;&#x3D;,所以前端如果发送的是JSON数据，后端该如何接收? 对于JSON数据类型，我们常见的有三种:  json普通数组（[“value1”,”value2”,”value3”,…]） json对象（{key1:value1,key2:value2,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC-JSON数据传输参数">
+<meta property="og:url" content="http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JSON数据传输参数 现在比较流行的开发方式为异步调用。前后台以异步方式进行交换，传输的数据使用的是&#x3D;&#x3D;JSON&#x3D;&#x3D;,所以前端如果发送的是JSON数据，后端该如何接收? 对于JSON数据类型，我们常见的有三种:  json普通数组（[“value1”,”value2”,”value3”,…]） json对象（{key1:value1,key2:value2,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905672.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905673.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905674.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905675.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905676.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905677.png">
+<meta property="article:published_time" content="2023-07-04T07:13:41.000Z">
+<meta property="article:modified_time" content="2024-08-29T15:36:10.365Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905672.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SpringMVC-JSON数据传输参数</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/07/05/Blog/SpringMVC/7.%20%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/07/04/Blog/SpringMVC/5.%20%E4%BA%94%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&text=SpringMVC-JSON数据传输参数"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&is_video=false&description=SpringMVC-JSON数据传输参数"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringMVC-JSON数据传输参数&body=Check out this article: http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&name=SpringMVC-JSON数据传输参数&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&t=SpringMVC-JSON数据传输参数"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">JSON数据传输参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-JSON%E6%99%AE%E9%80%9A%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">1. JSON普通数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41-pom-xml%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.1.1.</span> <span class="toc-text">步骤1:pom.xml添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42-PostMan%E5%8F%91%E9%80%81JSON%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">步骤2:PostMan发送JSON数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43-%E5%BC%80%E5%90%AFSpringMVC%E6%B3%A8%E8%A7%A3%E6%94%AF%E6%8C%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">步骤3:开启SpringMVC注解支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A44-%E5%8F%82%E6%95%B0%E5%89%8D%E6%B7%BB%E5%8A%A0-RequestBody"><span class="toc-number">1.1.4.</span> <span class="toc-text">步骤4:参数前添加@RequestBody</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. JSON对象数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-JSON%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">3. JSON对象数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">4. 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B91%EF%BC%9A-EnableWebMvc"><span class="toc-number">1.4.1.</span> <span class="toc-text">知识点1：@EnableWebMvc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B92%EF%BC%9A-RequestBody"><span class="toc-number">1.4.2.</span> <span class="toc-text">知识点2：@RequestBody</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RequestBody%E4%B8%8E-RequestParam%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.3.</span> <span class="toc-text">@RequestBody与@RequestParam区别</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpringMVC-JSON数据传输参数
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-04T07:13:41.000Z" class="dt-published" itemprop="datePublished">2023-07-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SpringMVC/">SpringMVC</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="JSON数据传输参数"><a href="#JSON数据传输参数" class="headerlink" title="JSON数据传输参数"></a>JSON数据传输参数</h2><hr>
+<p>现在比较流行的开发方式为异步调用。前后台以异步方式进行交换，传输的数据使用的是&#x3D;&#x3D;JSON&#x3D;&#x3D;,所以前端如果发送的是JSON数据，后端该如何接收?</p>
+<p>对于JSON数据类型，我们常见的有三种:</p>
+<ul>
+<li>json普通数组（[“value1”,”value2”,”value3”,…]）</li>
+<li>json对象（{key1:value1,key2:value2,…}）</li>
+<li>json对象数组（[{key1:value1,…},{key2:value2,…}]）</li>
+</ul>
+<p>对于上述数据，前端如何发送，后端如何接收?</p>
+<h3 id="1-JSON普通数组"><a href="#1-JSON普通数组" class="headerlink" title="1. JSON普通数组"></a>1. JSON普通数组</h3><hr>
+<h4 id="步骤1-pom-xml添加依赖"><a href="#步骤1-pom-xml添加依赖" class="headerlink" title="步骤1:pom.xml添加依赖"></a>步骤1:pom.xml添加依赖</h4><p>SpringMVC默认使用的是jackson来处理json的转换，所以需要在pom.xml添加jackson依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>除了jackson还可以用gson等。</p>
+</blockquote>
+<h4 id="步骤2-PostMan发送JSON数据"><a href="#步骤2-PostMan发送JSON数据" class="headerlink" title="步骤2:PostMan发送JSON数据"></a>步骤2:PostMan发送JSON数据</h4><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905672.png" alt="1630485135061" style="zoom:50%;" />
+
+<h4 id="步骤3-开启SpringMVC注解支持"><a href="#步骤3-开启SpringMVC注解支持" class="headerlink" title="步骤3:开启SpringMVC注解支持"></a>步骤3:开启SpringMVC注解支持</h4><p>在SpringMVC的配置类中开启SpringMVC的注解支持，这里面就包含了将JSON转换成对象的功能。</p>
+<ul>
+<li><mark><strong>@EnableWebMvc ：开启json数据类型自动转换。</strong></mark></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(&quot;com.itheima.controller&quot;)</span></span><br><span class="line"><span class="comment">//开启json数据类型自动转换</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringMvcConfig</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤4-参数前添加-RequestBody"><a href="#步骤4-参数前添加-RequestBody" class="headerlink" title="步骤4:参数前添加@RequestBody"></a>步骤4:参数前添加@RequestBody</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用@RequestBody注解将外部传递的json数组数据映射到形参的集合对象中作为数据</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/listParamForJson&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">listParamForJson</span><span class="params">(<span class="meta">@RequestBody</span> List&lt;String&gt; likes)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;list common(json)参数传递 list ==&gt; &quot;</span>+likes);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&#123;&#x27;module&#x27;:&#x27;list common for json param&#x27;&#125;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-JSON对象数据"><a href="#2-JSON对象数据" class="headerlink" title="2. JSON对象数据"></a>2. JSON对象数据</h3><hr>
+<p>请求和数据的发送:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;itcast&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;age&quot;</span><span class="punctuation">:</span><span class="number">15</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905673.png" alt="1630493105450" style="zoom: 50%;" />
+
+<p>后端接收数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/pojoParamForJson&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">pojoParamForJson</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;pojo(json)参数传递 user ==&gt; &quot;</span>+user);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&#123;&#x27;module&#x27;:&#x27;pojo for json param&#x27;&#125;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动程序访问测试</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905674.png" alt="1630493233550" style="zoom:67%;" />
+
+<p><strong>说明:</strong></p>
+<p>address为null的原因是前端没有传递数据给后端。</p>
+<p>如果想要address也有数据，我们需求修改前端传递的数据内容:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;itcast&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;age&quot;</span><span class="punctuation">:</span><span class="number">15</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;address&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;province&quot;</span><span class="punctuation">:</span><span class="string">&quot;beijing&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span><span class="string">&quot;beijing&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>再次发送请求，就能看到address中的数据</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905675.png" alt="1630493450694"></p>
+<hr>
+<h3 id="3-JSON对象数组"><a href="#3-JSON对象数组" class="headerlink" title="3. JSON对象数组"></a>3. JSON对象数组</h3><hr>
+<p>集合中保存多个POJO该如何实现?</p>
+<p>请求和数据的发送:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;itcast&quot;</span><span class="punctuation">,</span><span class="attr">&quot;age&quot;</span><span class="punctuation">:</span><span class="number">15</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;itheima&quot;</span><span class="punctuation">,</span><span class="attr">&quot;age&quot;</span><span class="punctuation">:</span><span class="number">12</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+ <img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905676.png" alt="1630493501205" style="zoom:67%;" />
+
+<p>后端接收数据:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/listPojoParamForJson&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">listPojoParamForJson</span><span class="params">(<span class="meta">@RequestBody</span> List&lt;User&gt; list)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;list pojo(json)参数传递 list ==&gt; &quot;</span>+list);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&#123;&#x27;module&#x27;:&#x27;list pojo for json param&#x27;&#125;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动程序访问测试</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/asserts_JavaSE/202407260905677.png" alt="1630493561137"></p>
+<hr>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><hr>
+<h4 id="知识点1：-EnableWebMvc"><a href="#知识点1：-EnableWebMvc" class="headerlink" title="知识点1：@EnableWebMvc"></a>知识点1：@EnableWebMvc</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>@EnableWebMvc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>&#x3D;&#x3D;配置类注解&#x3D;&#x3D;</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>SpringMVC配置类定义上方</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>开启SpringMVC多项辅助功能</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>[!Tip]</p>
+<p><mark><strong>提供将JSON转换成对象的功能</strong></mark></p>
+</blockquote>
+<h4 id="知识点2：-RequestBody"><a href="#知识点2：-RequestBody" class="headerlink" title="知识点2：@RequestBody"></a>知识点2：@RequestBody</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>@RequestBody</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>&#x3D;&#x3D;形参注解&#x3D;&#x3D;</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>SpringMVC控制器方法形参定义前面</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>将请求中请求体所包含的数据传递给请求参数，<strong>此注解一个处理器方法只能使用一次</strong>。</td>
+</tr>
+</tbody></table>
+<h4 id="RequestBody与-RequestParam区别"><a href="#RequestBody与-RequestParam区别" class="headerlink" title="@RequestBody与@RequestParam区别"></a>@RequestBody与@RequestParam区别</h4><ul>
+<li><p>区别</p>
+<ul>
+<li><strong>@RequestParam用于接收url地址传参，表单传参【application&#x2F;x-www-form-urlencoded】</strong></li>
+<li><u><strong>@RequestBody用于接收json数据【application&#x2F;json】</strong></u></li>
+</ul>
+</li>
+<li><p>应用</p>
+<ul>
+<li><mark><strong>只用涉及JSON请求格式数据才用@RequestBody</strong></mark></li>
+<li><mark><strong>如果发送非json格式数据，选用@RequestParam接收请求参数</strong></mark></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">JSON数据传输参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-JSON%E6%99%AE%E9%80%9A%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">1. JSON普通数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41-pom-xml%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.1.1.</span> <span class="toc-text">步骤1:pom.xml添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42-PostMan%E5%8F%91%E9%80%81JSON%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">步骤2:PostMan发送JSON数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43-%E5%BC%80%E5%90%AFSpringMVC%E6%B3%A8%E8%A7%A3%E6%94%AF%E6%8C%81"><span class="toc-number">1.1.3.</span> <span class="toc-text">步骤3:开启SpringMVC注解支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A44-%E5%8F%82%E6%95%B0%E5%89%8D%E6%B7%BB%E5%8A%A0-RequestBody"><span class="toc-number">1.1.4.</span> <span class="toc-text">步骤4:参数前添加@RequestBody</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSON%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">2. JSON对象数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-JSON%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">3. JSON对象数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">4. 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B91%EF%BC%9A-EnableWebMvc"><span class="toc-number">1.4.1.</span> <span class="toc-text">知识点1：@EnableWebMvc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B92%EF%BC%9A-RequestBody"><span class="toc-number">1.4.2.</span> <span class="toc-text">知识点2：@RequestBody</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RequestBody%E4%B8%8E-RequestParam%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.3.</span> <span class="toc-text">@RequestBody与@RequestParam区别</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&text=SpringMVC-JSON数据传输参数"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&is_video=false&description=SpringMVC-JSON数据传输参数"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringMVC-JSON数据传输参数&body=Check out this article: http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&title=SpringMVC-JSON数据传输参数"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&name=SpringMVC-JSON数据传输参数&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/07/04/Blog/SpringMVC/6.%20JSON%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%8F%82%E6%95%B0/&t=SpringMVC-JSON数据传输参数"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="17. HttpServletRequest接口详解  HttpServletRequest是一个接口，是Servlet规范中的一员。全限定名称：jakarta.servlet.http.HttpServletRequest  HttpServletRequest接口的父接口：ServletRequest   1public interface HttpServletRequest extends">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HttpServletRequest接口详解">
+<meta property="og:url" content="http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="17. HttpServletRequest接口详解  HttpServletRequest是一个接口，是Servlet规范中的一员。全限定名称：jakarta.servlet.http.HttpServletRequest  HttpServletRequest接口的父接口：ServletRequest   1public interface HttpServletRequest extends">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-29T13:46:42.000Z">
+<meta property="article:modified_time" content="2024-06-29T13:47:02.058Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HttpServletRequest接口详解</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/06/29/Blog/Java%20Web/Servlet/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/06/24/Blog/Java%20SE/87.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&text=HttpServletRequest接口详解"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&is_video=false&description=HttpServletRequest接口详解"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HttpServletRequest接口详解&body=Check out this article: http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&name=HttpServletRequest接口详解&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&t=HttpServletRequest接口详解"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#17-HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">17. HttpServletRequest接口详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#17-1-HttpServletRequest%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%E8%B0%81%E5%86%99%E7%9A%84-HttpServletRequest%E5%AF%B9%E8%B1%A1%E6%98%AF%E8%B0%81%E7%BB%99%E5%88%9B%E5%BB%BA%E7%9A%84%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">17.1 HttpServletRequest接口的实现类谁写的? HttpServletRequest对象是谁给创建的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-2-HttpServletRequest%E5%AF%B9%E8%B1%A1%E4%B8%AD%E9%83%BD%E6%9C%89%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%9F%E9%83%BD%E5%8C%85%E8%A3%85%E4%BA%86%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">17.2 HttpServletRequest对象中都有什么信息？都包装了什么信息？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-3-request%E5%92%8Cresponse%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.</span> <span class="toc-text">17.3 request和response对象的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#17-3-1-Request%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">17.3.1 Request对象的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-3-2-Response%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.2.</span> <span class="toc-text">17.3.2 Response对象的生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-4-HttpServletRequest%E6%8E%A5%E5%8F%A3%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">17.4 HttpServletRequest接口中有哪些常用的方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-5-%E5%89%8D%E7%AB%AF%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E7%94%A8%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%98%E5%82%A8%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">17.5 前端表单提交的数据采用什么样的数据结构存储？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-6-%E2%80%9C%E5%BA%94%E7%94%A8%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1%E5%92%8C%E2%80%9C%E8%AF%B7%E6%B1%82%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.6.</span> <span class="toc-text">17.6 “应用域”对象和“请求域”对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#17-7-1-%E2%80%9C%E5%BA%94%E7%94%A8%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">17.7.1 “应用域”对象是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-7-2-%E2%80%9C%E8%AF%B7%E6%B1%82%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text">17.7.2 “请求域”对象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-8-HttpServletRequest%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text">17.8 HttpServletRequest接口的其他常用方法</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HttpServletRequest接口详解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-29T13:46:42.000Z" class="dt-published" itemprop="datePublished">2024-06-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="17-HttpServletRequest接口详解"><a href="#17-HttpServletRequest接口详解" class="headerlink" title="17. HttpServletRequest接口详解"></a>17. HttpServletRequest接口详解</h2><hr>
+<ul>
+<li><p>HttpServletRequest是一个接口，是Servlet规范中的一员。全限定名称：<code>jakarta.servlet.http.HttpServletRequest</code></p>
+</li>
+<li><p>HttpServletRequest接口的父接口：ServletRequest</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">HttpServletRequest</span> <span class="keyword">extends</span> <span class="title class_">ServletRequest</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="17-1-HttpServletRequest接口的实现类谁写的-HttpServletRequest对象是谁给创建的？"><a href="#17-1-HttpServletRequest接口的实现类谁写的-HttpServletRequest对象是谁给创建的？" class="headerlink" title="17.1 HttpServletRequest接口的实现类谁写的? HttpServletRequest对象是谁给创建的？"></a>17.1 HttpServletRequest接口的实现类谁写的? HttpServletRequest对象是谁给创建的？</h3><ul>
+<li>通过测试：<code>org.apache.catalina.connector.RequestFacade</code> 实现了 HttpServletRequest接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestFacade</span> <span class="keyword">implements</span> <span class="title class_">HttpServletRequest</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>测试结果说明：Tomcat服务器（WEB服务器、WEB容器）实现了HttpServletRequest接口，还是说明了Tomcat服务器实现了Servlet规范。而对于我们javaweb程序员来说，实际上不需要关心这个，我们只需要面向接口编程即可。我们关心的是HttpServletRequest接口中有哪些方法，这些方法可以完成什么功能！！！！</li>
+</ul>
+<h3 id="17-2-HttpServletRequest对象中都有什么信息？都包装了什么信息？"><a href="#17-2-HttpServletRequest对象中都有什么信息？都包装了什么信息？" class="headerlink" title="17.2 HttpServletRequest对象中都有什么信息？都包装了什么信息？"></a>17.2 HttpServletRequest对象中都有什么信息？都包装了什么信息？</h3><ul>
+<li><p>HttpServletRequest对象是Tomcat服务器负责创建的。这个对象中封装了HTTP的请求协议。</p>
+</li>
+<li><p>实际上是用户发送请求的时候，遵循了HTTP协议，发送的是HTTP的请求协议，Tomcat服务器将HTTP协议中的信息以及数据全部解析出来，然后Tomcat服务器把这些信息封装到HttpServletRequest对象当中，传给了我们javaweb程序员。</p>
+</li>
+<li><p>javaweb程序员面向HttpServletRequest接口编程，调用方法就可以获取到请求的信息了。</p>
+</li>
+</ul>
+<h3 id="17-3-request和response对象的生命周期"><a href="#17-3-request和response对象的生命周期" class="headerlink" title="17.3 request和response对象的生命周期"></a>17.3 request和response对象的生命周期</h3><h4 id="17-3-1-Request对象的生命周期"><a href="#17-3-1-Request对象的生命周期" class="headerlink" title="17.3.1 Request对象的生命周期"></a>17.3.1 Request对象的生命周期</h4><ol>
+<li><p><strong>创建</strong>：<br>当客户端（通常是浏览器）发送HTTP请求到服务器时，服务器会为每个请求创建一个新的<code>HttpServletRequest</code>对象。这个对象包含了请求的所有信息，例如请求参数、头信息、URI等。</p>
+</li>
+<li><p><strong>处理</strong>：<br>服务器将创建的<code>HttpServletRequest</code>对象传递给对应的Servlet的<code>service</code>方法，通常是<code>doGet</code>、<code>doPost</code>等方法。Servlet通过这个对象来获取请求信息和与客户端进行交互。</p>
+</li>
+<li><p><strong>销毁</strong>：<br>一旦Servlet完成了对请求的处理，服务器会销毁这个<code>HttpServletRequest</code>对象。对象的销毁意味着它不再有效，服务器会回收其占用的资源。</p>
+</li>
+</ol>
+<h4 id="17-3-2-Response对象的生命周期"><a href="#17-3-2-Response对象的生命周期" class="headerlink" title="17.3.2 Response对象的生命周期"></a>17.3.2 Response对象的生命周期</h4><ol>
+<li><p><strong>创建</strong>：<br><code>HttpServletRequest</code>对象类似，当服务器接收到客户端的请求时，它也会创建一个新的<code>HttpServletResponse</code>对象。这个对象将用于生成和发送响应回客户端。</p>
+</li>
+<li><p><strong>处理</strong>：<br>服务器将创建的<code>HttpServletResponse</code>对象传递给对应的Servlet的<code>service</code>方法。Servlet通过这个对象来设置响应的状态码、头信息以及响应的内容。</p>
+</li>
+<li><p><strong>提交和销毁</strong>：<br>当Servlet完成对响应内容的生成，并且调用了<code>response</code>对象的<code>flushBuffer</code>方法或返回后，服务器会将响应数据发送给客户端。然后，服务器会销毁这个<code>HttpServletResponse</code>对象，并回收其占用的资源。</p>
+</li>
+</ol>
+<p>总结来说，<u><code>request</code>和<code>response</code>对象的生命周期是非常短暂的，它们仅在一次请求-响应周期内有效。</u>从客户端发送请求到服务器生成并发送响应的整个过程中，这两个对象会被创建、使用并最终销毁。</p>
+<h3 id="17-4-HttpServletRequest接口中有哪些常用的方法？"><a href="#17-4-HttpServletRequest接口中有哪些常用的方法？" class="headerlink" title="17.4 HttpServletRequest接口中有哪些常用的方法？"></a>17.4 HttpServletRequest接口中有哪些常用的方法？</h3><ol>
+<li>怎么获取前端浏览器用户提交的数据？</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,String[]&gt; getParameterMap() 这个是获取Map</span><br><span class="line">Enumeration&lt;String&gt; <span class="title function_">getParameterNames</span><span class="params">()</span> 这个是获取Map集合中所有的key</span><br><span class="line">String[] getParameterValues(String name) 根据key获取Map集合的value</span><br><span class="line">* String <span class="title function_">getParameter</span><span class="params">(String name)</span>  获取value这个一维数组当中的第一个元素。这个方法最常用。</span><br><span class="line"><span class="comment">// 以上的4个方法，和获取用户提交的数据有关系。     </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!NOTE]</p>
+<ol>
+<li>String getParameter(String name)  获取value这个一维数组当中的第一个元素。这个方法最常用。</li>
+<li><mark><strong>这四个方法适用于获取用户提交的数据，不要和对请求域的数据方法搞混。</strong></mark></li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>方法测试</li>
+</ol>
+<p><strong>Map&lt;String,String[]&gt; parameterMap &#x3D; request.getParameterMap();</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 通过getParameterMap()获取参数Map集合</span></span><br><span class="line">Map&lt;String,String[]&gt; parameterMap = request.getParameterMap();</span><br><span class="line"><span class="comment">//遍历Map集合（获取Map集合中所有的Key遍历）</span></span><br><span class="line">Set&lt;String&gt; keys = parameterMap.keySet();</span><br><span class="line"><span class="keyword">for</span> (String key : keys) &#123;</span><br><span class="line">   <span class="comment">//通过key获取value</span></span><br><span class="line">   String[] values = parameterMap.get(key);</span><br><span class="line">   out.println(key + <span class="string">&quot;: &quot;</span> );</span><br><span class="line">   <span class="keyword">for</span> (String value : values) &#123;</span><br><span class="line">      out.println(value+<span class="string">&quot; &quot;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">out.println(<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Enumeration<String> names &#x3D; request.getParameterNames();<br>String[] values &#x3D; request.getParameterValues(“name”);<br>String value &#x3D; request.getParameter(“name”);</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//2. 通过getParameterNames()获取Map集合所有key</span></span><br><span class="line">Enumeration&lt;String&gt; keys1 = request.getParameterNames();</span><br><span class="line"><span class="keyword">while</span> (keys1.hasMoreElements()) &#123;</span><br><span class="line">   <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keys1.nextElement();</span><br><span class="line">   out.println(key + <span class="string">&quot;: &quot;</span> );</span><br><span class="line">   <span class="comment">// 通过getParameterValues(key)获取所有values</span></span><br><span class="line">   <span class="comment">//request.getParameter(&quot;key&quot;)是获取数组的第一个元素，因为一般value只有一个元素。</span></span><br><span class="line">   String[] values = request.getParameterValues(key);</span><br><span class="line">   or (String value : values) &#123;</span><br><span class="line">      out.println(value+<span class="string">&quot; &quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">   out.println(<span class="string">&quot;&lt;br&gt;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="17-5-前端表单提交的数据采用什么样的数据结构存储？"><a href="#17-5-前端表单提交的数据采用什么样的数据结构存储？" class="headerlink" title="17.5 前端表单提交的数据采用什么样的数据结构存储？"></a>17.5 前端表单提交的数据采用什么样的数据结构存储？</h3><ol>
+<li><p>前端提交的数据格式：username&#x3D;abc&amp;userpwd&#x3D;111&amp;aihao&#x3D;s&amp;aihao&#x3D;d&amp;aihao&#x3D;tt</p>
+</li>
+<li><p>采用Map集合来存储：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,String&gt;</span><br><span class="line">key存储String</span><br><span class="line">value存储String</span><br><span class="line">key         value</span><br><span class="line">---------------------</span><br><span class="line">username    abc</span><br><span class="line">userpwd     111</span><br><span class="line">aihao       s</span><br><span class="line">aihao       d</span><br><span class="line">aihao       tt</span><br></pre></td></tr></table></figure>
+<p>如果采用以上的数据结构存储会发现key重复的时候value覆盖。这样是不行的，因为map的key不能重复。但是将value存储改为String数组即可解决重复覆盖问题。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String[]&gt;</span><br><span class="line">key存储String</span><br><span class="line">value存储String[]</span><br><span class="line">key				value</span><br><span class="line">-------------------------------</span><br><span class="line">username		&#123;&quot;abc&quot;&#125;</span><br><span class="line">userpwd			&#123;&quot;111&quot;&#125;</span><br><span class="line">aihao			&#123;&quot;s&quot;,&quot;d&quot;,&quot;tt&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：前端表单提交数据的时候，假设提交了120这样的“数字”，其实是以字符串”120”的方式提交的，所以服务器端获取到的一定是一个字符串的”120”，而不是一个数字。（前端永远提交的是字符串，后端获取的也永远是字符串。）</p>
+</li>
+</ol>
+<h3 id="17-6-“应用域”对象和“请求域”对象"><a href="#17-6-“应用域”对象和“请求域”对象" class="headerlink" title="17.6 “应用域”对象和“请求域”对象"></a>17.6 “应用域”对象和“请求域”对象</h3><h4 id="17-7-1-“应用域”对象是什么？"><a href="#17-7-1-“应用域”对象是什么？" class="headerlink" title="17.7.1 “应用域”对象是什么？"></a>17.7.1 “应用域”对象是什么？</h4><p>应用域对象通常指的是 <code>ServletContext</code> 对象。在 Java Web 开发中，它表示整个 web 应用的上下文，可以在应用的各个部分之间共享数据。因为它的生命周期与 web 应用一致，所以被称为“应用域”对象。</p>
+<ol>
+<li><p>什么情况下会考虑向ServletContext这个应用域当中绑定数据呢？</p>
+<ul>
+<li>第一：所有用户共享的数据。</li>
+<li>第二：这个共享的数据量很小。</li>
+<li>第三：这个共享的数据很少的修改操作。</li>
+</ul>
+<p>在以上三个条件都满足的情况下，使用这个应用域对象，可以大大提高我们程序执行效率。实际上向应用域当中绑定数据，就相当于把数据放到了缓存（Cache）当中，然后用户访问的时候直接从缓存中取，减少IO的操作，大大提升系统的性能，所以缓存技术是提高系统性能的重要手段。</p>
+</li>
+<li><p><strong>ServletContext当中有三个操作域的方法：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">setAttribute</span><span class="params">(String name, Object obj)</span>; <span class="comment">// 向域当中绑定数据。</span></span><br><span class="line">Object <span class="title function_">getAttribute</span><span class="params">(String name)</span>; <span class="comment">// 从域当中根据name获取数据。</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">removeAttribute</span><span class="params">(String name)</span>; <span class="comment">// 将域当中绑定的数据移除</span></span><br><span class="line">   </span><br><span class="line"><span class="comment">// 以上的操作类似于Map集合的操作。</span></span><br><span class="line">Map&lt;String, Object&gt; map;</span><br><span class="line">map.put(<span class="string">&quot;name&quot;</span>, obj); <span class="comment">// 向map集合中放key和value</span></span><br><span class="line"><span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> map.get(<span class="string">&quot;name&quot;</span>); <span class="comment">// 通过map集合的key获取value</span></span><br><span class="line">map.remove(<span class="string">&quot;name&quot;</span>); <span class="comment">// 通过Map集合的key删除key和value这个键值对。</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="17-7-2-“请求域”对象"><a href="#17-7-2-“请求域”对象" class="headerlink" title="17.7.2 “请求域”对象"></a>17.7.2 “请求域”对象</h4><p>“请求域”对象要比“应用域”对象范围小很多。生命周期短很多。请求域只在一次请求内有效。一个请求对象request对应一个请求域对象。一次请求结束之后，这个请求域就销毁了。</p>
+<ol>
+<li><p>请求域对象也有这三个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">setAttribute</span><span class="params">(String name, Object obj)</span>; <span class="comment">// 向域当中绑定数据。</span></span><br><span class="line">Object <span class="title function_">getAttribute</span><span class="params">(String name)</span>; <span class="comment">// 从域当中根据name获取数据。</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">removeAttribute</span><span class="params">(String name)</span>; <span class="comment">// 将域当中绑定的数据移除</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!NOTE]</p>
+<ol>
+<li>和应用域ServletContext使用方法相同，只是后者生命周期短，涉及请求转发。</li>
+<li>请注意区分这些操作方法与接收前端传来数据的四种常用方法。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>请求域和应用域的选用原则？</p>
+<ul>
+<li>尽量使用小的域对象，因为小的域对象占用的资源较少。</li>
+</ul>
+</li>
+<li><p>转发（一次请求）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一步：获取请求转发器对象</span></span><br><span class="line"><span class="type">RequestDispatcher</span> <span class="variable">dispatcher</span> <span class="operator">=</span> request.getRequestDispatcher(<span class="string">&quot;/b&quot;</span>);</span><br><span class="line"><span class="comment">// 第二步：调用转发器的forward方法完成跳转/转发</span></span><br><span class="line">dispatcher.forward(request,response);</span><br><span class="line"><span class="comment">// 第一步和第二步代码可以联合在一起。</span></span><br><span class="line">request.getRequestDispatcher(<span class="string">&quot;/b&quot;</span>).forward(request,response);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>两个Servlet怎么共享数据？</strong></p>
+<ul>
+<li>将数据放到ServletContext应用域当中，当然是可以的，但是应用域范围太大，占用资源太多。不建议使用。</li>
+<li>可以将数据放到request域当中，<u>然后AServlet转发到BServlet，保证AServlet和BServlet在同一次请求当中</u>，这样就可以做到两个Servlet，或者多个Servlet共享同一份数据。</li>
+</ul>
+</li>
+<li><p>转发的下一个资源必须是一个Servlet吗？</p>
+<ul>
+<li>不一定，只要是Tomcat服务器当中的合法资源，都是可以转发的。例如：html….</li>
+<li>注意：转发的时候，路径的写法要注意，转发的路径以“&#x2F;”开始，不加项目名。</li>
+</ul>
+</li>
+<li><p><mark><strong>关于request对象中两个非常容易混淆的方法：</strong></mark></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// uri?username=zhangsan&amp;userpwd=123&amp;sex=1</span></span><br><span class="line"><span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 之前一定是执行过：request.setAttribute(&quot;name&quot;, new Object())</span></span><br><span class="line"><span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> request.getAttribute(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 以上两个方法的区别是什么？</span></span><br><span class="line">    <span class="comment">// 第一个方法：获取的是用户在浏览器上提交的数据。</span></span><br><span class="line">    <span class="comment">// 第二个方法：获取的是请求域当中绑定的数据。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[!NOTE]<br>getParameter是针对获取前端发送的数据，setAttribute是针对请求域存储的数据。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="17-8-HttpServletRequest接口的其他常用方法"><a href="#17-8-HttpServletRequest接口的其他常用方法" class="headerlink" title="17.8 HttpServletRequest接口的其他常用方法"></a>17.8 HttpServletRequest接口的其他常用方法</h3><ol>
+<li><p>获取客户端的IP地址</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取客户端的IP地址</span></span><br><span class="line"><span class="type">String</span> <span class="variable">remoteAddr</span> <span class="operator">=</span> request.getRemoteAddr();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置请求体的字符集。</p>
+<ul>
+<li><strong>POST请求处理</strong>：<u><strong>当客户端通过POST方法发送请求时</strong>，请求的数据通常包含在请求体中</u>。如果请求体中包含中文或其他非ASCII字符，并且服务器未设置正确的字符集，就可能导致乱码问题。通过设置请求体的字符集，比如使用<code>request.setCharacterEncoding(&quot;UTF-8&quot;)</code>来告诉服务器如何解析请求体的数据，可以有效避免乱码问题。</li>
+<li><strong>GET请求乱码问题</strong>：与POST不同，<u>GET请求的参数是通过URL传递的</u>，通常以查询字符串的形式出现在URL中。如果URL中包含中文或其他非ASCII字符，并且服务器未正确解析这些字符，就可能导致乱码问题。<u>设置请求体字符集的方法并不能解决GET请求中的乱码问题，因为这些字符已经包含在URL中，而非请求体中。</u></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p><strong>处理post请求乱码问题</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置请求体的字符集。（显然这个方法是处理POST请求的乱码问题。这种方式并不能解决get请求的乱码问题。）</span></span><br><span class="line"><span class="comment">// Tomcat10之后，request请求体当中的字符集默认就是UTF-8，不需要设置字符集，不会出现乱码问题。</span></span><br><span class="line"><span class="comment">// Tomcat9前（包括9在内），如果前端请求体提交的是中文，后端获取之后出现乱码。</span></span><br><span class="line"> request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>处理get请求乱码问题</strong></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get请求发送的时候，数据是在请求行上提交的，不是在请求体当中提交的。</span></span><br><span class="line"><span class="comment">// 方案：修改CATALINA_HOME/conf/server.xml配置文件</span></span><br><span class="line">&lt;Connector URIEncoding=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span><br><span class="line"><span class="comment">// 注意：从Tomcat8之后，URIEncoding的默认值就是UTF-8，所以GET请求也没有乱码问题了。</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>处理响应乱码问题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在Tomcat9之前（包括9），响应中文也是有乱码的，怎么解决这个响应的乱码？</span></span><br><span class="line">response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"><span class="comment">// 在Tomcat10之后，包括10在内，响应中文的时候就不在出现乱码问题了。以上代码就不需要设置UTF-8了。</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li><p>获取应用的根路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取应用的根路径(动态的获取)</span></span><br><span class="line"><span class="type">String</span> <span class="variable">contextPath</span> <span class="operator">=</span> request.getContextPath();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取请求方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取请求方式</span></span><br><span class="line"><span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> request.getMethod();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取请求的URI</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取请求的URI</span></span><br><span class="line"><span class="type">String</span> <span class="variable">uri</span> <span class="operator">=</span> request.getRequestURI();  <span class="comment">// /aaa/testRequest</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取servlet path</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取servlet path</span></span><br><span class="line"><span class="type">String</span> <span class="variable">servletPath</span> <span class="operator">=</span> request.getServletPath(); <span class="comment">//   /testRequest</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#17-HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">17. HttpServletRequest接口详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#17-1-HttpServletRequest%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB%E8%B0%81%E5%86%99%E7%9A%84-HttpServletRequest%E5%AF%B9%E8%B1%A1%E6%98%AF%E8%B0%81%E7%BB%99%E5%88%9B%E5%BB%BA%E7%9A%84%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">17.1 HttpServletRequest接口的实现类谁写的? HttpServletRequest对象是谁给创建的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-2-HttpServletRequest%E5%AF%B9%E8%B1%A1%E4%B8%AD%E9%83%BD%E6%9C%89%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%9F%E9%83%BD%E5%8C%85%E8%A3%85%E4%BA%86%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">17.2 HttpServletRequest对象中都有什么信息？都包装了什么信息？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-3-request%E5%92%8Cresponse%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.</span> <span class="toc-text">17.3 request和response对象的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#17-3-1-Request%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">17.3.1 Request对象的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-3-2-Response%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.3.2.</span> <span class="toc-text">17.3.2 Response对象的生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-4-HttpServletRequest%E6%8E%A5%E5%8F%A3%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">17.4 HttpServletRequest接口中有哪些常用的方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-5-%E5%89%8D%E7%AB%AF%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E7%94%A8%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%98%E5%82%A8%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">17.5 前端表单提交的数据采用什么样的数据结构存储？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-6-%E2%80%9C%E5%BA%94%E7%94%A8%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1%E5%92%8C%E2%80%9C%E8%AF%B7%E6%B1%82%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.6.</span> <span class="toc-text">17.6 “应用域”对象和“请求域”对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#17-7-1-%E2%80%9C%E5%BA%94%E7%94%A8%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">17.7.1 “应用域”对象是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-7-2-%E2%80%9C%E8%AF%B7%E6%B1%82%E5%9F%9F%E2%80%9D%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.6.2.</span> <span class="toc-text">17.7.2 “请求域”对象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-8-HttpServletRequest%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text">17.8 HttpServletRequest接口的其他常用方法</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&text=HttpServletRequest接口详解"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&is_video=false&description=HttpServletRequest接口详解"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HttpServletRequest接口详解&body=Check out this article: http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&title=HttpServletRequest接口详解"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&name=HttpServletRequest接口详解&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/29/Blog/Java%20Web/Servlet/HttpServletRequest%E6%8E%A5%E5%8F%A3%E8%AF%A6%E8%A7%A3/&t=HttpServletRequest接口详解"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
