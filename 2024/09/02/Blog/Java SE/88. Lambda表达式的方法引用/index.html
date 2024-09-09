@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Lambda表达式的方法引用 方法引用其实就是把一个已经存在的方法拿来用，不需要再写一遍代码。可以理解为：“别写重复的东西，直接拿来用”。比如，如果你要做一件事情，而某个方法已经写好了，那你就直接用它的名字就行，不用再写一个lambda表达式。  静态方法引用想象你要把列表里的每个数字都打印出来，原来你可能会这样写： 1list.forEach(n -&gt; System.out.println">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda表达式的方法引用">
+<meta property="og:url" content="http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Lambda表达式的方法引用 方法引用其实就是把一个已经存在的方法拿来用，不需要再写一遍代码。可以理解为：“别写重复的东西，直接拿来用”。比如，如果你要做一件事情，而某个方法已经写好了，那你就直接用它的名字就行，不用再写一个lambda表达式。  静态方法引用想象你要把列表里的每个数字都打印出来，原来你可能会这样写： 1list.forEach(n -&gt; System.out.println">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-02T14:50:46.000Z">
+<meta property="article:modified_time" content="2024-09-09T14:22:52.133Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Lambda表达式的方法引用</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/09/01/Blog/Java%20SE/87.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&text=Lambda表达式的方法引用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&is_video=false&description=Lambda表达式的方法引用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lambda表达式的方法引用&body=Check out this article: http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&name=Lambda表达式的方法引用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&t=Lambda表达式的方法引用"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">Lambda表达式的方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. 实例方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 实例方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E4%BD%BF%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1.1.1 使用lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9A"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">1.1.2 使用实例方法引用：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 什么时候可以用实例方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 实例方法引用的格式：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">2. 静态方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 静态方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E4%BD%BF%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">2.1.1 使用lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2.1.2 使用静态方法引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 什么时候可以用静态方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 常见场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BB%BB%E6%84%8F%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%88%E9%80%9A%E8%BF%87%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E8%B0%83%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3. 特定类型的任意对象的实例方法引用（通过参数对象调用实例方法）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BB%BB%E6%84%8F%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 特定类型的任意对象的实例方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E4%BD%BF%E7%94%A8Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 使用Lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E6%9D%A5"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 使用方法引用来</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 构造方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 构造方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.1.1 使用 lambda 表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">4.1.2 使用构造方法引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 什么时候可以用构造方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">5. 数组引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 数组引用的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 数组引用的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 数组引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1-%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">5.3.1 使用匿名内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2-%E4%BD%BF%E7%94%A8-Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">5.3.2 使用 Lambda 表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3-%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">5.3.3 使用数组引用</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Lambda表达式的方法引用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-09-02T14:50:46.000Z" class="dt-published" itemprop="datePublished">2024-09-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Java-SE/">Java SE</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Lambda表达式的方法引用"><a href="#Lambda表达式的方法引用" class="headerlink" title="Lambda表达式的方法引用"></a>Lambda表达式的方法引用</h1><hr>
+<p><strong>方法引用</strong>其实就是把一个<strong>已经存在</strong>的方法拿来用，不需要再写一遍代码。可以理解为：<strong>“别写重复的东西，直接拿来用”</strong>。比如，如果你要做一件事情，而某个方法已经写好了，那你就直接用它的名字就行，不用再写一个lambda表达式。</p>
+<ol>
+<li><p><strong>静态方法引用</strong><br>想象你要把列表里的每个数字都打印出来，原来你可能会这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(n -&gt; System.out.println(n));</span><br></pre></td></tr></table></figure>
+<p>这其实就是每次把<code>n</code>传到<code>System.out.println()</code>方法里。<br><strong>但<code>println</code>这个方法已经存在了</strong>，你可以直接用它的名字，像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<p>这样代码就更简洁了！<strong>不需要重复地写<code>n -&gt;</code>了</strong>，因为Java知道要用<code>println</code>这个方法。</p>
+</li>
+<li><p><strong>实例方法引用</strong><br>假设你有一个对象<code>apple</code>，它有一个方法叫<code>eat()</code>。原来你可能会这么写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(item -&gt; apple.eat(item));</span><br></pre></td></tr></table></figure>
+<p>但其实<code>apple.eat()</code>已经写好了，所以你可以这样直接引用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(apple::eat);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>类方法引用</strong><br>如果你有一个方法需要调用列表中每个对象的某个功能，比如字符串转换成大写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(str -&gt; str.toUpperCase());</span><br></pre></td></tr></table></figure>
+<p>因为<code>toUpperCase()</code>这个方法已经写好了，你可以直接用它的名字：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(String::toUpperCase);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>构造方法引用</strong><br>当你需要创建对象时，像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Supplier&lt;List&lt;String&gt;&gt; supplier = () -&gt; <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<p><strong><code>new ArrayList()</code>这个构造器已经写好了</strong>，所以可以直接用方法引用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Supplier&lt;List&lt;String&gt;&gt; supplier = ArrayList::<span class="keyword">new</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p>当<strong>lambda表达式</strong>只是简单调用一个已有方法时，就可以用<strong>方法引用</strong>。</p>
+<p><strong>用方法引用会让代码更简洁、少重复</strong>，不需要每次都写lambda表达式。</p>
+</blockquote>
+<p>在Lambda表达式的方法引用中，主要有实例方法引用、静态方法引用、特殊方法引用和构造方法引用、数组引用这五种情况</p>
+<h2 id="1-实例方法引用"><a href="#1-实例方法引用" class="headerlink" title="1. 实例方法引用"></a>1. 实例方法引用</h2><hr>
+<p><strong>实例方法引用</strong>是指使用某个对象的实例方法，而不需要显式地写出lambda表达式。用实例方法引用，可以让代码更加简洁。当你用实例方法引用时，它会自动把参数传给该方法，<strong>前提是这个方法已经写好了，并且适合传入的参数</strong>。</p>
+<h3 id="1-1-实例方法引用的使用"><a href="#1-1-实例方法引用的使用" class="headerlink" title="1.1 实例方法引用的使用"></a>1.1 实例方法引用的使用</h3><p>假设我们有一个对象<code>apple</code>，它有一个<code>eat()</code>方法，用来吃水果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Apple</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">(String fruit)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Eating &quot;</span> + fruit);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-1-使用lambda表达式"><a href="#1-1-1-使用lambda表达式" class="headerlink" title="1.1.1 使用lambda表达式"></a>1.1.1 使用lambda表达式</h4><p>原本可能会用lambda表达式来遍历一个水果列表，并调用<code>apple.eat()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Apple</span> <span class="variable">apple</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Apple</span>();</span><br><span class="line">List&lt;String&gt; fruits = Arrays.asList(<span class="string">&quot;banana&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;apple&quot;</span>);</span><br><span class="line"></span><br><span class="line">fruits.forEach(fruit -&gt; apple.eat(fruit));  <span class="comment">// lambda表达式</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-1-2-使用实例方法引用："><a href="#1-1-2-使用实例方法引用：" class="headerlink" title="1.1.2 使用实例方法引用："></a>1.1.2 使用实例方法引用：</h4><p>既然<code>apple.eat()</code>已经存在，我们可以直接引用它的方法名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fruits.forEach(apple::eat);  <span class="comment">// 实例方法引用</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>这两种写法的效果完全一样</strong>，但使用方法引用的代码更简洁！</p>
+<h3 id="1-2-什么时候可以用实例方法引用？"><a href="#1-2-什么时候可以用实例方法引用？" class="headerlink" title="1.2 什么时候可以用实例方法引用？"></a>1.2 什么时候可以用实例方法引用？</h3><ol>
+<li><p><strong>已有的实例方法</strong>：你已经有一个对象（比如上面的<code>apple</code>），并且你想对列表中的每一项调用这个对象的某个方法。</p>
+</li>
+<li><p><strong>方法参数匹配</strong>：lambda表达式中的参数要和实例方法的参数一致。例如，<code>fruits.forEach(apple::eat)</code>中，<code>forEach</code>会把<code>fruits</code>中的每个元素传递给<code>apple.eat()</code>，而<code>eat</code>刚好是接受一个<code>String</code>参数。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.camellia.lambda;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodRefDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">RefClass</span> <span class="variable">refClass</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RefClass</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 匿名类</span></span><br><span class="line">        <span class="type">RefInterface</span> <span class="variable">anonymous</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RefInterface</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> String <span class="title function_">getValue</span><span class="params">(<span class="type">int</span> a)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> refClass.getValue(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        System.out.println(anonymous.getValue(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. Lambda 表达式</span></span><br><span class="line">        <span class="type">RefInterface</span> <span class="variable">lambda</span> <span class="operator">=</span> a -&gt; refClass.getValue(a);</span><br><span class="line">        System.out.println(lambda.getValue(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 方法引用</span></span><br><span class="line">        <span class="type">RefInterface</span> <span class="variable">methodRef</span> <span class="operator">=</span> refClass::getValue;</span><br><span class="line">        System.out.println(methodRef.getValue(<span class="number">3</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">RefInterface</span> &#123;</span><br><span class="line">    String <span class="title function_">getValue</span><span class="params">(<span class="type">int</span> a)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RefClass</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getValue</span><span class="params">(<span class="type">int</span> a)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;输出值：%d&quot;</span>, a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-实例方法引用的格式："><a href="#1-3-实例方法引用的格式：" class="headerlink" title="1.3 实例方法引用的格式："></a>1.3 实例方法引用的格式：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">实例对象::方法名</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：方法引用等价于lambda表达式，也就是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apple::eat  <span class="comment">// 等价于 (fruit) -&gt; apple.eat(fruit)</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="2-静态方法引用"><a href="#2-静态方法引用" class="headerlink" title="2. 静态方法引用"></a>2. 静态方法引用</h2><hr>
+<p><strong>静态方法引用</strong>是指直接引用类中的静态方法，而不需要通过对象调用。静态方法引用使代码更加简洁，特别是在lambda表达式中，静态方法可以直接作为逻辑处理的实现。</p>
+<p><strong>静态方法引用的格式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名::静态方法名</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-1-静态方法引用的使用"><a href="#2-1-静态方法引用的使用" class="headerlink" title="2.1 静态方法引用的使用"></a>2.1 静态方法引用的使用</h3><p>假设有一个类<code>MathUtils</code>，其中有一个静态方法<code>doubleNumber()</code>，用于将数字乘以2：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MathUtils</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">doubleNumber</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> num * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-1-使用lambda表达式"><a href="#2-1-1-使用lambda表达式" class="headerlink" title="2.1.1 使用lambda表达式"></a>2.1.1 使用lambda表达式</h4><p>将一个数字列表中的每个数字都乘以2，可能会用lambda表达式来写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">numbers.stream().map(n -&gt; MathUtils.doubleNumber(n)).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-2-使用静态方法引用"><a href="#2-1-2-使用静态方法引用" class="headerlink" title="2.1.2 使用静态方法引用"></a>2.1.2 使用静态方法引用</h4><p>因为<code>doubleNumber()</code>是一个静态方法，你可以直接用方法引用来简化代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers.stream().map(MathUtils::doubleNumber).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-什么时候可以用静态方法引用？"><a href="#2-2-什么时候可以用静态方法引用？" class="headerlink" title="2.2 什么时候可以用静态方法引用？"></a>2.2 什么时候可以用静态方法引用？</h3><ol>
+<li><p><strong>有静态方法可以使用</strong>：当你已经有一个现成的静态方法，并且这个静态方法可以被重用时，比如上面的<code>MathUtils.doubleNumber</code>。</p>
+</li>
+<li><p><strong>参数匹配</strong>：lambda表达式中的参数要和静态方法的<strong>参数一致</strong>。在上面的例子中，<code>stream().map()</code>会把数字传递给<code>MathUtils.doubleNumber()</code>，它正好接受一个<code>int</code>参数并返回<code>int</code>。</p>
+</li>
+</ol>
+<h3 id="2-3-常见场景"><a href="#2-3-常见场景" class="headerlink" title="2.3 常见场景"></a>2.3 常见场景</h3><ol>
+<li><p><strong>工具类中的静态方法</strong>：静态方法引用通常用于像<code>Math</code>或<code>Collections</code>这样的工具类，因为它们通常包含常用的、与实例无关的逻辑。</p>
+<p>例如，使用<code>Math.max()</code>来获取两个数中的最大值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BinaryOperator&lt;Integer&gt; max = Math::max;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 lambda 表达式的等效写法</span></span><br><span class="line">BinaryOperator&lt;Integer&gt; max = (a, b) -&gt; Math.max(a, b); </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>转换、计算逻辑</strong>：如果你有一些转换或计算逻辑，并且这些逻辑已经通过静态方法实现，可以使用静态方法引用。</p>
+<p>例如，使用<code>Integer.parseInt()</code>将字符串转换为数字：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>,      <span class="string">&quot;3&quot;</span>).map(Integer::parseInt).forEach(System.out::println);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="3-特定类型的任意对象的实例方法引用（通过参数对象调用实例方法）"><a href="#3-特定类型的任意对象的实例方法引用（通过参数对象调用实例方法）" class="headerlink" title="3. 特定类型的任意对象的实例方法引用（通过参数对象调用实例方法）"></a>3. <strong>特定类型的任意对象的实例方法引用</strong>（通过参数对象调用实例方法）</h2><hr>
+<p>在Lambda表达式的方法体中，通过参数对象调用实例方法就是方法的第一个形参来调用指定的某个“实例方法”。</p>
+<p>接口方法的第一个参数就是你用来调用实例方法的对象。接口方法中除第一个参数外的其他参数，必须与实例方法的参数列表一一对应。</p>
+<h3 id="3-1-特定类型的任意对象的实例方法引用的使用"><a href="#3-1-特定类型的任意对象的实例方法引用的使用" class="headerlink" title="3.1 特定类型的任意对象的实例方法引用的使用"></a>3.1 特定类型的任意对象的实例方法引用的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式一：使用匿名内部类来实现</span></span><br><span class="line">Comparator&lt;Double&gt; comparator1 = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Double&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Double o1, Double o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.compareTo(o2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">System.out.println(comparator1.compare(<span class="number">10.0</span>, <span class="number">20.0</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式一：使用匿名内部类来实现</span></span><br><span class="line"><span class="type">Teacher</span> <span class="variable">teacher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;ande&quot;</span>, <span class="number">18</span>);</span><br><span class="line">Function&lt;Teacher, String&gt; function1 = <span class="keyword">new</span> <span class="title class_">Function</span>&lt;Teacher, String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">apply</span><span class="params">(Teacher teacher)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> teacher.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">System.out.println(function1.apply(teacher));</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-1-使用Lambda表达式"><a href="#3-1-1-使用Lambda表达式" class="headerlink" title="3.1.1 使用Lambda表达式"></a>3.1.1 使用Lambda表达式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式二：使用Lambda表达式来实现</span></span><br><span class="line">Comparator&lt;Double&gt; comparator2 = (o1, o2) -&gt; o1.compareTo(o2);</span><br><span class="line">System.out.println(comparator2.compare(<span class="number">10.0</span>, <span class="number">20.0</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式二：使用Lambda表达式来实现</span></span><br><span class="line">Function&lt;Teacher, String&gt; function2 = e -&gt; e.getName();</span><br><span class="line">System.out.println(function2.apply(teacher));</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-2-使用方法引用来"><a href="#3-1-2-使用方法引用来" class="headerlink" title="3.1.2 使用方法引用来"></a>3.1.2 使用方法引用来</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式三：使用方法引用来实现</span></span><br><span class="line">Comparator&lt;Double&gt; comparator3 = Double :: compareTo;</span><br><span class="line">System.out.println(comparator3.compare(<span class="number">10.0</span>, <span class="number">20.0</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式三：使用方法引用来实现</span></span><br><span class="line">Function&lt;Teacher, String &gt; function3 = Teacher :: getName;</span><br><span class="line">System.out.println(function3.apply(teacher));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="4-构造方法引用"><a href="#4-构造方法引用" class="headerlink" title="4. 构造方法引用"></a>4. 构造方法引用</h2><hr>
+<p>允许你使用类的构造方法来创建对象，构造方法引用是一个简洁的方式来传递构造函数作为参数。</p>
+<h3 id="4-1-构造方法引用的使用"><a href="#4-1-构造方法引用的使用" class="headerlink" title="4.1 构造方法引用的使用"></a>4.1 构造方法引用的使用</h3><p>构造方法引用的基本语法是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClassName::<span class="keyword">new</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>ClassName</code> 是想要引用构造方法的类名。</p>
+<ul>
+<li>假设有一个 <code>Person</code> 类，其构造方法如下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>有一个接口 <code>PersonFactory</code>，它有一个 <code>createPerson</code> 方法：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PersonFactory</span> &#123;</span><br><span class="line">    Person <span class="title function_">create</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-1-使用-lambda-表达式"><a href="#4-1-1-使用-lambda-表达式" class="headerlink" title="4.1.1 使用 lambda 表达式"></a>4.1.1 使用 lambda 表达式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用 lambda 表达式创建一个 PersonFactory 实例</span></span><br><span class="line">        <span class="type">PersonFactory</span> <span class="variable">factory</span> <span class="operator">=</span> name -&gt; <span class="keyword">new</span> <span class="title class_">Person</span>(name);</span><br><span class="line">        <span class="comment">// 使用工厂实例创建 Person 对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> factory.create(<span class="string">&quot;John Doe&quot;</span>);</span><br><span class="line">        <span class="comment">// 输出 Person 的名字</span></span><br><span class="line">        System.out.println(person.getName()); <span class="comment">// 输出 &quot;John Doe&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-2-使用构造方法引用"><a href="#4-1-2-使用构造方法引用" class="headerlink" title="4.1.2 使用构造方法引用"></a>4.1.2 使用构造方法引用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用构造方法引用创建一个 PersonFactory 实例</span></span><br><span class="line">        <span class="type">PersonFactory</span> <span class="variable">factory</span> <span class="operator">=</span> Person::<span class="keyword">new</span>;</span><br><span class="line">        <span class="comment">// 使用工厂实例创建 Person 对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> factory.create(<span class="string">&quot;John Doe&quot;</span>);</span><br><span class="line">        <span class="comment">// 输出 Person 的名字</span></span><br><span class="line">        System.out.println(person.getName()); <span class="comment">// 输出 &quot;John Doe&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-什么时候可以用构造方法引用？"><a href="#4-2-什么时候可以用构造方法引用？" class="headerlink" title="4.2 什么时候可以用构造方法引用？"></a>4.2 什么时候可以用构造方法引用？</h3><ol>
+<li><strong>已有的构造方法</strong>：已经有一个类及其构造方法，并且想用这个构造方法来创建对象。</li>
+<li><strong>参数匹配</strong>：构造方法引用的参数需要与接口的抽象方法参数匹配。例如，<code>PersonFactory</code> 接口的 <code>create</code> 方法需要一个 <code>String</code> 类型的参数，而 <code>Person</code> 类的构造方法也正好接受一个 <code>String</code> 参数。</li>
+</ol>
+<h3 id="4-3-使用场景"><a href="#4-3-使用场景" class="headerlink" title="4.3 使用场景"></a>4.3 使用场景</h3><p> <strong>1. 工厂模式</strong>：可以用来创建对象的工厂方法。<br> <strong>2. 流处理</strong>：在 Java Streams API 中，可以用构造方法引用来创建对象。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = Arrays.asList(<span class="string">&quot;John&quot;</span>, <span class="string">&quot;Jane&quot;</span>, <span class="string">&quot;Jack&quot;</span>);</span><br><span class="line">List&lt;Person&gt; people = names.stream()</span><br><span class="line">                           .map(Person::<span class="keyword">new</span>)</span><br><span class="line">                           .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>Person::new</code> 是构造方法引用，它将 <code>names</code> 列表中的每个名字映射到一个新的 <code>Person</code> 对象。</p>
+<p>构造方法引用提供了一种更简洁的方式来传递构造方法，同时保持代码的可读性和简洁性。</p>
+<h2 id="5-数组引用"><a href="#5-数组引用" class="headerlink" title="5. 数组引用"></a>5. 数组引用</h2><hr>
+<p><strong>数组引用</strong>是一种方法引用形式，用于创建指定类型的数组。在 Java 8 中，数组引用提供了一种简洁的方式来创建数组，尤其是在使用 lambda 表达式时。通过数组引用，可以在 lambda 表达式的方法体中创建并返回一个指定类型的数组。</p>
+<h3 id="5-1-数组引用的语法"><a href="#5-1-数组引用的语法" class="headerlink" title="5.1 数组引用的语法"></a>5.1 数组引用的语法</h3><p>语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数组类型::<span class="keyword">new</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-数组引用的特点"><a href="#5-2-数组引用的特点" class="headerlink" title="5.2 数组引用的特点"></a>5.2 数组引用的特点</h3><ul>
+<li><strong>要求</strong>：重写的方法必须有且只有一个 <code>int</code> 类型的参数，该参数用来设置数组的空间长度。</li>
+<li><strong>返回值类型</strong>：重写方法的返回值类型必须与创建的数组类型一致。</li>
+</ul>
+<h3 id="5-3-数组引用的使用"><a href="#5-3-数组引用的使用" class="headerlink" title="5.3 数组引用的使用"></a>5.3 数组引用的使用</h3><p>假设要创建一个 <code>Function&lt;Integer, int[]&gt;</code> 对象，并使用数组引用来创建不同长度的 <code>int</code> 数组。以下是三种实现方式：</p>
+<h4 id="5-3-1-使用匿名内部类"><a href="#5-3-1-使用匿名内部类" class="headerlink" title="5.3.1 使用匿名内部类"></a>5.3.1 使用匿名内部类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayRefDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 方式一：使用匿名内部类来实现</span></span><br><span class="line">        Function&lt;Integer, <span class="type">int</span>[]&gt; function1 = <span class="keyword">new</span> <span class="title class_">Function</span>&lt;Integer, <span class="type">int</span>[]&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span>[] apply(Integer integer) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[integer];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        System.out.println(Arrays.toString(function1.apply(<span class="number">10</span>))); <span class="comment">// 输出 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-2-使用-Lambda-表达式"><a href="#5-3-2-使用-Lambda-表达式" class="headerlink" title="5.3.2 使用 Lambda 表达式"></a>5.3.2 使用 Lambda 表达式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayRefDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 方式二：使用 Lambda 表达式来实现</span></span><br><span class="line">        Function&lt;Integer, <span class="type">int</span>[]&gt; function2 = num -&gt; <span class="keyword">new</span> <span class="title class_">int</span>[num];</span><br><span class="line">        System.out.println(Arrays.toString(function2.apply(<span class="number">20</span>))); <span class="comment">// 输出 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-3-使用数组引用"><a href="#5-3-3-使用数组引用" class="headerlink" title="5.3.3 使用数组引用"></a>5.3.3 使用数组引用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayRefDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 方式三：使用数组引用来实现</span></span><br><span class="line">        Function&lt;Integer, <span class="type">int</span>[]&gt; function3 = <span class="type">int</span>[]::<span class="keyword">new</span>;</span><br><span class="line">        System.out.println(Arrays.toString(function3.apply(<span class="number">30</span>))); <span class="comment">// 输出 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">Lambda表达式的方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1. 实例方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 实例方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E4%BD%BF%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1.1.1 使用lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9A"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">1.1.2 使用实例方法引用：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 什么时候可以用实例方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 实例方法引用的格式：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">2. 静态方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 静态方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E4%BD%BF%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">2.1.1 使用lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2.1.2 使用静态方法引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 什么时候可以用静态方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 常见场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BB%BB%E6%84%8F%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%88%E9%80%9A%E8%BF%87%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E8%B0%83%E7%94%A8%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3. 特定类型的任意对象的实例方法引用（通过参数对象调用实例方法）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BB%BB%E6%84%8F%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 特定类型的任意对象的实例方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E4%BD%BF%E7%94%A8Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 使用Lambda表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E6%9D%A5"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 使用方法引用来</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 构造方法引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 构造方法引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.1.1 使用 lambda 表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">4.1.2 使用构造方法引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 什么时候可以用构造方法引用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">5. 数组引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 数组引用的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 数组引用的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 数组引用的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1-%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">5.3.1 使用匿名内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2-%E4%BD%BF%E7%94%A8-Lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">5.3.2 使用 Lambda 表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3-%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">5.3.3 使用数组引用</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&text=Lambda表达式的方法引用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&is_video=false&description=Lambda表达式的方法引用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Lambda表达式的方法引用&body=Check out this article: http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&title=Lambda表达式的方法引用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&name=Lambda表达式的方法引用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/&t=Lambda表达式的方法引用"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Java获取资源路径 在 Java 中，获取资源文件的路径可以通过以下几种方式实现，具体方法取决于资源的存放位置和环境： 1. 获取方式 1.1 ClassLoader.getResource() 使用类加载器来获取资源的路径，资源需要存放在类路径（通常是 src&#x2F;main&#x2F;resources）下。返回的是 URL 对象。     123456789@Testvoid  getPathByClas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java获取资源路径">
+<meta property="og:url" content="http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java获取资源路径 在 Java 中，获取资源文件的路径可以通过以下几种方式实现，具体方法取决于资源的存放位置和环境： 1. 获取方式 1.1 ClassLoader.getResource() 使用类加载器来获取资源的路径，资源需要存放在类路径（通常是 src&#x2F;main&#x2F;resources）下。返回的是 URL 对象。     123456789@Testvoid  getPathByClas">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409080906835.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/image-20240908171525205.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092028281.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092101767.png">
+<meta property="og:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092101381.png">
+<meta property="article:published_time" content="2024-09-08T08:50:33.000Z">
+<meta property="article:modified_time" content="2024-09-09T13:18:58.617Z">
+<meta property="article:author" content="Camellia.xiaohua">
+<meta property="article:tag" content="搬砖日记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409080906835.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Java获取资源路径</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/thymeleaf%E6%A8%A1%E6%9D%BF/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/09/02/Blog/Java%20SE/88.%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&text=Java获取资源路径"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&is_video=false&description=Java获取资源路径"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java获取资源路径&body=Check out this article: http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&name=Java获取资源路径&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&t=Java获取资源路径"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="toc-number">1.</span> <span class="toc-text">Java获取资源路径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 获取方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-ClassLoader-getResource"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 ClassLoader.getResource()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Class-getResource"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Class.getResource()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-File-%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3  File 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Paths-get-%E5%92%8C-Files"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4  Paths.get() 和 Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-System-getProperty"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5  System.getProperty()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9C%A8Windows%E5%92%8CLinux%E4%B8%8B%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. 在Windows和Linux下测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Windows%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Windows测试结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Linux%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Linux测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Linux%E4%B8%8B%E7%9A%84%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">3. Linux下的异常问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E4%BD%BF%E7%94%A8idea%E4%B8%AD%E7%9A%84%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 使用idea中的源路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-getResourceAsStream"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 getResourceAsStream</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-%E5%B0%86jar%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%8B%BF%E5%87%BA%E5%8D%95%E7%8B%AC%E5%AD%98%E6%94%BE"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">3.1.3 将jar中的文件拿出单独存放</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Java获取资源路径
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Camellia.xiaohua</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-09-08T08:50:33.000Z" class="dt-published" itemprop="datePublished">2024-09-08</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tips/">Tips</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E6%90%AC%E7%A0%96%E6%97%A5%E8%AE%B0/" rel="tag">搬砖日记</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Java获取资源路径"><a href="#Java获取资源路径" class="headerlink" title="Java获取资源路径"></a>Java获取资源路径</h1><hr>
+<p>在 Java 中，获取资源文件的路径可以通过以下几种方式实现，具体方法取决于资源的存放位置和环境：</p>
+<h2 id="1-获取方式"><a href="#1-获取方式" class="headerlink" title="1. 获取方式"></a>1. 获取方式</h2><hr>
+<h3 id="1-1-ClassLoader-getResource"><a href="#1-1-ClassLoader-getResource" class="headerlink" title="1.1 ClassLoader.getResource()"></a>1.1 <strong><code>ClassLoader.getResource()</code></strong></h3><ul>
+<li>使用类加载器来获取资源的路径，资源需要存放在类路径（通常是 <code>src/main/resources</code>）下。返回的是 <code>URL</code> 对象。</li>
+</ul>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span>  <span class="title function_">getPathByClassPathResource</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 使用类加载器资源的URL</span></span><br><span class="line">    <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> getClass().getClassLoader().getResource(<span class="string">&quot;static/font/simsun.ttc&quot;</span>);</span><br><span class="line">    <span class="comment">// 获取资源的路径</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> url.getPath();</span><br><span class="line">    <span class="comment">// 使用类加载器来获取资源的路径并打印出来</span></span><br><span class="line">    System.out.println(<span class="string">&quot;类加载器来获取资源的路径: &quot;</span>+path);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-Class-getResource"><a href="#1-2-Class-getResource" class="headerlink" title="1.2 Class.getResource()"></a>1.2 <strong><code>Class.getResource()</code></strong></h3><ul>
+<li>使用类对象获取资源路径，可以加载当前类包下或根目录的资源。与 <code>ClassLoader.getResource()</code> 不同，路径可以以 <code>/</code> 开头，表示从类路径根目录开始。</li>
+</ul>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">getPathByClass</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 使用类对象获取资源路径，&quot;/&quot; 表示从根目录开始获取资源</span></span><br><span class="line">    <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> getClass().getResource(<span class="string">&quot;/static/font/simsun.ttc&quot;</span>);</span><br><span class="line">    <span class="comment">// 提取资源路径</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> url.getPath();</span><br><span class="line">    <span class="comment">// 输出路径信息</span></span><br><span class="line">    System.out.println(<span class="string">&quot;类对象获取资源路径: &quot;</span>+path);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-File-类"><a href="#1-3-File-类" class="headerlink" title="1.3  File 类"></a>1.3  <strong><code>File</code> 类</strong></h3><ul>
+<li>直接通过 <code>File</code> 类获取文件的绝对路径。适用于资源在文件系统中的情况（如项目的相对路径、绝对路径等）。</li>
+</ul>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">getPathByFile</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个File对象，指向资源文件系统中的一个特定文件</span></span><br><span class="line">    <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;src/main/resources/static/font/simsun.ttc&quot;</span>);</span><br><span class="line">    <span class="comment">// 获取文件的绝对路径</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> file.getAbsolutePath();</span><br><span class="line">    <span class="comment">// 打印文件的绝对路径</span></span><br><span class="line">    System.out.println(<span class="string">&quot;文件对象获取资源路径: &quot;</span>+path);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-Paths-get-和-Files"><a href="#1-4-Paths-get-和-Files" class="headerlink" title="1.4  Paths.get() 和 Files"></a>1.4  <strong><code>Paths.get()</code> 和 <code>Files</code></strong></h3><ul>
+<li>使用 <code>java.nio.file.Paths</code> 结合 <code>Files</code> 来获取文件路径，适用于从文件系统加载资源。</li>
+</ul>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">getPathByPaths</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个Path对象，指向资源文件</span></span><br><span class="line">    <span class="type">Path</span> <span class="variable">path</span> <span class="operator">=</span> Paths.get(<span class="string">&quot;src/main/resources/static/font/simsun.ttc&quot;</span>);</span><br><span class="line">    <span class="comment">// 将Path对象转换为绝对路径字符串</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">absolutePath</span> <span class="operator">=</span> path.toAbsolutePath().toString();</span><br><span class="line">    <span class="comment">// 打印Path对象的绝对路径</span></span><br><span class="line">    System.out.println(<span class="string">&quot;Path对象获取资源路径: &quot;</span>+absolutePath);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-System-getProperty"><a href="#1-5-System-getProperty" class="headerlink" title="1.5  System.getProperty()"></a>1.5  <strong><code>System.getProperty()</code></strong></h3><ul>
+<li>可以通过系统属性获取 Java 运行时的一些基本路径，比如用户目录或项目的当前工作目录。</li>
+</ul>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">getPathBySystem</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 获取项目根目录</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">userDir</span> <span class="operator">=</span> System.getProperty(<span class="string">&quot;user.dir&quot;</span>);</span><br><span class="line">    <span class="comment">// 拼接项目中的资源文件路径</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> userDir + <span class="string">&quot;/src/main/resources/static/font/simsun.ttc&quot;</span>;</span><br><span class="line">    <span class="comment">// 打印通过系统属性获取的资源路径</span></span><br><span class="line">    System.out.println(<span class="string">&quot;系统属性获取资源路径: &quot;</span>+path);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些方法适用于不同的场景，具体取决于资源文件的存储位置。如果资源位于类路径下（如 <code>src/main/resources</code>），则使用 <code>ClassLoader</code> 或 <code>Class.getResource()</code> 更合适；如果资源在文件系统中，则可以直接使用 <code>File</code> 类或 <code>Paths</code> 获取路径。</p>
+<h2 id="2-在Windows和Linux下测试"><a href="#2-在Windows和Linux下测试" class="headerlink" title="2. 在Windows和Linux下测试"></a>2. 在Windows和Linux下测试</h2><hr>
+<p>最近在开发一个项目，需要加载资源路径，但是在部署到Linux服务器时确报指定的路径文件找不到。刚好自己的电脑上安装了Ubuntu，所以我分别在Windows和Linux系统下进行了测试。</p>
+<h3 id="2-1-Windows测试结果"><a href="#2-1-Windows测试结果" class="headerlink" title="2.1 Windows测试结果"></a>2.1 Windows测试结果</h3><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409080906835.png" alt="image-20240908090635746"></p>
+<h3 id="2-2-Linux测试结果"><a href="#2-2-Linux测试结果" class="headerlink" title="2.2 Linux测试结果"></a>2.2 Linux测试结果</h3><p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/image-20240908171525205.png" alt="image-20240908171525205"></p>
+<blockquote>
+<p>最后一种System.getProperty()路径获取在不同系统有偏差，不能做到很好的兼容。</p>
+</blockquote>
+<h2 id="3-Linux下的异常问题"><a href="#3-Linux下的异常问题" class="headerlink" title="3. Linux下的异常问题"></a>3. Linux下的异常问题</h2><hr>
+<p>通过实际项目部署发现，项目在读取jar包的情况下。上面涉及的五种方法均出现问题，不能正确获取jar表中的文件路径。通过查看日志发现路径莫名奇妙多出一些<code>！</code>，导致找不到文件。</p>
+<p><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092028281.png" alt="image-20240909202818777"></p>
+<ul>
+<li>jar包结构</li>
+<li><img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092101767.png" alt="image-20240909204007669" style="zoom: 67%;" /></li>
+</ul>
+<h3 id="3-1-解决方法"><a href="#3-1-解决方法" class="headerlink" title="3.1 解决方法"></a>3.1 解决方法</h3><h4 id="3-1-1-使用idea中的源路径"><a href="#3-1-1-使用idea中的源路径" class="headerlink" title="3.1.1 使用idea中的源路径"></a>3.1.1 使用idea中的源路径</h4><p>实际的测试发现使用idea中的源路径<code>static/font/simsun.ttc</code>可以找到jar中的文件，其实这idea中的源路径就是jar包中的相对路径。</p>
+<p>通过解压jar包发现<code>simsun.ttc</code>存在<code>BOOT-INF</code> &gt;<code>static</code>&gt;<code>font</code>，此外项目中java目录下编辑的代码以及resources下的文件夹和文件全部存放在classes下。</p>
+<img src="https://camelliaxiaohua-1313958787.cos.ap-shanghai.myqcloud.com/postImage/202409092101381.png" alt="image-20240909205107191" style="zoom: 67%;" />
+
+<ul>
+<li>SpringBoot Jar包的大致结构以及存储内容</li>
+</ul>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">spring-boot-app.jar</span><br><span class="line">│</span><br><span class="line">├── META-INF</span><br><span class="line">│   └── maven</span><br><span class="line">|       └───camellia</span><br><span class="line">|           └───PrintFounction</span><br><span class="line">|               └───pom.xml       </span><br><span class="line">│</span><br><span class="line">├── BOOT-INF</span><br><span class="line">│   ├── classes</span><br><span class="line">│   │   ├── print</span><br><span class="line">│   │   │   ├── controller</span><br><span class="line">|   |   |   ├── service</span><br><span class="line">|   |   |   ├── mapper</span><br><span class="line">|   |   |   └── utils</span><br><span class="line">|   |   ├── <span class="type">static</span></span><br><span class="line">|   |   |   └── font</span><br><span class="line">|   |   └── templates</span><br><span class="line">│   │</span><br><span class="line">│   └── lib</span><br><span class="line">│       └── spring-boot-starter-xxx.<span class="built_in">jar</span>(maven中引入的jar包)</span><br><span class="line">│</span><br><span class="line">└── org/</span><br><span class="line">    └── 第三方库的类文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1-2-getResourceAsStream"><a href="#3-1-2-getResourceAsStream" class="headerlink" title="3.1.2 getResourceAsStream"></a>3.1.2 <code>getResourceAsStream</code></h4><p>使用<code>LoadCacheFile.class.getClassLoader().getResourceAsStream(filepath)</code>获取文件路径。</p>
+<p>这个是在Linux和Windows都通用的方法。</p>
+<h4 id="3-1-3-将jar中的文件拿出单独存放"><a href="#3-1-3-将jar中的文件拿出单独存放" class="headerlink" title="3.1.3 将jar中的文件拿出单独存放"></a>3.1.3 将jar中的文件拿出单独存放</h4><p>可以将运行所需要的外部资源，如我这里的渲染字体拿出来单独存储在机器的一个目录中，通过在配置文件中配置路径，在需要的地方获取配置的路径即可。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/links/">links</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="toc-number">1.</span> <span class="toc-text">Java获取资源路径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 获取方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-ClassLoader-getResource"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 ClassLoader.getResource()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Class-getResource"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 Class.getResource()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-File-%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3  File 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Paths-get-%E5%92%8C-Files"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4  Paths.get() 和 Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-System-getProperty"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5  System.getProperty()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9C%A8Windows%E5%92%8CLinux%E4%B8%8B%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. 在Windows和Linux下测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Windows%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Windows测试结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Linux%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Linux测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Linux%E4%B8%8B%E7%9A%84%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">3. Linux下的异常问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E4%BD%BF%E7%94%A8idea%E4%B8%AD%E7%9A%84%E6%BA%90%E8%B7%AF%E5%BE%84"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">3.1.1 使用idea中的源路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-getResourceAsStream"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">3.1.2 getResourceAsStream</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-%E5%B0%86jar%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%8B%BF%E5%87%BA%E5%8D%95%E7%8B%AC%E5%AD%98%E6%94%BE"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">3.1.3 将jar中的文件拿出单独存放</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&text=Java获取资源路径"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&is_video=false&description=Java获取资源路径"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java获取资源路径&body=Check out this article: http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&title=Java获取资源路径"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&name=Java获取资源路径&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/09/08/Blog/%E6%90%AC%E7%A0%96%E6%97%A5%E5%BF%97/Java%E8%8E%B7%E5%8F%96%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84/&t=Java获取资源路径"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    Camellia.xiaohua
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/links/">links</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'Camellia.xiaohua';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
